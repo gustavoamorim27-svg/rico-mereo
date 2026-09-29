@@ -1,0 +1,2858 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="rico"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1020"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="MEREO Time">
+<title>Rico · MEREO do time</title><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script>try{var t=localStorage.getItem('ricoMereo.theme')||'rico';if(t!=='lava')document.documentElement.dataset.theme=t;}catch(e){document.documentElement.dataset.theme='rico';}</script>
+<style>
+
+/* Paleta e tipografia do Hub do Assessor */
+:root {
+  --bg: #241263;
+  --sidebar: rgba(16, 10, 43, 0.74);
+  --panel: rgba(16, 15, 44, 0.65);
+  --panel-raised: rgba(42, 33, 75, 0.85);
+  --panel-solid: #1a1443;
+  --field: rgba(8, 8, 31, 0.45);
+  --text: #f6f7fb;
+  --muted: #c4c1d8;
+  --subtle: #a29dbb;
+  --border: rgba(218, 212, 255, 0.17);
+  --border-strong: rgba(218, 212, 255, 0.32);
+  --orange: #ff621d;
+  --orange-soft: rgba(255, 98, 29, 0.16);
+  --on-accent: #fff;
+  --accent-glow: rgba(255, 98, 29, 0.3);
+  --accent-text: #ff9161;
+  --accent-text-soft: #ffb08a;
+  --accent-hover: #ff7a3d;
+  --atm-1: #2a1470;
+  --atm-2: #241263;
+  --atm-3: #43105e;
+  --atm-4: #5c0f3f;
+  --orb-a: #ff3d00;
+  --orb-b: #4533ff;
+  --orb-c: #ff2d78;
+  --orb-d: #ff6a00;
+  --orb-e: #0e9fb5;
+  --orb-f: #2b6cff;
+  --orb-g: #ff9e57;
+  --orb-h: #8a2bff;
+  --blue: #7199ff;
+  --green: #48d6a0;
+  --yellow: #ffd075;
+  --violet: #b29aff;
+  --pink: #ff2d78;
+  --red: #ff7a7a;
+  --heading: "Sora", "Manrope", -apple-system, sans-serif;
+  --body: "Manrope", -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --radius: 16px;
+  --safe: env(safe-area-inset-bottom, 0px);
+  color-scheme: dark;
+}
+/* Tema Rico: noite azul-marinho com laranja, coral e âmbar */
+:root[data-theme="rico"] {
+  --bg: #0b1020;
+  --sidebar: rgba(8, 12, 30, 0.74);
+  --panel: rgba(12, 17, 40, 0.66);
+  --panel-raised: rgba(24, 31, 62, 0.86);
+  --panel-solid: #121a36;
+  --border: rgba(180, 200, 255, 0.16);
+  --border-strong: rgba(180, 200, 255, 0.3);
+  --muted: #c3cbe6;
+  --subtle: #97a3c9;
+  --atm-1: #101a3d;
+  --atm-2: #0b1020;
+  --atm-3: #1c1226;
+  --atm-4: #3a1408;
+  --orb-a: #ff6a00;
+  --orb-b: #2b4bff;
+  --orb-c: #ff2e4d;
+  --orb-d: #ff9a1f;
+  --orb-e: #ff3d00;
+  --orb-f: #1f8fff;
+  --orb-g: #ffb020;
+  --orb-h: #ff5a3c;
+}
+/* Tema XP: grafite com dourado e âmbar */
+:root[data-theme="xp"] {
+  --bg: #0b0b0e;
+  --sidebar: rgba(12, 12, 15, 0.78);
+  --panel: rgba(18, 18, 22, 0.7);
+  --panel-raised: rgba(32, 30, 34, 0.9);
+  --panel-solid: #17161a;
+  --border: rgba(255, 230, 160, 0.14);
+  --border-strong: rgba(255, 230, 160, 0.3);
+  --muted: #d9d4c4;
+  --subtle: #a39d8c;
+  --orange: #f5c400;
+  --orange-soft: rgba(245, 196, 0, 0.16);
+  --on-accent: #16130a;
+  --accent-glow: rgba(245, 196, 0, 0.28);
+  --accent-text: #ffd84a;
+  --accent-text-soft: #ffe28a;
+  --accent-hover: #ffd21f;
+  --atm-1: #17140c;
+  --atm-2: #0b0b0e;
+  --atm-3: #1d1608;
+  --atm-4: #2b1e05;
+  --orb-a: #f5c400;
+  --orb-b: #3d3a2a;
+  --orb-c: #ff8c00;
+  --orb-d: #ffd54a;
+  --orb-e: #8a7a3a;
+  --orb-f: #b8860b;
+  --orb-g: #ffe27a;
+  --orb-h: #6b5a1e;
+}
+:root[data-theme="xp"] .nav-item.active,
+:root[data-theme="xp"] .card-bottom button,
+:root[data-theme="xp"] .suggest-item.new,
+:root[data-theme="xp"] .metric:first-child strong,
+:root[data-theme="xp"] .mereo-score strong,
+:root[data-theme="xp"] .key,
+:root[data-theme="xp"] .chip-toggle.on,
+:root[data-theme="xp"] .day.today .day-title b,
+:root[data-theme="xp"] .month-day.today .month-num b,
+:root[data-theme="xp"] .toast button,
+:root[data-theme="xp"] .chip.on {
+  color: #ffd84a;
+}
+.tier-A {
+  --tc: #ffb547;
+  color: #ffcf7a;
+  background: rgba(255, 181, 71, 0.16);
+}
+.tier-B {
+  --tc: #48d6a0;
+  color: #7be6bd;
+  background: rgba(72, 214, 160, 0.14);
+}
+.tier-C {
+  --tc: #7199ff;
+  color: #a3bcff;
+  background: rgba(113, 153, 255, 0.16);
+}
+.tier-D {
+  --tc: #a79fc9;
+  color: #c9c3e3;
+  background: rgba(167, 159, 201, 0.14);
+}
+.tier-none {
+  color: var(--subtle);
+  background: rgba(218, 212, 255, 0.1);
+}
+* {
+  box-sizing: border-box;
+}
+[hidden] {
+  display: none !important;
+}
+html {
+  background: var(--bg) linear-gradient(165deg, var(--atm-1) 0%, var(--atm-2) 36%, var(--atm-3) 70%, var(--atm-4) 100%) fixed;
+}
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px var(--body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+/* O app ocupa a tela como uma camada fixa, do mesmo jeito que o fundo: no iPad isso
+   alcança a borda inferior mesmo quando 100dvh fica menor que a tela. */
+#app {
+  position: fixed;
+  inset: 0;
+  min-height: 100lvh;
+  overflow: hidden;
+}
+
+/* Atmosfera: gradiente com orbes animadas, como no Hub */
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  min-height: 100lvh;
+  overflow: hidden;
+  pointer-events: none;
+  background: linear-gradient(165deg, var(--atm-1) 0%, var(--atm-2) 36%, var(--atm-3) 70%, var(--atm-4) 100%);
+  contain: strict;
+  animation: breathe 38s ease-in-out infinite;
+}
+/* Piso: a borda inferior do app termina na cor lisa do tema (a mesma do theme-color),
+   para a faixa que o iPadOS pinta abaixo do app continuar o fundo sem emenda. */
+.floor {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 26vh;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent 0%, var(--bg) 100%);
+}
+@keyframes breathe {
+  0%, 100% { filter: hue-rotate(0deg) saturate(1); }
+  50% { filter: hue-rotate(-9deg) saturate(1.12); }
+}
+.atmosphere::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, rgba(8, 8, 31, 0.22), rgba(8, 8, 31, 0.3) 60%, rgba(8, 8, 31, 0.12));
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+}
+.orb-orange {
+  width: 64vmax;
+  height: 64vmax;
+  top: -16vmax;
+  left: -14vmax;
+  background: radial-gradient(circle, var(--orb-a), transparent 68%);
+  opacity: 0.9;
+  animation: lava-a 19s ease-in-out infinite;
+}
+.orb-blue {
+  width: 56vmax;
+  height: 56vmax;
+  top: 26%;
+  right: -18vmax;
+  background: radial-gradient(circle, var(--orb-b), transparent 70%);
+  opacity: 0.85;
+  animation: lava-b 24s ease-in-out infinite;
+}
+.orb-pink {
+  width: 52vmax;
+  height: 52vmax;
+  bottom: -16vmax;
+  left: 6%;
+  background: radial-gradient(circle, var(--orb-c), transparent 70%);
+  opacity: 0.7;
+  animation: lava-c 28s ease-in-out infinite;
+}
+.orb-amber {
+  width: 44vmax;
+  height: 44vmax;
+  top: 52%;
+  left: -16vmax;
+  background: radial-gradient(circle, var(--orb-d) 0%, color-mix(in srgb, var(--orb-d) 80%, transparent) 26%, color-mix(in srgb, var(--orb-d) 33%, transparent) 50%, transparent 74%);
+  opacity: 0.75;
+  animation: lava-a 22s ease-in-out infinite reverse;
+}
+.orb-teal {
+  width: 38vmax;
+  height: 38vmax;
+  top: 6%;
+  left: 44%;
+  background: radial-gradient(circle, var(--orb-e) 0%, color-mix(in srgb, var(--orb-e) 80%, transparent) 26%, color-mix(in srgb, var(--orb-e) 33%, transparent) 50%, transparent 74%);
+  opacity: 0.45;
+  animation: lava-b 31s ease-in-out infinite reverse;
+}
+.orb-cobalt {
+  width: 34vmax;
+  height: 34vmax;
+  bottom: 4%;
+  right: 8%;
+  background: radial-gradient(circle, var(--orb-f) 0%, color-mix(in srgb, var(--orb-f) 80%, transparent) 26%, color-mix(in srgb, var(--orb-f) 33%, transparent) 50%, transparent 74%);
+  opacity: 0.6;
+  animation: lava-c 26s ease-in-out infinite reverse;
+}
+.orb-ember {
+  width: 30vmax;
+  height: 30vmax;
+  top: 40%;
+  left: 30%;
+  background: radial-gradient(circle, var(--orb-g), transparent 66%);
+  opacity: 0.55;
+  animation: lava-d 17s ease-in-out infinite;
+}
+.orb-deep {
+  width: 48vmax;
+  height: 48vmax;
+  top: -10vmax;
+  right: 10%;
+  background: radial-gradient(circle, var(--orb-h), transparent 70%);
+  opacity: 0.5;
+  animation: lava-d 33s ease-in-out infinite reverse;
+}
+@keyframes lava-d {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  20% { transform: translate(18vw, 10vh) scale(1.25, 0.85); }
+  45% { transform: translate(-12vw, 26vh) scale(0.85, 1.2); }
+  70% { transform: translate(22vw, -12vh) scale(1.1); }
+}
+@keyframes lava-a {
+  0%, 100% { transform: translate(0, 14vh) scale(1); }
+  25% { transform: translate(7vw, -6vh) scale(1.16, 0.9); }
+  50% { transform: translate(-5vw, -26vh) scale(0.9, 1.15); }
+  75% { transform: translate(9vw, -10vh) scale(1.1, 0.94); }
+}
+@keyframes lava-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  30% { transform: translate(-14vw, -16vh) scale(1.2, 0.88); }
+  60% { transform: translate(-4vw, 12vh) scale(0.88, 1.18); }
+}
+@keyframes lava-c {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(12vw, -22vh) scale(1.12, 0.9); }
+  55% { transform: translate(-8vw, -38vh) scale(0.94, 1.16); }
+  80% { transform: translate(4vw, -14vh) scale(1.08, 0.92); }
+}
+#app {
+  z-index: 1;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+  color: inherit;
+  min-height: 44px;
+  border: 0;
+  background: none;
+  border-radius: 10px;
+}
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+button,
+a {
+  touch-action: manipulation;
+}
+button:disabled {
+  opacity: 0.45;
+  cursor: wait;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 3px;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--orange);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+input,
+select,
+textarea {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  min-height: 46px;
+  padding: 11px 13px;
+  background: var(--field);
+  color: var(--text);
+  width: 100%;
+  font-size: 16px;
+}
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23c4c1d8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+select option {
+  background: var(--panel-solid);
+  color: var(--text);
+}
+input::placeholder,
+textarea::placeholder {
+  color: var(--subtle);
+}
+input[type="date"],
+input[type="month"] {
+  color-scheme: dark;
+}
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="month"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.8);
+}
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+input[type="checkbox"] {
+  min-height: 20px;
+  width: 20px;
+  accent-color: var(--orange);
+}
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  min-height: 0;
+  padding: 0;
+  cursor: pointer;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--thumb, var(--orange));
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+  cursor: grab;
+}
+input[type="range"]::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 0;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--thumb, var(--orange));
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+}
+input[type="range"]:focus {
+  outline: none;
+}
+input[type="range"]:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+a {
+  color: var(--orange);
+}
+svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  stroke-width: 1.7;
+}
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+h1,
+h2,
+h3 {
+  font-family: var(--heading);
+}
+h1 {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -1.2px;
+  line-height: 1.25;
+}
+h1 em {
+  font-style: normal;
+  color: var(--orange);
+}
+h2 {
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.6px;
+}
+h3 {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+.muted {
+  color: var(--muted);
+}
+.small {
+  font-size: 12px;
+}
+.eyebrow {
+  font: 500 10px/1.6 var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 1.7px;
+  color: var(--orange);
+}
+.btn {
+  padding: 0 17px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 600;
+  white-space: nowrap;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  transition: background 0.18s, border-color 0.18s, transform 0.18s;
+}
+.btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--border-strong);
+}
+.primary {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--on-accent);
+  box-shadow: 0 8px 24px var(--accent-glow);
+}
+.primary:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+.green {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--on-accent);
+  box-shadow: 0 8px 24px var(--accent-glow);
+}
+.green:hover {
+  background: var(--accent-hover);
+}
+.danger {
+  color: var(--red);
+}
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  padding: 8px;
+  color: var(--muted);
+}
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.between {
+  justify-content: space-between;
+}
+.stack {
+  display: grid;
+  gap: 16px;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  line-height: 1.3;
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-weight: 600;
+  background: rgba(218, 212, 255, 0.12);
+  color: var(--muted);
+  white-space: nowrap;
+}
+.dot {
+  width: 7px;
+  height: 7px;
+  background: currentColor;
+  display: inline-block;
+  border-radius: 50%;
+}
+.empty {
+  padding: 45px 18px;
+  text-align: center;
+  color: var(--subtle);
+  line-height: 1.8;
+}
+.empty svg {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 8px;
+  opacity: 0.6;
+}
+.empty strong {
+  display: block;
+  color: var(--text);
+  font-size: 16px;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+/* Estrutura: página fixa em 100dvh; só as áreas internas rolam */
+.shell {
+  --sidebar-w: 224px;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+  height: 100%;
+  transition: grid-template-columns 0.22s cubic-bezier(0.2, 0.72, 0.2, 1);
+}
+.shell.collapsed {
+  --sidebar-w: 76px;
+}
+.sidebar {
+  background: linear-gradient(to bottom, var(--sidebar) 0%, var(--sidebar) calc(100% - 22vh), transparent 100%);
+  backdrop-filter: blur(22px) saturate(1.2);
+  -webkit-backdrop-filter: blur(22px) saturate(1.2);
+  border-right: 1px solid var(--border);
+  color: var(--muted);
+  padding: 26px 16px 20px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--sidebar-w);
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  transition: width 0.22s cubic-bezier(0.2, 0.72, 0.2, 1);
+  overflow: hidden;
+}
+.sidebar-toggle {
+  width: 34px;
+  height: 34px;
+  min-height: 34px;
+  margin: 16px 0 0 6px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.sidebar-toggle svg {
+  width: 16px;
+  height: 16px;
+  transform: rotate(180deg);
+  transition: transform 0.22s;
+}
+.sidebar-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text);
+}
+.collapsed .sidebar-toggle svg {
+  transform: rotate(0deg);
+}
+.collapsed .brand-label,
+.collapsed .brand-divider,
+.collapsed .sidebar .eyebrow,
+.collapsed .nav-item span,
+.collapsed .private-note,
+.collapsed .account div {
+  display: none;
+}
+.collapsed .sidebar {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.collapsed .sidebar .brand {
+  justify-content: center;
+  padding: 0;
+}
+.collapsed .brand-logo {
+  width: 52px;
+  height: 23px;
+}
+.collapsed .sidebar-toggle {
+  margin: 14px auto 0;
+}
+.collapsed .nav-items {
+  margin-top: 28px;
+}
+.collapsed .nav-item {
+  padding: 0;
+  justify-content: center;
+  min-height: 50px;
+}
+.collapsed .nav-item.active::before {
+  left: -10px;
+}
+.collapsed .nav-item svg {
+  width: 21px;
+  height: 21px;
+}
+.collapsed .account {
+  padding: 15px 0;
+  justify-content: center;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text);
+  padding: 0 6px;
+}
+.brand-logo {
+  width: 74px;
+  height: 32px;
+  color: var(--orange);
+  flex-shrink: 0;
+}
+.brand-logo svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  stroke: none;
+}
+.brand-divider {
+  height: 31px;
+  width: 1px;
+  background: var(--border);
+}
+.brand-label {
+  font: 500 10px/1.65 var(--mono);
+  letter-spacing: 1.7px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.sidebar .eyebrow {
+  color: var(--subtle);
+  font-size: 9px;
+  margin: 36px 12px 12px;
+}
+.nav-items {
+  display: grid;
+  gap: 4px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 13px;
+  width: 100%;
+  text-align: left;
+  min-height: 46px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  position: relative;
+  transition: background 0.18s, color 0.18s;
+}
+.nav-item:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+}
+.nav-item.active {
+  color: var(--accent-text);
+  background: color-mix(in srgb, var(--orange) 9%, transparent);
+}
+.nav-item.active::before {
+  content: "";
+  position: absolute;
+  left: -16px;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  background: var(--orange);
+  border-radius: 0 3px 3px 0;
+}
+.nav-item svg {
+  width: 18px;
+  height: 18px;
+}
+.nav-item .nav-count {
+  margin-left: auto;
+  font: 500 11px var(--mono);
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 5px;
+  padding: 2px 7px;
+}
+.sidebar-footer {
+  margin-top: auto;
+}
+.private-note {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin: 24px 3px;
+  padding: 13px 12px;
+  display: flex;
+  gap: 9px;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--subtle);
+  background: rgba(255, 255, 255, 0.03);
+}
+.private-note svg {
+  width: 15px;
+  margin-top: 2px;
+  color: var(--orange);
+}
+.account {
+  border-top: 1px solid var(--border);
+  padding: 18px 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text);
+}
+.account .avatar {
+  background: var(--orange-soft);
+  color: var(--accent-text);
+  width: 33px;
+  height: 33px;
+  font-size: 11px;
+}
+.account small {
+  display: block;
+  color: var(--subtle);
+  font-size: 10px;
+  margin-top: 3px;
+}
+.main {
+  grid-column: 2;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+.topbar {
+  flex-shrink: 0;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 36px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(18, 11, 48, 0.18);
+  font-size: 13px;
+}
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: var(--subtle);
+}
+.breadcrumb b {
+  color: var(--muted);
+  font-weight: 500;
+}
+.breadcrumb svg {
+  width: 14px;
+}
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.sync {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--green);
+}
+.sync.pending,
+.sync.offline {
+  color: var(--yellow);
+}
+.sync.denied,
+.sync.full {
+  color: var(--red);
+}
+.content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 32px 20px;
+  width: 100%;
+  max-width: 1760px;
+  margin: 0 auto;
+}
+.content > * {
+  flex-shrink: 0;
+}
+/* Quadro de pipes: cabeçalho compacto para sobrar altura às colunas */
+.content[data-screen="board"] .page-title {
+  margin-bottom: 10px;
+}
+.content[data-screen="board"] .metrics {
+  margin-bottom: 12px;
+}
+.content[data-screen="board"] .metric {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 10px 16px;
+  flex-wrap: wrap;
+}
+.content[data-screen="board"] .metric .eyebrow {
+  width: 100%;
+}
+.content[data-screen="board"] .metric strong {
+  margin: 0;
+  font-size: 20px;
+}
+.content[data-screen="board"] .metric small {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.content[data-screen="board"] .metric-icon {
+  top: 10px;
+  right: 12px;
+}
+.content[data-screen="board"] .metric-icon svg {
+  width: 16px;
+  height: 16px;
+}
+/* Sidebar recolhida: o conteúdo ganha o espaço, com respiro menor nas bordas */
+.collapsed .content {
+  padding-left: 22px;
+  padding-right: 22px;
+  max-width: none;
+}
+.collapsed .topbar {
+  padding-left: 22px;
+  padding-right: 22px;
+}
+.collapsed .board {
+  gap: 10px;
+}
+.collapsed .column {
+  padding: 10px 8px 6px;
+}
+/* Telas que cabem na altura: o que sobra rola dentro dos painéis */
+.content[data-screen="board"] .board,
+.content[data-screen="agenda"] .week-grid,
+.content[data-screen="agenda"] .month-grid,
+.content[data-screen="clients"] .client-list,
+.content[data-screen="history"] .panel:last-child {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.content[data-screen="clients"] .client-list,
+.content[data-screen="history"] .panel:last-child {
+  overflow: auto;
+}
+.page-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+  min-height: 44px;
+}
+.page-title h1 {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  color: var(--muted);
+}
+.page-title h1::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--orange);
+  margin-right: 10px;
+  vertical-align: 2px;
+}
+/* Faixa de indicadores do quadro: uma linha só, para sobrar altura aos pipes */
+.stat-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  align-items: center;
+  padding: 9px 16px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  border-radius: 12px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.stat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 12px;
+}
+.stat svg {
+  width: 14px;
+  height: 14px;
+  align-self: center;
+  color: var(--subtle);
+}
+.stat b {
+  font-family: var(--heading);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text);
+}
+.stat.hot b {
+  color: var(--accent-text-soft);
+}
+.stat.hot svg {
+  color: var(--orange);
+}
+.stat.due b {
+  color: #ffd166;
+}
+.page-title p {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.page-title .eyebrow {
+  margin-bottom: 8px;
+}
+.title-actions {
+  display: flex;
+  gap: 9px;
+}
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(218, 212, 255, 0.14);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--heading);
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.avatar.big {
+  width: 66px;
+  height: 66px;
+  font-size: 21px;
+  background: var(--orange-soft);
+  color: var(--accent-text);
+}
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 21px 23px;
+  border-bottom: 1px solid var(--border);
+}
+.panel-head .row {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.panel-pad {
+  padding: 24px;
+}
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.metric {
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  border-radius: 14px;
+  position: relative;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.chips {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.chip {
+  min-height: 39px;
+  padding: 0 13px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  color: var(--subtle);
+}
+.chip.on {
+  background: var(--orange-soft);
+  border-color: color-mix(in srgb, var(--orange) 40%, transparent);
+  color: var(--accent-text-soft);
+}
+.toolbar-spacer {
+  flex: 1;
+}
+.toolbar-secondary {
+  margin-top: -4px;
+}
+.chip-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.chip-label {
+  font: 500 9px var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: var(--subtle);
+  padding-right: 2px;
+}
+.chip-group .chips {
+  background: rgba(8, 8, 31, 0.32);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 3px;
+  gap: 2px;
+}
+.chip-group .chip {
+  border-radius: 9px;
+  min-height: 38px;
+}
+.chip-group .chip.on {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--on-accent) !important;
+  box-shadow: 0 4px 14px var(--accent-glow);
+}
+.chip-count {
+  margin-left: 6px;
+  font: 500 10px var(--mono);
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 5px;
+  padding: 1px 6px;
+}
+.chip.on .chip-count {
+  background: rgba(0, 0, 0, 0.2);
+}
+.select-small {
+  width: auto;
+  max-width: 220px;
+  font-size: 13px;
+  min-height: 42px;
+  padding: 8px 32px 8px 12px;
+}
+.segment {
+  display: inline-flex;
+  background: rgba(8, 8, 31, 0.4);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 3px;
+}
+.segment button {
+  min-height: 33px;
+  font-size: 12px;
+  padding: 0 12px;
+  color: var(--subtle);
+}
+.segment button.on {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text);
+  border-radius: 6px;
+}
+
+/* Quadro de pipes */
+.chips-radio {
+  gap: 8px;
+}
+.chip-btn {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(8, 8, 31, 0.32);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+.chip-btn.on {
+  background: var(--orange-soft);
+  border-color: color-mix(in srgb, var(--orange) 55%, transparent);
+  color: var(--text);
+}
+.notice {
+  background: rgba(113, 153, 255, 0.12);
+  border: 1px solid rgba(113, 153, 255, 0.3);
+  border-radius: 12px;
+  padding: 15px 18px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.notice svg {
+  color: var(--blue);
+}
+.notice .btn {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.notice.demo {
+  background: rgba(255, 208, 117, 0.1);
+  border-color: rgba(255, 208, 117, 0.35);
+}
+.notice.demo svg {
+  color: var(--yellow);
+}
+.notice strong {
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Temas */
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 6px;
+}
+.theme-card {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 10px;
+  display: grid;
+  gap: 8px;
+  text-align: left;
+  color: var(--text);
+  background: rgba(8, 8, 31, 0.32);
+}
+.theme-card.on {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 1px var(--orange);
+}
+.theme-swatch {
+  height: 54px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+.theme-swatch i {
+  position: absolute;
+  border-radius: 50%;
+  width: 60%;
+  height: 120%;
+  filter: blur(12px);
+}
+.theme-card b {
+  font-size: 13px;
+}
+.theme-card small {
+  color: var(--subtle);
+  font-size: 11px;
+}
+
+/* Diálogos */
+dialog {
+  width: min(640px, calc(100vw - 30px));
+  max-height: calc(100dvh - 40px);
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 20px;
+  box-shadow: 0 24px 90px rgba(0, 0, 0, 0.6);
+  background: var(--panel-solid);
+  color: var(--text);
+  overscroll-behavior: contain;
+}
+dialog::backdrop {
+  background: rgba(8, 8, 31, 0.55);
+  backdrop-filter: blur(6px);
+}
+.dialog-head {
+  padding: 21px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel-solid);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.dialog-head h2 {
+  font-size: 20px;
+}
+.dialog-body {
+  padding: 23px 25px;
+}
+.dialog-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 17px 24px;
+  background: var(--panel-solid);
+  border-top: 1px solid var(--border);
+  position: sticky;
+  bottom: 0;
+}
+.fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 17px;
+}
+.field {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.field.full {
+  grid-column: 1/-1;
+}
+.field small {
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--subtle);
+}
+.field-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--muted);
+}
+.form-error {
+  color: var(--red);
+  line-height: 1.6;
+  font-size: 12px;
+  margin: 12px 0;
+}
+.form-error:empty {
+  display: none;
+}
+.toast {
+  position: fixed;
+  bottom: calc(24px + var(--safe));
+  left: 50%;
+  transform: translate(-50%, 20px);
+  background: rgba(20, 14, 52, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  z-index: 2000;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
+  padding: 14px 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  max-width: 90vw;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+}
+.toast button {
+  padding: 0 4px;
+  min-height: 30px;
+  color: var(--accent-text);
+  text-decoration: underline;
+  font-weight: 600;
+}
+.key {
+  font: 13px var(--mono);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  background: rgba(8, 8, 31, 0.5);
+  padding: 18px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 12px;
+  line-height: 1.8;
+  user-select: all;
+  color: var(--accent-text-soft);
+}
+@media (max-width: 1180px) {
+  .shell {
+    --sidebar-w: 196px;
+  }
+  .shell.collapsed {
+    --sidebar-w: 76px;
+  }
+  .sidebar {
+    padding: 24px 12px 18px;
+  }
+  .brand-logo {
+    width: 62px;
+    height: 27px;
+  }
+  .brand-label {
+    font-size: 8px;
+    letter-spacing: 1.2px;
+  }
+  .content {
+    padding: 25px 23px;
+  }
+  .topbar {
+    padding: 0 23px;
+  }
+  .metrics {
+    gap: 10px;
+  }
+  .metric {
+    padding: 15px;
+  }
+  .metric strong {
+    font-size: 23px;
+  }
+  .metric-icon {
+    display: none;
+  }
+  .board {
+    grid-template-columns: repeat(4, minmax(220px, 1fr));
+    gap: 11px;
+  }
+  .donut-layout {
+    gap: 20px;
+    padding: 24px 18px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .legend {
+    min-width: 170px;
+  }
+  .detail-grid {
+    grid-template-columns: minmax(0, 1.35fr) minmax(250px, 1fr);
+  }
+  .mereo-components {
+    gap: 12px;
+  }
+  .mereo {
+    gap: 12px;
+    padding: 20px;
+  }
+  .mereo-score {
+    width: 95px;
+  }
+}
+@media (max-width: 950px) {
+  .shell {
+    --sidebar-w: 78px;
+  }
+  .sidebar {
+    padding: 23px 10px;
+  }
+  .sidebar-toggle {
+    display: none;
+  }
+  .brand-label,
+  .brand-divider,
+  .sidebar .eyebrow,
+  .nav-item span,
+  .private-note,
+  .account div,
+  .nav-count {
+    display: none !important;
+  }
+  .sidebar .brand {
+    justify-content: center;
+    margin-bottom: 40px;
+    padding: 0;
+  }
+  .brand-logo {
+    width: 52px;
+    height: 23px;
+  }
+  .nav-item {
+    padding: 0;
+    justify-content: center;
+    min-height: 51px;
+  }
+  .nav-item.active::before {
+    left: -10px;
+  }
+  .nav-item svg {
+    width: 21px;
+    height: 21px;
+  }
+  .account {
+    padding: 15px 0;
+    justify-content: center;
+  }
+  .account .avatar {
+    display: flex !important;
+  }
+  .content {
+    padding: 24px 20px;
+  }
+  .topbar {
+    padding: 0 20px;
+    height: 63px;
+  }
+  .metric {
+    padding: 14px;
+  }
+  .metric strong {
+    font-size: 21px;
+  }
+  .metric small {
+    font-size: 10px;
+  }
+  .page-title h1 {
+    font-size: 27px;
+  }
+  .title-actions .btn {
+    padding: 0 12px;
+    font-size: 12px;
+  }
+  .board {
+    grid-template-columns: repeat(4, 230px);
+  }
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+  .donut-layout {
+    flex-wrap: nowrap;
+    justify-content: start;
+    padding: 28px 40px;
+  }
+  .potential-list {
+    grid-template-columns: 1fr 1fr;
+  }
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+  .week-grid {
+    grid-template-columns: repeat(5, 170px);
+  }
+  .month-day {
+    min-height: 96px;
+    padding: 6px;
+  }
+  .mereo-component {
+    font-size: 10px;
+  }
+  .welcome-story,
+  .welcome-form {
+    padding: 40px;
+  }
+  .welcome-story h1 {
+    font-size: 38px;
+  }
+  .topbar-actions {
+    gap: 7px;
+  }
+}
+@media (max-width: 650px) {
+  .shell {
+    display: block;
+    --sidebar-w: 0px;
+  }
+  .main {
+    height: calc(100% - 65px - var(--safe));
+  }
+  .sidebar {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: calc(65px + var(--safe));
+    padding: 5px 8px calc(5px + var(--safe));
+    border-radius: 16px 16px 0 0;
+    border-right: 0;
+    border-top: 1px solid var(--border);
+  }
+  .sidebar .brand,
+  .sidebar-footer {
+    display: none;
+  }
+  .nav-items {
+    display: flex;
+    gap: 3px;
+    justify-content: space-between;
+  }
+  .nav-item {
+    min-height: 53px;
+    flex: 1;
+    flex-direction: column;
+    gap: 3px;
+    max-width: 85px;
+  }
+  .nav-item span {
+    display: inline !important;
+    font-size: 8px;
+  }
+  .nav-item.active::before {
+    display: none;
+  }
+  .nav-item.active {
+    box-shadow: inset 0 2px var(--orange);
+  }
+  .nav-item svg {
+    width: 19px;
+    height: 19px;
+  }
+  .topbar {
+    height: 57px;
+    padding: 0 17px;
+  }
+  .breadcrumb {
+    font-size: 10px;
+    gap: 7px;
+  }
+  .content {
+    padding: 24px 16px;
+  }
+  .page-title {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    gap: 13px;
+  }
+  .page-title h1 {
+    font-size: 27px;
+  }
+  .page-title p {
+    font-size: 11px;
+  }
+  .metrics {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 21px;
+  }
+  .metrics .metric {
+    padding: 16px;
+  }
+  .metric strong {
+    font-size: 24px;
+  }
+  .toolbar {
+    gap: 9px;
+  }
+  .search {
+    max-width: none;
+    flex-basis: 100%;
+  }
+  .chips {
+    gap: 2px;
+  }
+  .chip {
+    padding: 0 11px;
+    font-size: 10px;
+  }
+  .toolbar-spacer {
+    display: none;
+  }
+  .board {
+    margin-right: -16px;
+    padding-right: 16px;
+    grid-template-columns: repeat(4, 267px);
+    gap: 13px;
+  }
+  .board-hint {
+    font-size: 10px;
+    line-height: 1.7;
+    text-align: center;
+  }
+  .drag-targets {
+    left: 8px;
+    right: 8px;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .drop-target {
+    flex: 1 1 28%;
+    min-height: 70px;
+  }
+  .drag-hint {
+    display: none;
+  }
+  .drop-target {
+    min-width: 90px;
+    font-size: 11px;
+  }
+  .drop-target svg {
+    width: 17px;
+  }
+  .goal-grid {
+    grid-template-columns: 1fr;
+  }
+  .mereo {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .mereo-score {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-align: left;
+    width: auto;
+  }
+  .mereo-score strong {
+    font-size: 42px;
+  }
+  .mereo-components {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 13px;
+  }
+  .donut-layout {
+    padding: 24px;
+    flex-wrap: wrap;
+  }
+  .donut {
+    width: 180px;
+    height: 180px;
+  }
+  .donut-hole {
+    width: 134px;
+    height: 134px;
+  }
+  .donut-hole strong {
+    font-size: 20px;
+  }
+  .legend {
+    min-width: 180px;
+  }
+  .wallet-foot {
+    padding: 15px 20px;
+  }
+  .client-heading {
+    gap: 13px;
+  }
+  .avatar.big {
+    width: 53px;
+    height: 53px;
+    font-size: 18px;
+  }
+  .potential-list {
+    grid-template-columns: 1fr;
+  }
+  .table th,
+  .table td {
+    padding: 14px 16px;
+  }
+  .detail-tabs {
+    gap: 16px;
+  }
+  .notice {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    font-size: 11px;
+  }
+  .notice .btn {
+    margin-left: 0;
+  }
+  .toast {
+    bottom: calc(82px + var(--safe));
+    width: max-content;
+    max-width: 92vw;
+  }
+  .fields {
+    gap: 15px;
+  }
+  .dialog-body {
+    padding: 20px;
+  }
+  .dialog-head,
+  .dialog-foot {
+    padding: 16px 20px;
+  }
+  .dialog-head h2 {
+    font-size: 18px;
+  }
+  .est-row {
+    grid-template-columns: minmax(0, 1fr) 76px;
+  }
+  .profile-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .month-grid {
+    gap: 3px;
+  }
+  .month-day {
+    min-height: 70px;
+    padding: 4px;
+    border-radius: 8px;
+  }
+  .month-day .agenda-card.compact strong {
+    display: none;
+  }
+  .month-day .agenda-card.compact {
+    padding: 3px;
+    justify-content: center;
+  }
+  .month-num b {
+    font-size: 12px;
+  }
+  .welcome {
+    display: flex;
+    flex-direction: column;
+  }
+  .welcome-story {
+    padding: 32px 28px;
+  }
+  .welcome-story .brand {
+    margin-bottom: 37px;
+  }
+  .welcome-story h1 {
+    font-size: 34px;
+    letter-spacing: -1px;
+  }
+  .welcome-story p {
+    font-size: 12px;
+  }
+  .welcome-features,
+  .welcome-story footer {
+    display: none;
+  }
+  .welcome-form {
+    padding: 35px 28px;
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
+  .topbar-actions .sync {
+    font-size: 10px;
+  }
+  .topbar-actions .icon-btn {
+    width: 36px;
+  }
+  .client-list .table {
+    min-width: 660px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *:before,
+  *:after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+.chip-check {
+  position: relative;
+  display: inline-flex;
+}
+.chip-check input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  min-height: 0;
+}
+.chip-check span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(8, 8, 31, 0.32);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.chip-check input:checked + span {
+  background: var(--orange-soft);
+  border-color: color-mix(in srgb, var(--orange) 55%, transparent);
+  color: var(--text);
+}
+.chip-check input:focus-visible + span {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+}
+.chip-check .dot {
+  width: 9px;
+  height: 9px;
+}
+.fields .chips {
+  gap: 8px;
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.settings-grid .panel {
+  padding: 24px;
+}
+.settings-grid p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--muted);
+  margin: 12px 0 18px;
+}
+.settings-grid .row svg {
+  color: var(--orange);
+}
+
+/* ===== MEREO do time — componentes próprios, sobre a base visual do Pipeline/Hub ===== */
+:root {
+  --s-top: #5fd3ff;
+  --s-ok: #48d6a0;
+  --s-mid: #ffd075;
+  --s-low: #ff7a7a;
+}
+.s-top { --sc: var(--s-top); }
+.s-ok { --sc: var(--s-ok); }
+.s-mid { --sc: var(--s-mid); }
+.s-low { --sc: var(--s-low); }
+.none { --sc: var(--subtle); }
+.wrap { flex-wrap: wrap; }
+.center { justify-content: center; }
+.spacer { flex: 1; }
+.btn { min-height: 44px; }
+.btn.sm { min-height: 38px; padding: 0 12px; font-size: 12px; gap: 6px; }
+.btn.sm svg { width: 16px; height: 16px; }
+.btn.ghost { background: transparent; border-color: transparent; color: var(--muted); padding: 0 10px 0 4px; }
+.btn.ghost:hover { color: var(--text); background: rgba(255, 255, 255, 0.06); }
+.btn.danger, .icon-btn.danger { color: var(--red); }
+.avatar { background: color-mix(in srgb, var(--mc, var(--orange)) 22%, transparent); color: color-mix(in srgb, var(--mc, var(--orange)) 70%, #fff); border: 1px solid color-mix(in srgb, var(--mc, var(--orange)) 35%, transparent); }
+.avatar.big { width: 52px; height: 52px; font-size: 17px; background: color-mix(in srgb, var(--mc, var(--orange)) 22%, transparent); color: color-mix(in srgb, var(--mc, var(--orange)) 70%, #fff); }
+.pill.ok { color: #7be6bd; background: rgba(72, 214, 160, 0.14); }
+.pill.est { color: #ffd98f; background: rgba(255, 208, 117, 0.14); }
+.progress { display: block; height: 6px; border-radius: 99px; background: rgba(255, 255, 255, 0.1); overflow: hidden; position: relative; }
+.progress > span { display: block; height: 100%; border-radius: inherit; background: var(--orange); transition: width .25s; }
+.footnote { color: var(--subtle); font-size: 11.5px; line-height: 1.8; margin: 14px 2px 6px; }
+
+/* Barra de período */
+.period { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+.stepper { display: inline-flex; align-items: center; gap: 2px; background: rgba(8, 8, 31, 0.4); border: 1px solid var(--border); border-radius: 10px; padding: 2px; }
+.stepper b { min-width: 150px; text-align: center; font-family: var(--heading); font-size: 13px; font-weight: 600; }
+.stepper .icon-btn { width: 38px; min-height: 36px; padding: 6px; }
+.stepper svg { width: 16px; height: 16px; }
+.segment button { min-height: 36px; }
+
+/* KPIs */
+.kpis { display: grid; grid-template-columns: 1.1fr 1fr 1.3fr 1fr; gap: 12px; margin-bottom: 14px; }
+.kpi { padding: 14px 18px; border: 1px solid var(--border); background: var(--panel); border-radius: 14px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.kpi .eyebrow { color: var(--subtle); font-size: 9px; letter-spacing: 1.2px; }
+.kpi strong { font-family: var(--heading); font-size: 26px; font-weight: 700; letter-spacing: -1px; line-height: 1.2; }
+.kpi strong em { font-style: normal; color: var(--subtle); font-size: 17px; font-weight: 500; }
+.kpi small { color: var(--muted); font-size: 12px; }
+.kpi .progress { margin-top: 6px; }
+.kpi.lead { background: linear-gradient(135deg, color-mix(in srgb, var(--orange) 22%, transparent), rgba(43, 75, 255, 0.14)); border-color: color-mix(in srgb, var(--orange) 35%, transparent); }
+.kpi.lead strong { color: var(--accent-text-soft); font-size: 32px; }
+
+/* Ranking do mês */
+.ranking { padding: 6px; overflow: hidden; }
+.rank-head, .rank-row { display: grid; grid-template-columns: 34px minmax(170px, 1.6fr) 118px repeat(5, minmax(54px, .55fr)) minmax(150px, 1fr); align-items: center; gap: 10px; }
+.rank-head { padding: 10px 14px 8px; font: 500 9.5px var(--mono); letter-spacing: 1.2px; text-transform: uppercase; color: var(--subtle); }
+.rank-head small { opacity: .7; }
+.rank-row { width: 100%; text-align: left; padding: 10px 14px; border-radius: 12px; min-height: 64px; transition: background .15s; }
+.rank-row + .rank-row, .heat-row + .heat-row { border-top: 1px solid color-mix(in srgb, var(--border) 60%, transparent); border-radius: 0; }
+.rank-row:hover, .heat-row:hover { background: rgba(255, 255, 255, 0.05); }
+.pos { font: 600 13px var(--mono); color: var(--subtle); text-align: center; }
+.who { display: flex; align-items: center; gap: 11px; min-width: 0; text-align: left; }
+.who > span:last-child { min-width: 0; display: grid; gap: 3px; }
+.who b { font-weight: 700; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.who small { color: var(--subtle); font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.who small .pill { padding: 2px 7px; font-size: 10px; }
+.sc { display: grid; gap: 6px; }
+.sc b { font-family: var(--heading); font-size: 22px; font-weight: 700; letter-spacing: -.8px; color: var(--sc); line-height: 1; }
+.scale { position: relative; display: block; height: 6px; border-radius: 99px; background: linear-gradient(90deg, var(--s-low) 0%, var(--s-mid) 38%, var(--s-ok) 55%, var(--s-top) 100%); opacity: .9; }
+.scale i { position: absolute; top: 50%; width: 13px; height: 13px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 3px var(--sc), 0 2px 8px rgba(0, 0, 0, .5); transform: translate(-50%, -50%); transition: left .25s; }
+.comp { display: grid; gap: 1px; text-align: center; padding: 6px 4px; border-radius: 9px; background: color-mix(in srgb, var(--sc) 11%, transparent); }
+.comp b { font-family: var(--heading); font-size: 15px; color: var(--sc); }
+.comp small { font: 500 10px var(--mono); color: var(--subtle); }
+.comp.none { background: rgba(255, 255, 255, .03); }
+.capcol { display: grid; gap: 6px; }
+.capcol small { font-size: 12px; color: var(--text); font-weight: 600; }
+.capcol em { font-style: normal; color: var(--subtle); font-weight: 500; }
+
+/* Mapa de calor do semestre */
+.heat-head, .heat-row { display: grid; grid-template-columns: 34px minmax(180px, 1.7fr) repeat(6, minmax(56px, 1fr)) minmax(84px, 1.1fr); align-items: center; gap: 8px; }
+.heat-head { padding: 10px 14px 8px; font: 500 10px var(--mono); letter-spacing: 1.2px; text-transform: uppercase; color: var(--subtle); text-align: center; }
+.heat-head span:nth-child(2) { text-align: left; }
+.heat-head .now { color: var(--accent-text); }
+.heat-row { width: 100%; padding: 9px 14px; min-height: 62px; transition: background .15s; }
+.cell { height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font: 700 13px var(--heading); color: var(--sc); background: color-mix(in srgb, var(--sc) 15%, transparent); border: 1px solid color-mix(in srgb, var(--sc) 30%, transparent); }
+.cell.est { border-style: dashed; }
+.cell.none { background: rgba(255, 255, 255, .03); border-color: transparent; color: var(--subtle); font-weight: 500; }
+.cell em { font: 500 10px var(--mono); font-style: normal; color: var(--subtle); }
+.cell.total { height: 46px; background: color-mix(in srgb, var(--sc) 24%, transparent); }
+.cell.total b { font-size: 18px; letter-spacing: -.5px; }
+.legend { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.legend i { width: 10px; height: 10px; border-radius: 3px; background: var(--sc); display: inline-block; margin-left: 6px; }
+.legend i:first-child { margin-left: 0; }
+.dash { border: 1px dashed var(--muted); border-radius: 4px; padding: 0 5px; }
+
+/* Membro */
+.member-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.who.big h2 { font-size: 19px; letter-spacing: -.4px; }
+.who.big small { font-size: 12px; }
+.member-nav { display: inline-flex; align-items: center; gap: 2px; }
+.member-nav .icon-btn { width: 38px; }
+.member-grid { display: grid; grid-template-columns: minmax(290px, .82fr) minmax(0, 1.5fr); gap: 16px; align-items: start; }
+.score-panel { padding: 22px; position: sticky; top: 0; }
+.score-hero { display: grid; gap: 6px; padding-bottom: 18px; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
+.score-hero strong { font-family: var(--heading); font-size: 58px; font-weight: 700; letter-spacing: -2.5px; line-height: 1; color: var(--sc); margin-top: 4px; }
+.score-hero .scale { margin-top: 10px; height: 8px; }
+.scale-labels { display: flex; justify-content: space-between; font: 500 9.5px var(--mono); color: var(--subtle); }
+.comp-list { display: grid; }
+.comp-row { padding: 12px 0; display: grid; gap: 6px; }
+.comp-row + .comp-row { border-top: 1px solid color-mix(in srgb, var(--border) 60%, transparent); }
+.comp-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.comp-top b { font-size: 13px; }
+.comp-top small { color: var(--subtle); font: 500 10px var(--mono); }
+.comp-score { font: 700 16px var(--heading); color: var(--sc); }
+.comp-val { font-size: 12px; color: var(--text); display: flex; gap: 6px; align-items: baseline; }
+.comp-val em { font-style: normal; color: var(--subtle); }
+.comp-val span { margin-left: auto; font: 500 11px var(--mono); color: var(--muted); }
+.comp-row .progress > span { background: var(--sc); }
+.comp-row .progress i { position: absolute; top: -2px; bottom: -2px; width: 2px; background: rgba(255, 255, 255, .7); }
+.gap { margin-top: 12px; padding: 12px 14px; border-radius: 12px; background: rgba(255, 255, 255, .04); font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+.gap b { color: var(--accent-text-soft); }
+
+.entry-panel, .sem-panel { padding: 0; overflow: hidden; }
+.entry-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 16px 20px; border-bottom: 1px solid var(--border); }
+.entry-head .eyebrow { display: block; margin-bottom: 8px; }
+.status-seg button.on:first-child { background: rgba(255, 208, 117, .18); color: #ffd98f; }
+.status-seg button.on:last-child { background: rgba(72, 214, 160, .18); color: #7be6bd; }
+.entry-body { padding: 6px 20px 20px; }
+.entry-group { padding: 16px 0 14px; display: grid; gap: 14px; }
+.entry-group + .entry-group { border-top: 1px solid color-mix(in srgb, var(--border) 60%, transparent); }
+.entry-group h3 { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.entry-group h3 svg { width: 17px; height: 17px; color: var(--orange); }
+.entry-group h3 small { margin-left: auto; font: 500 10.5px var(--mono); color: var(--subtle); letter-spacing: .3px; }
+.entry-group.two { grid-template-columns: 1fr 1fr; gap: 22px; }
+.entry-group.two > div { display: grid; gap: 14px; align-content: start; }
+.calc { font-size: 12px; color: var(--muted); }
+.calc b { color: var(--text); }
+details.sub { border: 1px solid var(--border); border-radius: 12px; padding: 0 14px; background: rgba(8, 8, 31, .22); }
+details.sub > summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; color: var(--muted); list-style: none; }
+details.sub > summary::-webkit-details-marker { display: none; }
+details.sub > summary::before { content: '+'; font: 600 15px var(--mono); color: var(--orange); width: 14px; }
+details.sub[open] > summary::before { content: '−'; }
+details.sub > summary em { font-style: normal; font: 500 10px var(--mono); color: var(--accent-text); margin-left: auto; }
+details.sub[open] { padding-bottom: 14px; }
+details.sub .sl + .sl { margin-top: 14px; }
+
+/* Sliders */
+.sl { display: grid; gap: 9px; }
+.sl-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 12.5px; color: var(--muted); font-weight: 600; }
+.sl-out { min-height: 34px; padding: 0 10px; border-radius: 8px; font: 700 16px var(--heading); color: var(--text); background: rgba(255, 255, 255, .06); border: 1px solid transparent; letter-spacing: -.3px; }
+.sl-out:hover { border-color: var(--border-strong); }
+.sl.is-null .sl-out { color: var(--subtle); font-size: 13px; font-weight: 600; }
+.sl.is-null input[type=range] { opacity: .45; }
+.sl-type { width: 150px; min-height: 36px; padding: 5px 10px; font: 700 15px var(--heading); text-align: right; }
+.sl input[type=range] { height: 8px; }
+.sl-presets { display: flex; gap: 6px; flex-wrap: wrap; }
+.sl-presets .chip-btn { min-height: 34px; padding: 0 11px; font-size: 12px; }
+.sl-hint { color: var(--subtle); font-size: 11.5px; }
+
+/* Semestre do membro */
+.bars { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; padding: 18px 20px 10px; height: 250px; }
+.bar { display: grid; grid-template-rows: auto 1fr auto auto; justify-items: center; gap: 6px; padding: 6px 0; border-radius: 12px; min-height: 0; }
+.bar:hover { background: rgba(255, 255, 255, .05); }
+.bar-val { font: 700 14px var(--heading); color: var(--sc); }
+.bar-track { position: relative; width: 58%; max-width: 54px; height: 100%; border-radius: 10px; background: rgba(255, 255, 255, .05); display: flex; align-items: flex-end; overflow: hidden; }
+.bar-track span { width: 100%; border-radius: 10px; background: linear-gradient(to top, color-mix(in srgb, var(--sc) 55%, transparent), var(--sc)); transition: height .3s; }
+.bar.est .bar-track span { background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--sc) 70%, transparent) 0 6px, color-mix(in srgb, var(--sc) 40%, transparent) 6px 12px); }
+.bar-lbl { font: 600 12px var(--body); text-transform: capitalize; }
+.bar small { font: 500 9.5px var(--mono); color: var(--subtle); text-transform: uppercase; letter-spacing: .8px; }
+.sem-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.sem-table th { text-align: left; font: 500 9.5px var(--mono); letter-spacing: 1.1px; text-transform: uppercase; color: var(--subtle); padding: 10px 20px 8px; border-top: 1px solid var(--border); }
+.sem-table td { padding: 9px 20px; border-top: 1px solid color-mix(in srgb, var(--border) 55%, transparent); text-transform: none; }
+.sem-table td:first-child { text-transform: capitalize; font-weight: 600; }
+.sem-table em { font-style: normal; color: var(--subtle); display: block; font-size: 11px; }
+.sem-table td:last-child em { display: inline; }
+.sem-table tr.dim td { color: var(--subtle); }
+.sem-table tfoot td { font-weight: 700; background: rgba(255, 255, 255, .04); border-top: 1px solid var(--border); }
+.sc-chip { display: inline-block; min-width: 50px; text-align: center; padding: 3px 8px; border-radius: 7px; font: 700 12.5px var(--heading); color: var(--sc); background: color-mix(in srgb, var(--sc) 15%, transparent); }
+
+/* Equipe */
+.member-list { padding: 6px; }
+.member-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px; min-height: 66px; }
+.member-row + .member-row { border-top: 1px solid color-mix(in srgb, var(--border) 60%, transparent); }
+.member-row .who { flex: 1; min-height: 44px; border-radius: 10px; }
+.member-row .who small { white-space: normal; }
+.removed { margin-top: 14px; padding: 6px; }
+.removed > summary { cursor: pointer; padding: 12px 14px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.hero-empty { padding: 48px 24px; text-align: center; display: grid; justify-items: center; gap: 12px; }
+.hero-empty > svg { width: 38px; height: 38px; color: var(--orange); }
+.hero-empty p { max-width: 460px; color: var(--muted); line-height: 1.7; margin-bottom: 8px; }
+
+/* Minha base */
+.settings-grid .wide { grid-column: 1 / -1; }
+.settings-grid .row.wrap { gap: 8px; }
+.fields.one { grid-template-columns: 1fr 1fr; margin-bottom: 16px; }
+.key-form { display: flex; gap: 10px; align-items: flex-end; margin-top: 16px; }
+.key-form .field { flex: 1; }
+.rules { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+.rules th { text-align: left; font: 500 9.5px var(--mono); letter-spacing: 1.1px; text-transform: uppercase; color: var(--subtle); padding: 8px 10px; }
+.rules td { padding: 9px 10px; border-top: 1px solid var(--border); }
+.rules td:last-child { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.rule-notes { margin: 0; padding-left: 18px; color: var(--muted); font-size: 12.5px; line-height: 1.9; }
+.theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+/* Diálogos */
+dialog.wide { width: min(760px, calc(100vw - 30px)); }
+.goal-box { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border); display: grid; gap: 18px; }
+.semgoal { border: 0; padding: 0; margin: 0; display: grid; gap: 16px; }
+.semgoal .sl.total { padding: 14px; border-radius: 12px; background: color-mix(in srgb, var(--orange) 10%, transparent); border: 1px solid color-mix(in srgb, var(--orange) 28%, transparent); }
+.month-sliders { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 22px; }
+.sl.mini .sl-head span { text-transform: capitalize; }
+.sl.mini .sl-head b { font: 700 14px var(--heading); color: var(--text); }
+.sl.total .sl-head b { font: 700 18px var(--heading); color: var(--accent-text-soft); }
+
+/* Responsivo */
+@media (max-width: 1180px) {
+  .rank-head, .rank-row { grid-template-columns: 30px minmax(150px, 1.5fr) 104px repeat(5, minmax(48px, .5fr)) minmax(120px, .9fr); gap: 8px; }
+  .member-grid { grid-template-columns: minmax(260px, .8fr) minmax(0, 1.4fr); }
+  .score-hero strong { font-size: 50px; }
+}
+@media (max-width: 1050px) {
+  .hide-sm { display: none !important; }
+  .rank-head, .rank-row { grid-template-columns: 30px minmax(150px, 1.5fr) 120px minmax(150px, 1fr); }
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  .member-grid { grid-template-columns: 1fr; }
+  .score-panel { position: static; }
+  .page-title { flex-wrap: wrap; }
+}
+@media (max-width: 800px) {
+  .heat-head, .heat-row { grid-template-columns: 24px minmax(110px, 1.3fr) repeat(6, minmax(34px, 1fr)) minmax(52px, 1fr); gap: 5px; padding-left: 8px; padding-right: 8px; }
+  .heat-row .who small { display: none; }
+  .heat-row .avatar { display: none; }
+  .cell { height: 34px; font-size: 11px; border-radius: 8px; }
+  .cell.total b { font-size: 14px; }
+  .settings-grid { grid-template-columns: 1fr; }
+  .entry-group.two { grid-template-columns: 1fr; }
+  .month-sliders { grid-template-columns: 1fr; }
+}
+@media (max-width: 650px) {
+  .hide-xs { display: none !important; }
+  .rank-head, .rank-row { grid-template-columns: 26px minmax(0, 1fr) 96px; }
+  .kpis { gap: 8px; }
+  .kpi { padding: 12px 14px; }
+  .kpi strong { font-size: 21px; }
+  .kpi.lead strong { font-size: 26px; }
+  .period { justify-content: flex-start; width: 100%; }
+  .stepper b { min-width: 0; flex: 1; font-size: 12px; }
+  .stepper { flex: 1; }
+  .member-head .spacer { display: none; }
+  .bars { height: 200px; gap: 4px; padding: 14px 10px 8px; }
+  .sem-table th, .sem-table td { padding-left: 12px; padding-right: 12px; }
+  .fields.one { grid-template-columns: 1fr; }
+  .key-form { flex-direction: column; align-items: stretch; }
+  .theme-grid { grid-template-columns: 1fr; }
+  .heat-head { font-size: 8.5px; letter-spacing: .4px; }
+  .member-row { flex-wrap: wrap; }
+  .nav-item .nav-count { display: none !important; }
+  .heat-head, .heat-row { grid-template-columns: minmax(64px, 1.3fr) repeat(6, minmax(0, 1fr)) minmax(40px, 1.1fr); gap: 3px; padding-left: 6px; padding-right: 6px; }
+  .heat-head .hpos, .heat-row .pos { display: none; }
+  .heat-row .who b { font-size: 12px; }
+  .cell { font-size: 10px; height: 32px; border-radius: 7px; }
+  .cell em { font-size: 8px; }
+  .cell.total b { font-size: 13px; }
+}
+
+.bar-track::after { content: ''; position: absolute; left: -6px; right: -6px; bottom: 50%; border-top: 1px dashed rgba(255, 255, 255, .4); pointer-events: none; }
+.settings-grid .btn.primary svg { color: inherit; }
+</style></head><body><div class="atmosphere" aria-hidden="true"><i class="orb orb-orange"></i><i class="orb orb-blue"></i><i class="orb orb-pink"></i><i class="orb orb-amber"></i><i class="orb orb-teal"></i><i class="orb orb-cobalt"></i><i class="orb orb-ember"></i><i class="orb orb-deep"></i></div><div class="floor" aria-hidden="true"></div><div id="app"></div><dialog id="dialog"></dialog><div id="toast" class="toast" role="status" aria-live="polite"></div><noscript>Ative o JavaScript para abrir o MEREO do time.</noscript><script>
+const RICO_LOGO_VIEWBOX='505.3 428.8 2944.9 1283.9';
+const RICO_LOGO_PATH='M 1321.2,429.5 c -21.3,1.7 -38.9,6.9 -56.5,16.9 c -19.1,10.9 -37.3,27.6 -47.2,42.8 c -3.7,5.9 -6.8,11.1 -6.8,11.5 c 0,0.4 -1.5,4 -3.3,7.9 c -6.8,14.4 -8.9,26.1 -9.1,50.8 c -0.1,31.9 3.6,47.1 18.1,72 c 13.1,22.4 31.2,38.3 60.5,53.1 c 10.7,5.3 20.9,8 44.1,11.5 c 18.7,2.8 40.9,1.1 65.5,-5.2 c 22.9,-5.7 57.7,-30.4 67.9,-48 c 1.9,-3.3 4.8,-7.7 6.4,-9.7 c 5.2,-6.1 12.4,-22.3 15.5,-34.3 c 4.3,-16.5 4.3,-52.9 0,-69.3 c -4.9,-18.7 -12.8,-33.5 -28,-52.4 c -7.7,-9.6 -25.1,-24.3 -34.1,-28.9 c -3.1,-1.6 -7.6,-4 -10.1,-5.3 c -20.4,-11.1 -49.9,-15.7 -82.8,-13.2 z M 2036.7,773.3 c -17.2,1.2 -41.5,4.7 -50,7.2 c -3.3,1.1 -8.7,2.3 -12,2.8 c -3.3,0.5 -7.6,1.9 -9.6,2.8 c -2,1.1 -5.3,1.9 -7.3,1.9 c -2.1,0 -6,1.2 -8.8,2.7 c -2.7,1.5 -6.1,2.7 -7.6,2.7 c -4.1,0 -27.9,6.4 -36.7,9.9 c -11.7,4.7 -27.5,12.1 -35.6,16.9 c -3.9,2.3 -15.2,8.4 -25.2,13.5 c -9.9,5.1 -21.5,12 -25.7,15.5 c -4.3,3.5 -8.8,6.8 -10,7.6 c -9.3,5.9 -21.1,14.5 -29.5,21.9 c -5.5,4.9 -12.7,10.9 -16,13.5 c -8.8,6.7 -32.7,31.9 -47.9,50.3 c -1.9,2.4 -5.2,6.3 -7.2,8.7 c -8.3,9.7 -14.4,18.4 -21.7,31.1 c -4.1,7.3 -8.3,13.9 -9.2,14.7 c -2.1,1.9 -11.7,16.5 -15.7,24.1 c -4,7.6 -14.3,31.9 -14.3,33.7 c 0,0.7 -2,5.1 -4.4,9.7 c -2.4,4.7 -6.3,13.3 -8.7,19.3 c -4.4,11.2 -13.6,42 -13.6,45.6 c 0,1.1 -0.8,4.9 -1.9,8.7 c -2.9,10.4 -7.2,34.4 -9.1,51.5 c -2.1,19.7 -2.1,89.9 0,112.7 c 1.7,17.2 5.5,41.2 8.4,52.7 c 0.9,3.3 2,8.7 2.5,12 c 2.1,12.9 12.3,47.3 14.8,50 c 0.7,0.7 1.2,2 1.2,3.1 c 0,1.1 2.3,6.8 5.1,12.8 c 5.1,10.7 6.5,14.4 10.7,26.1 c 3.3,9.6 12.9,27.9 19.3,37.3 c 3.3,4.8 8.9,13.5 12.4,19.3 c 11.2,18.9 26.4,38.1 47.1,59.3 c 6.1,6.3 12,12.7 13.1,14.4 c 2.5,3.7 44.8,37.7 52,41.9 c 2.8,1.5 5.7,3.5 6.4,4.4 c 3.2,3.6 24.9,16.8 34.7,21.2 c 5.9,2.5 18.3,8.5 27.6,13.3 c 25.1,12.9 40.1,18.4 66.1,24.1 c 8.4,1.9 16.9,3.3 19.1,3.3 c 2.1,0 6.1,1.2 8.8,2.7 c 2.8,1.5 7.5,2.7 10.5,2.7 c 3.1,0 7.6,0.8 10,1.9 c 2.5,1.1 9.1,2.3 14.5,2.8 c 5.5,0.5 13.9,1.9 18.7,3.1 c 6.9,1.6 17.9,2 54,2.1 c 41.6,0.1 46.8,-0.1 63.3,-2.9 c 9.9,-1.7 20.8,-4 24.1,-5.1 c 3.5,-0.9 8.3,-1.9 10.7,-1.9 c 2.5,0 6.5,-1.2 8.9,-2.7 c 2.4,-1.5 6.3,-2.7 8.7,-2.7 c 13.3,0 54.4,-13.7 73.5,-24.7 c 5.9,-3.3 17.9,-9.5 26.7,-13.9 c 15.5,-7.5 44.1,-25.7 56.8,-36 c 3.3,-2.7 14.1,-11.1 24.1,-18.5 c 10,-7.3 20.4,-16.3 23.1,-19.6 c 2.8,-3.3 10.5,-10.5 17.3,-15.9 c 6.8,-5.5 16,-14.3 20.4,-19.7 c 4.4,-5.3 11.5,-12.7 15.7,-16.3 c 4.1,-3.7 13.2,-13.3 20.1,-21.3 c 6.9,-8.1 17.3,-20.3 23.3,-26.8 c 5.9,-6.7 15.7,-18.8 22,-27.1 c 6.3,-8.3 12.3,-15.5 13.5,-15.9 c 2.4,-0.9 7.2,3.9 17.3,17.6 c 3.3,4.4 8.5,10.7 11.5,14 c 3.1,3.5 8.3,9.7 11.5,14 c 3.3,4.4 11.1,13.5 17.3,20.1 c 6.3,6.7 17.3,18.8 24.5,26.9 c 7.2,8.3 19.2,20.5 26.7,27.2 c 7.3,6.8 18.3,16.9 24.1,22.5 c 13.3,12.5 40.8,34.4 54.1,43.2 c 5.5,3.7 12.7,8.8 16,11.5 c 6.7,5.3 19.6,13.1 26.7,15.9 c 2.5,1.1 7.5,3.5 10.8,5.5 c 3.3,2 7.6,4 9.3,4.5 c 1.7,0.5 4.1,1.7 5.2,2.7 c 4,3.5 32.9,16.4 45.3,20.4 c 16.1,5.1 35.7,9.6 42.1,9.6 c 2.8,0 6,0.9 7.3,2.1 c 1.3,1.2 6.1,2.5 10.9,3.2 c 4.7,0.5 9.7,1.6 11.1,2.4 c 1.3,0.7 7.1,1.7 12.5,2.3 c 5.5,0.5 13.9,1.9 18.7,3.1 c 12.9,3.1 103.5,3.1 116,0 c 4.8,-1.2 12.9,-2.5 18,-3.1 c 5.2,-0.5 11.6,-1.9 14.5,-2.8 c 2.8,-1.1 7.1,-1.9 9.3,-1.9 c 2.3,0 6.8,-1.2 10,-2.7 c 3.2,-1.5 7.5,-2.7 9.5,-2.7 c 14.3,0 62.9,-14.9 78.7,-24 c 1.1,-0.7 13.5,-6.8 27.3,-13.9 c 14,-6.9 29.2,-15.5 34,-18.8 c 4.8,-3.3 12,-8.3 16,-10.9 c 36.5,-24 94.3,-82.1 112.3,-112.9 c 3.1,-5.2 8.7,-13.7 12.4,-18.9 c 12.7,-17.6 40.3,-76.9 46,-98.9 c 3.1,-11.9 6.3,-22.7 8.3,-28.3 c 12,-34 19.2,-105.2 15.7,-156.5 c -1.9,-29.9 -8.4,-74 -11.9,-80.5 c -0.7,-1.2 -1.6,-4.8 -2.1,-7.9 c -0.4,-2.9 -1.7,-6.5 -2.7,-8 c -1.1,-1.3 -2,-3.6 -2,-5.1 c 0,-4.5 -10.5,-35.1 -20.3,-58.7 c -4.7,-11.3 -20.4,-42.4 -25.2,-49.5 c -2.5,-3.7 -7.7,-11.5 -11.7,-17.3 c -3.9,-5.7 -7.6,-11.7 -8.1,-13.3 c -1.3,-3.5 -15.7,-22.5 -21.6,-28.5 c -2.5,-2.5 -7.9,-8.9 -12,-14 c -14.3,-18.1 -56.1,-55.9 -78.4,-70.7 c -3.2,-2.3 -9.9,-7.1 -14.8,-10.7 c -4.9,-3.7 -13.1,-8.7 -18.1,-11.2 c -4.9,-2.4 -10.8,-5.3 -13.1,-6.5 c -2.1,-1.2 -6.9,-3.9 -10.7,-5.9 c -19.3,-10.5 -34.4,-17.9 -45.2,-22 c -12.1,-4.7 -35.1,-11.1 -40.1,-11.1 c -1.6,0 -5.1,-1.2 -8,-2.7 c -2.9,-1.5 -6.9,-2.7 -8.9,-2.7 c -2,0 -5.6,-0.8 -8,-1.9 c -5.5,-2.4 -25.3,-6.8 -43.7,-9.6 c -47.9,-7.3 -107.5,-5.2 -151.3,5.5 c -5.1,1.2 -10.5,2.9 -12,3.7 c -1.5,0.8 -5.6,1.9 -9.2,2.4 c -3.6,0.7 -7.5,2 -8.7,2.9 c -1.2,1.1 -4.9,2.3 -8.5,2.7 c -18.5,2.5 -50.5,15.9 -78.3,32.9 c -1.1,0.7 -6.5,3.5 -12,6.3 c -9.7,4.8 -41.9,25.7 -47.3,30.7 c -1.5,1.3 -6.8,5.5 -12,9.1 c -13.6,9.5 -33.7,26.1 -40.7,33.3 c -3.3,3.5 -10.1,9.6 -15.3,13.7 c -10.5,8.5 -55.3,53.2 -55.3,55.2 c 0,0.8 -6.5,8.1 -14.7,16.3 c -8,8.1 -16,16.7 -17.6,18.9 c -2.9,3.9 -13.9,16.8 -31.9,37.6 c -4.7,5.5 -11.3,13.7 -14.9,18.5 c -3.5,4.9 -10.9,14.3 -16.7,20.9 c -14.9,17.6 -20.3,24.4 -27.3,34.8 c -3.5,5.1 -11.1,14.7 -16.9,21.3 c -5.9,6.5 -10.7,12.5 -10.7,13.1 c 0,1.3 -14,19.6 -21.5,28.1 c -2.5,3.1 -6.1,7.6 -7.9,10.1 c -1.7,2.5 -6.8,9.2 -11.3,14.7 c -4.5,5.5 -11.3,14.5 -15.3,20 c -3.9,5.5 -12.7,16.5 -19.3,24.7 c -14.3,17.3 -19.3,24 -19.3,25.7 c 0,0.8 -4.7,6.7 -10.4,13.2 c -14,16 -21.7,25.3 -26,31.7 c -2,3.1 -6.8,8.8 -10.7,12.7 c -3.9,4 -10.7,11.9 -14.9,17.3 c -13.9,17.5 -59.9,62.4 -76.9,75.1 c -8.5,6.4 -17.2,13.2 -19.3,15.3 c -2,2 -7.1,5.1 -11.1,6.8 c -4,1.7 -12.1,5.5 -18,8.1 c -16.7,7.9 -36.3,15.3 -43.3,16.7 c -2.5,0.5 -6.8,1.9 -9.3,3.1 c -6.9,3.2 -76,3.2 -82,0 c -2.3,-1.2 -6.5,-2.5 -9.3,-3.1 c -2.9,-0.4 -7.5,-1.6 -10,-2.7 c -21.5,-8.1 -27.5,-10.5 -37.3,-14.9 c -21.1,-9.6 -25.1,-12.3 -45.5,-30.8 c -25.3,-22.9 -25.7,-23.5 -35.2,-38.9 c -4.3,-6.9 -10,-15.9 -12.7,-20 c -10.7,-15.7 -16.8,-30.7 -22.1,-52.9 c -5.5,-23.3 -7.1,-33.3 -8.8,-53.5 c -1.9,-22.4 0,-52.7 4.4,-74.9 c 1.6,-7.7 3.3,-16.4 3.9,-19.3 c 1.6,-8.1 6.5,-24.3 8.8,-28.3 c 0.9,-2.1 1.9,-4.7 2,-5.7 c 0,-1.1 1.7,-4.5 3.6,-7.6 c 4.8,-7.5 15.9,-25.3 23.5,-37.9 c 4,-6.5 9.9,-13.5 17.1,-20.1 c 6.1,-5.6 15.3,-14.1 20.4,-19.1 c 7.9,-7.3 12.9,-10.5 31.3,-19.7 c 25.1,-12.4 34.9,-16.9 37.5,-16.9 c 1.1,0 3.1,-0.9 4.4,-2 c 1.5,-1.1 4.3,-2 6.3,-2 c 1.9,0 7.3,-1.3 12,-2.8 c 7.9,-2.7 11.5,-2.8 43.9,-2.8 c 32.4,0 36,0.1 43.9,2.8 c 4.7,1.5 9.7,2.8 11.3,2.8 c 1.6,0 5.2,1.2 8.1,2.7 c 2.9,1.5 6,2.7 7.1,2.7 c 1.1,0 3.5,0.8 5.3,1.9 c 3.9,2.1 13.1,6.3 37.9,17.6 c 8.7,3.9 17.3,8.3 19.3,9.9 c 6.4,4.9 33.7,25.7 41.6,31.7 c 4.1,3.2 8.9,7.5 10.8,9.5 c 5.7,6.5 8.8,6.5 14.4,0 c 2.7,-3.2 9.7,-10.8 15.6,-17.1 c 6,-6.4 14.1,-16 18.3,-21.5 c 4.1,-5.5 11.2,-13.9 15.7,-18.7 c 4.4,-4.8 10.9,-12.3 14.4,-16.5 c 3.5,-4.4 9.1,-10.9 12.4,-14.7 c 3.3,-3.7 10.5,-12.3 15.9,-18.8 c 5.5,-6.7 12.9,-15.3 16.7,-19.3 c 3.9,-4 10.9,-12.3 15.9,-18.3 c 10.7,-13.2 11.2,-16.8 4.1,-24.3 c -2.5,-2.7 -7.9,-8.4 -11.9,-12.9 c -4.1,-4.4 -12.9,-12.5 -19.6,-18 c -6.7,-5.5 -16.8,-13.6 -22.4,-18.3 c -13.7,-11.3 -39.9,-29.1 -49.2,-33.2 c -4.1,-2 -9.1,-4.5 -10.8,-6 c -1.7,-1.3 -4,-2.4 -4.9,-2.4 c -0.9,0 -5.3,-2.4 -9.9,-5.5 c -15.3,-10.1 -48.7,-23.5 -64.7,-25.7 c -3.6,-0.5 -7.9,-1.9 -9.5,-2.8 c -1.6,-0.9 -5.2,-2.3 -8,-2.8 c -2.8,-0.4 -6.7,-1.6 -8.5,-2.5 c -1.9,-0.9 -5.7,-2 -8.7,-2.5 c -2.9,-0.5 -8,-1.9 -11.3,-2.8 c -22.7,-7.1 -72.1,-10.1 -115.3,-7.3 z m 991.2,233.3 c 4.7,1.5 9.9,2.7 11.6,2.7 c 1.7,0 5.5,1.2 8.1,2.7 c 2.8,1.5 6.3,2.7 7.7,2.7 c 1.5,0 3.9,0.8 5.3,1.9 c 1.5,0.9 4.1,2.3 6,2.8 c 1.9,0.5 10.5,4.4 19.3,8.7 c 8.8,4.1 19.3,9.2 23.5,11.1 c 13.6,6.4 48.7,41.1 60.4,59.7 c 4.4,6.9 8.8,13.7 10,15.2 c 1.2,1.5 3.2,4.4 4.3,6.7 c 4,7.5 15.9,35.1 15.9,36.9 c 0,1.1 0.7,2.5 1.5,3.3 c 1.3,1.3 3.9,10.8 7.2,27.7 c 3.5,17.5 6.4,51.3 5.5,64 c -2.1,30.1 -7.7,63.6 -12.1,73.3 c -2,4.1 -3.3,7.5 -10.7,25.3 c -5.2,12.8 -7.2,16.3 -22.3,38.8 c -8.9,13.3 -14.1,19.7 -22,26.7 c -5.7,4.9 -13.7,12.1 -17.7,16 c -12.7,12 -19.7,16.1 -47.3,28.5 c -2.9,1.2 -10.7,4.3 -17.3,6.7 c -6.5,2.3 -13.9,5.1 -16.1,6 c -2.3,0.9 -7.1,2.3 -10.7,2.7 c -3.6,0.5 -8.3,2 -10.5,3.1 c -3.3,1.7 -10.3,2.1 -44,2.1 c -30,0 -40.9,-0.4 -44,-1.7 c -2.1,-1.1 -7.6,-2.5 -12,-3.5 c -4.4,-0.9 -9.7,-2.4 -12,-3.1 c -2.1,-0.8 -9.3,-3.3 -16,-5.7 c -6.5,-2.3 -16.8,-6.1 -22.7,-8.5 c -5.9,-2.4 -14.3,-5.7 -18.7,-7.5 c -4.4,-1.7 -14.3,-7.7 -22,-13.2 c -20.3,-14.5 -24.8,-17.7 -29.9,-20.7 c -2.5,-1.5 -9.9,-7.6 -16.4,-13.5 c -6.4,-6 -15.3,-13.9 -19.7,-17.6 c -4.4,-3.6 -14.5,-13.6 -22.7,-22.3 c -8,-8.5 -20.1,-21.3 -26.9,-28.4 c -6.7,-7.2 -15.2,-17.1 -18.8,-22.1 c -3.7,-5.1 -11.5,-14 -17.3,-20 c -5.9,-5.9 -11.6,-12.7 -12.8,-15.1 c -1.1,-2.3 -5.7,-8.7 -10.1,-14.1 c -4.4,-5.5 -8,-10.5 -8,-11.2 c 0,-0.7 2.7,-4.8 6,-8.9 c 3.3,-4.3 8.3,-11.5 10.9,-16 c 4.9,-8.1 12.1,-18.4 15.5,-22.1 c 7.3,-7.9 17.6,-20.9 21.2,-26.9 c 7.5,-12.1 9.7,-15.2 14.9,-19.7 c 2.7,-2.4 11.6,-12.3 19.7,-21.9 c 20.3,-24 53.3,-56.1 71.7,-69.9 c 8.4,-6.3 17.1,-13.1 19.2,-15.2 c 5.5,-5.3 13.2,-10.4 24.8,-16 c 21.3,-10.3 36.1,-17.1 36.9,-17.1 c 0.4,0 3.2,-1.1 6.3,-2.5 c 10.3,-4.7 20.1,-8.1 23.5,-8.1 c 1.9,-0.1 5.7,-1.1 8.7,-2.1 c 7.9,-3.1 28.7,-4.4 59.3,-3.7 c 22.1,0.5 28.9,1.2 35.9,3.2 z M 896,782.8 c -12.8,0.7 -26.9,2 -31.3,3.1 c -4.4,1.1 -11.7,2.3 -16.4,2.7 c -4.7,0.4 -9.7,1.7 -11.3,2.8 c -1.6,1.1 -5.6,2 -8.9,2 c -6,0.1 -30.7,4.9 -43.6,8.5 c -13.3,3.7 -34.4,12.3 -41.7,16.7 c -1.1,0.7 -11.9,6.1 -24,12 c -19.6,9.6 -33.5,17.7 -46,27.2 c -15.5,11.5 -40.7,33.2 -47.1,40.5 c -4.1,4.9 -13.3,14.9 -20.3,22.3 c -7.9,8.3 -15.1,17.6 -18.9,24.3 c -3.5,6 -9.5,15.2 -13.5,20.4 c -3.9,5.2 -10,15.3 -13.6,22.5 c -3.5,7.1 -8.1,16.5 -10.3,20.9 c -3.9,7.6 -10.8,26 -17.9,47.3 c -3.5,10 -6.1,20.3 -8.8,32.7 c -0.7,3.6 -2.1,8.1 -3.1,10 c -0.9,1.9 -2,6 -2.5,9.3 c -0.4,3.3 -1.7,9.9 -2.8,14.7 c -3.2,14.7 -6,38.3 -7.3,62.7 c -0.8,13.2 -1.3,127.1 -1.3,262.3 c 0,237.3 0,239.1 2.7,241.7 c 1.5,1.5 3.7,2.7 5.1,2.7 c 1.2,0 51.5,0 111.6,0 c 72.9,0 109.7,-0.5 110.7,-1.5 c 0.9,-0.9 1.6,-81.3 2,-246.9 c 0.8,-244.5 0.8,-245.7 3.7,-264.9 c 1.6,-10.7 3.5,-20.8 4.1,-22.7 c 0.8,-1.9 1.7,-5.5 2.1,-8 c 0.9,-5.5 2.1,-8.4 11.5,-30 c 7.5,-17.2 14.5,-29.1 25.5,-42.3 c 8.4,-10.3 10.5,-12.3 22.8,-22 c 5.3,-4.1 10,-8.3 10.5,-9.2 c 1.1,-1.6 12,-7.1 19.7,-9.7 c 2.5,-0.9 10.1,-3.6 16.7,-6.1 c 11.2,-4.1 22.7,-7.6 36.7,-11.2 c 3.3,-0.9 17.7,-2.8 32,-4.3 c 24.9,-2.5 27.2,-2.7 54,-0.7 c 15.5,1.2 32.3,3.1 37.3,4.1 c 5.2,1.1 12.7,2.5 16.7,3.3 c 4,0.7 11.9,2.7 17.3,4.1 c 5.5,1.6 12.7,2.9 16,3.1 c 5.1,0.1 6.1,-0.4 7.6,-3.2 c 1.3,-2.7 1.7,-25.2 1.5,-111.7 l -0.4,-108.5 l -2.9,-2.3 c -3.2,-2.7 -28.7,-8.1 -37.7,-8.1 c -3.3,0 -7.7,-0.9 -10,-2.1 c -2.1,-1.1 -8.1,-2.4 -13.3,-2.8 c -5.1,-0.3 -12,-1.5 -15.3,-2.4 c -3.3,-1.1 -18.1,-2.5 -32.9,-3.2 c -29.5,-1.6 -30.1,-1.6 -64.4,0 z M 1227.1,794.4 c -1.6,0.3 -3.5,1.2 -4.3,2.1 c -2.1,2.5 -2.1,891.1 0,893.6 c 1.3,1.6 20.8,1.9 113.1,1.9 c 67.9,0 112.3,-0.5 113.5,-1.3 c 1.7,-1.1 2,-52.4 2.4,-446.4 c 0.3,-355.6 0,-445.6 -1.3,-447.3 c -1.6,-2.1 -9.5,-2.4 -111.1,-2.7 c -60.1,-0.1 -110.7,-0.1 -112.3,0.1 z';
+
+// Motor MEREO — mesmas regras do Rico Pipeline (core.mjs → monthData), agora por membro do time.
+// Pesos, curvas e referências idênticos: Captação 40% · Cesta 20% · Crossell 10% · Índice comercial 10% · NPS 20%.
+const MereoCore = (() => {
+  const COMPONENTS = [
+    { id: 'cap', name: 'Captação', short: 'Capt.', weight: .4, curve: [20, 60, 100, 140, 180], unit: 'R$' },
+    { id: 'cesta', name: 'Cesta investimento', short: 'Cesta', weight: .2, curve: [60, 80, 100, 120, 140], unit: 'R$' },
+    { id: 'cross', name: 'Crossell', short: 'Cross', weight: .1, curve: [60, 80, 100, 120, 140], unit: 'pts' },
+    { id: 'ic', name: 'Índice comercial', short: 'IC', weight: .1, curve: [80, 90, 100, 110, 120], unit: '%' },
+    { id: 'nps', name: 'NPS', short: 'NPS', weight: .2, curve: [60, 80, 100, 120, 140], unit: '' }
+  ];
+  // Metas padrão do pipeline: captação R$ 800 mil/mês, cesta R$ 2,2 mi, crossell 25 pts, IC 83%, NPS 41,3.
+  const DEFAULT_GOALS = { cap: 800000, cesta: 2200000, cross: 25, ic: 83, nps: 41.3 };
+  const FLOW = ['cap', 'cesta', 'cross'];
+  const INPUTS = ['cap', 'prev', 'stvm', 'aloc', 'cards', 'seg', 'con', 'ic', 'nps'];
+
+  const num = v => (v == null || v === '' || !isFinite(+v)) ? 0 : +v;
+  const pct = (v, m) => m > 0 ? v / m * 100 : 0;
+  // Curva de 5 pontos: até curve[0] = 1; a partir de curve[4] = 5; linear entre os pontos. 100% da meta = 3.
+  function score(p, curve) {
+    if (p <= curve[0]) return 1;
+    if (p >= curve[4]) return 5;
+    for (let i = 0; i < 4; i++) if (p <= curve[i + 1]) return i + 1 + (p - curve[i]) / (curve[i + 1] - curve[i]);
+    return 1;
+  }
+  const hasData = e => !!e && !e.cleared && INPUTS.some(k => e[k] != null && e[k] !== '');
+
+  // Valores MEREO de um lançamento mensal.
+  // Previdência/STVM dentro da captação pesam 1,25× (igual ao pipeline). A cesta soma alocação + previdência ponderada.
+  // Crossell: cartão = 1 ponto, consórcio = 1 ponto a cada R$ 10 mil, seguro = 1 ponto a cada R$ 1 mil.
+  function values(e) {
+    e = e || {};
+    const cap = num(e.cap), boosted = Math.min(num(e.prev) + num(e.stvm), cap);
+    const prevW = Math.min(num(e.prev), cap) * 1.25;
+    return {
+      cap: cap + boosted * .25,
+      cesta: num(e.aloc) + prevW,
+      cross: num(e.cards) + num(e.con) / 10000 + num(e.seg) / 1000,
+      ic: e.ic == null || e.ic === '' ? null : +e.ic,
+      nps: e.nps == null || e.nps === '' ? null : +e.nps
+    };
+  }
+
+  function build(vals, goals) {
+    const components = COMPONENTS.map(c => {
+      const assumed = vals[c.id] == null;
+      const value = assumed ? goals[c.id] : vals[c.id];
+      const p = pct(value, goals[c.id]);
+      return { ...c, value, goal: goals[c.id], pct: p, score: score(p, c.curve), assumed };
+    });
+    return { components, score: components.reduce((s, c) => s + c.score * c.weight, 0) };
+  }
+
+  const monthKey = (id, month) => `${id}|${month}`;
+  function goalsFor(member, month) {
+    const base = { ...DEFAULT_GOALS, ...(member?.goals || {}) };
+    const o = member?.monthGoals?.[month] || {};
+    for (const k of FLOW) if (o[k] != null && o[k] !== '') base[k] = +o[k];
+    return base;
+  }
+  function monthResult(state, member, month) {
+    const entry = state.entries?.[monthKey(member.id, month)];
+    const filled = hasData(entry);
+    const goals = goalsFor(member, month);
+    const r = build(values(filled ? entry : {}), goals);
+    return { ...r, month, goals, entry: filled ? entry : null, filled, status: filled ? (entry.status || 'est') : 'none' };
+  }
+
+  // Semestre: meses 1–6 (1º sem.) ou 7–12 (2º sem.).
+  function semesterOf(month) { const y = +month.slice(0, 4), m = +month.slice(5, 7); return { year: y, half: m <= 6 ? 1 : 2 }; }
+  function semesterMonths(sem) { const s = sem.half === 1 ? 1 : 7; return Array.from({ length: 6 }, (_, i) => `${sem.year}-${String(s + i).padStart(2, '0')}`); }
+  function shiftSemester(sem, d) { let i = sem.year * 2 + sem.half - 1 + d; return { year: Math.floor(i / 2), half: i % 2 + 1 }; }
+
+  // Visão semestral. Fluxos (captação, cesta, crossell) somam no semestre contra a soma das metas mensais;
+  // IC e NPS usam a média dos meses lançados (sem lançamento = referência da meta, como no pipeline).
+  // mode 'proj': meses sem lançamento recebem a média dos meses lançados (projeção de fechamento).
+  // mode 'ytd' : compara só os meses lançados com as metas desses mesmos meses (ritmo até agora).
+  function semesterResult(state, member, sem, mode = 'proj') {
+    const months = semesterMonths(sem).map(m => monthResult(state, member, m));
+    const filled = months.filter(m => m.filled);
+    const vals = months.map(m => m.filled ? values(m.entry) : null);
+    const filledVals = vals.filter(Boolean);
+    const avg = k => filledVals.length ? filledVals.reduce((s, v) => s + v[k], 0) / filledVals.length : 0;
+    const totals = {}, goals = {};
+    for (const k of FLOW) {
+      totals[k] = 0; goals[k] = 0;
+      months.forEach((m, i) => {
+        if (mode === 'ytd' && !m.filled) return;
+        totals[k] += vals[i] ? vals[i][k] : (mode === 'proj' ? avg(k) : 0);
+        goals[k] += m.goals[k];
+      });
+    }
+    for (const k of ['ic', 'nps']) {
+      const list = filledVals.map(v => v[k]).filter(v => v != null);
+      totals[k] = list.length ? list.reduce((a, b) => a + b, 0) / list.length : null;
+      goals[k] = months.reduce((s, m) => s + m.goals[k], 0) / months.length;
+    }
+    const r = build(totals, goals);
+    return { ...r, months, totals, goals, filledCount: filled.length, realCount: filled.filter(m => m.status === 'real').length, mode, sem };
+  }
+
+  // Estado e mesclagem (cada registro com updatedAt; exclusão é marcação, para sincronizar entre aparelhos).
+  function emptyState() { return { version: 1, members: {}, entries: {}, settings: { team: 'Meu time', leader: '', updatedAt: 0 } }; }
+  function mergeMaps(a = {}, b = {}) {
+    const out = { ...a };
+    for (const [k, v] of Object.entries(b)) if (!out[k] || (v?.updatedAt || 0) > (out[k]?.updatedAt || 0)) out[k] = v;
+    return out;
+  }
+  function merge(a, b) {
+    a = a || emptyState(); b = b || emptyState();
+    return {
+      version: 1,
+      members: mergeMaps(a.members, b.members),
+      entries: mergeMaps(a.entries, b.entries),
+      settings: (b.settings?.updatedAt || 0) > (a.settings?.updatedAt || 0) ? b.settings : a.settings
+    };
+  }
+  function validate(s) {
+    if (!s || typeof s !== 'object' || typeof s.members !== 'object' || typeof s.entries !== 'object') throw Error('Arquivo não reconhecido como base MEREO.');
+    return { ...emptyState(), ...s, settings: { ...emptyState().settings, ...(s.settings || {}) } };
+  }
+  const activeMembers = s => Object.values(s.members || {}).filter(m => !m.removedAt).sort((a, b) => (a.order ?? a.createdAt ?? 0) - (b.order ?? b.createdAt ?? 0) || String(a.name).localeCompare(b.name, 'pt-BR'));
+
+  // Resumo do time (média simples das notas, somatório de captação).
+  function teamSummary(state, list) {
+    if (!list.length) return { avg: 0, above: 0, cap: 0, capGoal: 0, filled: 0, real: 0 };
+    return {
+      avg: list.reduce((s, r) => s + r.score, 0) / list.length,
+      above: list.filter(r => r.score >= 3).length,
+      cap: list.reduce((s, r) => s + r.components[0].value, 0),
+      capGoal: list.reduce((s, r) => s + r.components[0].goal, 0),
+      filled: list.filter(r => r.filled ?? r.filledCount > 0).length,
+      real: list.filter(r => r.status === 'real').length
+    };
+  }
+
+  const shortMoney = n => { n = +n || 0; const a = Math.abs(n); return a >= 1e6 ? 'R$ ' + (n / 1e6).toLocaleString('pt-BR', { maximumFractionDigits: a >= 1e7 ? 1 : 2 }) + ' mi' : a >= 1000 ? 'R$ ' + (n / 1000).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + ' mil' : n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }); };
+  const fmtScore = s => s.toFixed(2).replace('.', ',');
+  const fmtNum = (n, d = 1) => (+n || 0).toLocaleString('pt-BR', { maximumFractionDigits: d });
+
+  return { COMPONENTS, DEFAULT_GOALS, FLOW, INPUTS, score, values, build, monthKey, goalsFor, monthResult, semesterOf, semesterMonths, shiftSemester, semesterResult, emptyState, merge, validate, activeMembers, teamSummary, hasData, shortMoney, fmtScore, fmtNum };
+})();
+if (typeof module !== 'undefined') module.exports = MereoCore;
+
+// Rico · MEREO do time — painel do líder: membros, metas e estimativas mensais/semestrais.
+(() => {
+const C = MereoCore;
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const app = $('#app'), dialog = $('#dialog');
+const LS = { state: 'ricoMereo.state', key: 'ricoMereo.cloudKey', theme: 'ricoMereo.theme', sidebar: 'ricoMereo.sidebar', stamp: 'ricoMereo.cloudStamp' };
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); return true; } catch { return false; } },
+  del(k) { try { localStorage.removeItem(k); } catch {} }
+};
+const pad = n => String(n).padStart(2, '0');
+const todayMonth = (() => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}`; })();
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const uid = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
+const now = () => Date.now();
+
+let state = C.emptyState(), demo = false, demoBackup = null;
+let screen = 'team', memberId = null, view = 'month', month = todayMonth, sem = C.semesterOf(todayMonth), semMode = 'proj';
+let sidebarCollapsed = store.get(LS.sidebar) === 'collapsed', syncStatus = 'local', toastTimer, syncTimer, cloud = null, syncing = false, dirty = false;
+
+try { const raw = store.get(LS.state); if (raw) state = C.validate(JSON.parse(raw)); } catch { state = C.emptyState(); }
+
+// ---------- Ícones e marca ----------
+const icons = {
+  target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+  users: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2m20 0v-2a4 4 0 0 0-3-3.87M15 3.13a4 4 0 0 1 0 7.75"/><circle cx="9" cy="7" r="4"/>',
+  settings: '<path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3" fill="currentColor"/><circle cx="15" cy="17" r="3" fill="currentColor"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>', minus: '<path d="M5 12h14"/>', close: '<path d="m6 6 12 12M6 18 18 6"/>',
+  arrow: '<path d="M4 17 10 11l4 4 6-10m-6 0h6v6"/>', shield: '<path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6z"/><path d="m8 12 3 3 5-6"/>',
+  cloud: '<path d="M7 18a5 5 0 1 1 0-10 6 6 0 0 1 11-1 5.5 5.5 0 0 1 0 11M12 11v10m-3-3 3 3 3-3"/>',
+  trash: '<path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7"/>', check: '<path d="m4 12 5 5L20 6"/>',
+  chevron: '<path d="m9 5 7 7-7 7"/>', back: '<path d="m14 5-7 7 7 7"/>', edit: '<path d="m14 5 5 5M4 20l5-1L21 7l-5-5L4 14z"/>',
+  download: '<path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/>', upload: '<path d="M12 16V4m-5 5 5-5 5 5M4 16v5h16v-5"/>',
+  palette: '<path d="M12 3a9 9 0 0 0 0 18c1.5 0 2-1 1.5-2s0-2 1.5-2h1.5a4.5 4.5 0 0 0 4.5-4.5C21 7 17 3 12 3z"/><circle cx="7.5" cy="11.5" r="1.2"/><circle cx="10.5" cy="7.5" r="1.2"/><circle cx="15" cy="7.5" r="1.2"/>',
+  key: '<circle cx="8" cy="9" r="5"/><path d="m12 13 8 8m-3-3 3-3m-6 0 3-3"/>', copy: '<rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>',
+  repeat: '<path d="M17 2l4 4-4 4"/><path d="M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4"/><path d="M21 13v2a3 3 0 0 1-3 3H3"/>',
+  calendar: '<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M16 3v4M8 3v4M3 11h18"/>', info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>',
+  trophy: '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>', undo: '<path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/>',
+  wallet: '<path d="M20 7H5a2 2 0 0 1 0-4h12v4M3 5v14a2 2 0 0 0 2 2h15V7m0 5h-6v5h6"/>', exit: '<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/>'
+};
+const icon = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[n] || icons.target}</svg>`;
+const logo = () => `<span class="brand-logo"><svg viewBox="${RICO_LOGO_VIEWBOX}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rico"><path d="${RICO_LOGO_PATH}"/></svg></span>`;
+const brand = () => `<div class="brand">${logo()}<span class="brand-divider"></span><span class="brand-label">MEREO<br>do time</span></div>`;
+const button = (text, action, ico = '', cls = '', extra = '') => `<button type="button" class="btn ${cls}" data-action="${action}" ${extra}>${ico ? icon(ico) : ''}${text}</button>`;
+const initials = n => esc(String(n || '?').split(/\s+/).filter(Boolean).slice(0, 2).map(s => s[0]).join('').toUpperCase());
+const MEMBER_COLORS = ['#ff621d', '#7199ff', '#48d6a0', '#ffd075', '#ff2d78', '#b29aff', '#19c3d6', '#ff9e57', '#c8e04a', '#ff6f91'];
+const colorOf = m => m.color || MEMBER_COLORS[Math.abs([...String(m.id)].reduce((a, c) => a * 31 + c.charCodeAt(0) | 0, 7)) % MEMBER_COLORS.length];
+const avatar = (m, cls = '') => `<span class="avatar ${cls}" style="--mc:${colorOf(m)}">${initials(m.name)}</span>`;
+
+// ---------- Formatação ----------
+const cap1 = s => s.charAt(0).toUpperCase() + s.slice(1);
+const monthName = (m, opt = { month: 'long', year: 'numeric' }) => new Date(m + '-15T12:00:00').toLocaleDateString('pt-BR', opt);
+const monthShort = m => monthName(m, { month: 'short' }).replace('.', '');
+const semLabel = s => `${s.half}º semestre ${s.year}`;
+const scoreClass = s => s >= 4 ? 's-top' : s >= 3 ? 's-ok' : s >= 2 ? 's-mid' : 's-low';
+const scoreText = s => s >= 4 ? 'Excelente' : s >= 3 ? 'Na meta' : s >= 2 ? 'Atenção' : 'Abaixo';
+const fmtVal = (c, v) => c.unit === 'R$' ? C.shortMoney(v) : c.unit === 'pts' ? C.fmtNum(v) + ' pts' : c.unit === '%' ? C.fmtNum(v) + '%' : C.fmtNum(v);
+const pctTxt = p => Math.round(p) + '%';
+
+// ---------- Tema ----------
+const THEMES = [['rico', 'Rico', 'Azul-marinho com laranja, coral e âmbar', ['#0b1020', '#ff6a00', '#2b4bff', '#ff2e4d']], ['lava', 'Lava', 'Violeta com laranja, rosa e azul — o visual do Hub', ['#2a1470', '#ff3d00', '#4533ff', '#ff2d78']], ['xp', 'XP', 'Grafite com dourado e âmbar', ['#0b0b0e', '#f5c400', '#ff8c00', '#ffd54a']]];
+let theme = store.get(LS.theme) || 'rico';
+function applyTheme(t) {
+  theme = THEMES.some(x => x[0] === t) ? t : 'rico';
+  if (theme === 'lava') delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme = theme;
+  store.set(LS.theme, theme);
+  document.querySelector('meta[name=theme-color]')?.setAttribute('content', { rico: '#0b1020', lava: '#241263', xp: '#0b0b0e' }[theme]);
+}
+applyTheme(theme);
+
+// ---------- Persistência ----------
+function persist() {
+  if (demo) return;
+  store.set(LS.state, JSON.stringify(state));
+  if (cloud) { dirty = true; setStatus('pending'); clearTimeout(syncTimer); syncTimer = setTimeout(sync, 1200); }
+}
+function commit(fn, { rerender = true } = {}) { fn(state); persist(); if (rerender) render(); }
+function notify(msg, undo) {
+  const el = $('#toast'); el.innerHTML = `<span>${esc(msg)}</span>${undo ? '<button type="button" id="undo">Desfazer</button>' : ''}`;
+  el.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('show'), undo ? 9000 : 4500);
+  if (undo) $('#undo').onclick = () => { undo(); el.classList.remove('show'); };
+}
+const statusLabel = () => demo ? 'Demonstração · nada é salvo' : ({ local: 'Salvo neste aparelho', synced: 'Sincronizado', pending: 'Salvando…', offline: 'Offline · salvo no aparelho', error: 'Nuvem indisponível · salvo no aparelho' }[syncStatus]);
+function setStatus(s) { syncStatus = s; $$('[data-sync]').forEach(e => { e.className = 'sync ' + (demo ? 'pending' : s); e.innerHTML = `<i class="dot"></i>${statusLabel()}`; }); }
+
+// ---------- Nuvem (opcional): mesmo projeto Firestore do Pipeline, base criptografada por chave pessoal ----------
+const ROOT = 'https://firestore.googleapis.com/v1/projects/rico-hub/databases/(default)/documents/ricoPipeline/';
+const b64 = bytes => btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+const from64 = s => Uint8Array.from(atob(s.replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((s.length + 3) % 4)), c => c.charCodeAt(0));
+const genKey = () => 'MEREO-' + b64(crypto.getRandomValues(new Uint8Array(32)));
+async function credentials(access) {
+  const text = String(access).trim(); if (!/^MEREO-[A-Za-z0-9_-]{43}$/.test(text)) throw Error('Cole a chave completa, começando por MEREO-.');
+  const material = await crypto.subtle.importKey('raw', from64(text.slice(6)), 'HKDF', false, ['deriveKey', 'deriveBits']);
+  const params = { name: 'HKDF', hash: 'SHA-256', salt: new TextEncoder().encode('rico-mereo-v1') };
+  const key = await crypto.subtle.deriveKey({ ...params, info: new TextEncoder().encode('encryption') }, material, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+  const path = await crypto.subtle.deriveBits({ ...params, info: new TextEncoder().encode('document') }, material, 256);
+  return { access: text, key, id: 'mereo-v1-' + b64(new Uint8Array(path)) };
+}
+const bigB64 = bytes => { let s = ''; for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode(...bytes.subarray(i, i + 0x8000)); return btoa(s); };
+async function seal(value, key) {
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const data = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, new TextEncoder().encode(JSON.stringify(value))));
+  return { v: 1, iv: bigB64(iv), data: bigB64(data) };
+}
+async function unseal(env, key) {
+  const dec = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: dec(env.iv) }, key, dec(env.data));
+  return C.validate(JSON.parse(new TextDecoder().decode(plain)));
+}
+async function request(url, options = {}) {
+  const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 15000);
+  try {
+    const r = await fetch(url, { ...options, signal: ctl.signal, headers: { 'Content-Type': 'application/json' } });
+    const body = await r.json().catch(() => ({}));
+    if (r.status === 404 && !options.method) return null;
+    if (!r.ok) { const e = Error(body.error?.message || 'Falha na nuvem.'); e.status = r.status; throw e; }
+    return body;
+  } finally { clearTimeout(t); }
+}
+async function remoteRead(c) { const d = await request(ROOT + encodeURIComponent(c.id)); return d ? { envelope: JSON.parse(d.fields.envelope.stringValue), stamp: d.updateTime } : null; }
+async function remoteWrite(c, value, stamp) {
+  const cond = stamp ? 'currentDocument.updateTime=' + encodeURIComponent(stamp) : 'currentDocument.exists=false';
+  const d = await request(ROOT + encodeURIComponent(c.id) + '?' + cond, { method: 'PATCH', body: JSON.stringify({ fields: { envelope: { stringValue: JSON.stringify(await seal(value, c.key)) }, format: { stringValue: 'mereo-1' } } }) });
+  return d.updateTime;
+}
+async function sync({ quiet = true } = {}) {
+  if (!cloud || demo || syncing) return;
+  syncing = true; setStatus('pending');
+  try {
+    for (let attempt = 0; attempt < 4; attempt++) {
+      const remote = await remoteRead(cloud);
+      const remoteState = remote ? await unseal(remote.envelope, cloud.key) : null;
+      const before = JSON.stringify(state);
+      const merged = C.merge(state, remoteState);
+      const needsWrite = !remoteState || JSON.stringify(C.merge(remoteState, merged)) !== JSON.stringify(remoteState) || dirty;
+      try {
+        if (needsWrite && JSON.stringify(merged) !== JSON.stringify(remoteState)) await remoteWrite(cloud, merged, remote?.stamp);
+        dirty = false;
+        if (JSON.stringify(merged) !== before) { state = merged; store.set(LS.state, JSON.stringify(state)); if (!dialog.open && !isSliding) render(); }
+        setStatus('synced'); break;
+      } catch (e) { if ([400, 409, 412].includes(e.status) && attempt < 3) continue; throw e; }
+    }
+  } catch (e) {
+    setStatus(/fetch|network|abort|Failed|Load/i.test(e.message) ? 'offline' : 'error');
+    if (!quiet) notify('Não foi possível falar com a nuvem agora. Tudo continua salvo neste aparelho.');
+  } finally { syncing = false; }
+}
+async function connectCloud(access, create) {
+  const c = await credentials(access);
+  const remote = await remoteRead(c);
+  if (!remote && !create) throw Error('Nenhuma base encontrada com essa chave.');
+  if (remote) state = C.merge(state, await unseal(remote.envelope, c.key));
+  cloud = c; store.set(LS.key, c.access); store.set(LS.state, JSON.stringify(state)); dirty = true;
+  await sync({ quiet: false });
+}
+(async () => { const k = store.get(LS.key); if (k) { try { cloud = await credentials(k); sync(); } catch { cloud = null; } } })();
+setInterval(() => { if (cloud && !document.hidden) sync(); }, 20000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden && cloud) sync(); });
+
+// ---------- Dados ----------
+const members = () => C.activeMembers(state);
+const member = id => state.members[id];
+const entryKey = (id, m) => C.monthKey(id, m);
+const teamDefaults = () => ({ ...C.DEFAULT_GOALS, ...(state.settings.defaultGoals || {}) });
+function periodResults() {
+  return members().map(m => ({ m, r: view === 'month' ? C.monthResult(state, m, month) : C.semesterResult(state, m, sem, semMode) }));
+}
+
+// ---------- Estrutura ----------
+let isSliding = false;
+function render() {
+  if (!members().length && screen === 'member') screen = 'team';
+  const scrollTop = $('.content')?.scrollTop || 0;
+  const navs = [['team', 'Painel', 'target'], ['manage', 'Equipe', 'users'], ['settings', 'Minha base', 'settings']];
+  const crumb = { team: 'Painel', member: 'Membro', manage: 'Equipe', settings: 'Minha base' }[screen];
+  const leader = state.settings.leader || 'Liderança';
+  app.innerHTML = `<div class="shell ${sidebarCollapsed ? 'collapsed' : ''}"><aside class="sidebar">${brand()}<button class="sidebar-toggle" data-action="toggle-sidebar" aria-label="${sidebarCollapsed ? 'Expandir menu' : 'Recolher menu'}">${icon('chevron')}</button><div class="eyebrow">${esc(state.settings.team || 'Meu time')}</div><nav class="nav-items" aria-label="Navegação principal">${navs.map(([k, n, i]) => `<button class="nav-item ${screen === k || (k === 'team' && screen === 'member') ? 'active' : ''}" data-nav="${k}" aria-label="${n}">${icon(i)}<span>${n}</span>${k === 'manage' ? `<span class="nav-count">${members().length}</span>` : ''}</button>`).join('')}</nav><div class="sidebar-footer"><div class="private-note">${icon('trophy')}<span>100% da meta = nota 3.<br>Nota máxima: 5,00.</span></div><div class="account">${avatar({ id: 'leader', name: leader, color: 'var(--orange)' })}<div>${esc(leader)}<small>${demo ? 'Time de exemplo' : 'Líder do time'}</small></div></div></div></aside><main class="main"><header class="topbar"><div class="breadcrumb">MEREO do time ${icon('chevron')} <b>${crumb}</b></div><div class="topbar-actions"><span class="sync ${demo ? 'pending' : syncStatus}" data-sync><i class="dot"></i>${statusLabel()}</span><button class="icon-btn" title="Trocar tema" aria-label="Trocar tema" data-action="cycle-theme">${icon('palette')}</button></div></header><div class="content" data-screen="${screen}">${demo ? `<div class="notice demo">${icon('shield')}<span><strong>Time de exemplo.</strong> Explore à vontade — nada disso é salvo.</span>${button('Sair do exemplo', 'exit-demo', 'exit')}</div>` : ''}${screen === 'team' ? renderTeam() : screen === 'member' ? renderMember() : screen === 'manage' ? renderManage() : renderSettings()}</div></main></div>`;
+  const content = $('.content'); if (content) content.scrollTop = scrollTop;
+}
+const pageTitle = (title, actions = '') => `<div class="page-title"><h1>${title}</h1><div class="title-actions">${actions}</div></div>`;
+function periodBar(extra = '') {
+  const label = view === 'month' ? cap1(monthName(month)) : semLabel(sem);
+  return `<div class="period">${extra}<div class="segment" role="tablist"><button class="${view === 'month' ? 'on' : ''}" data-view="month">Mês</button><button class="${view === 'semester' ? 'on' : ''}" data-view="semester">Semestre</button></div><div class="stepper"><button class="icon-btn" data-action="period-prev" aria-label="Período anterior">${icon('back')}</button><b>${label}</b><button class="icon-btn" data-action="period-next" aria-label="Próximo período">${icon('chevron')}</button></div>${view === 'semester' ? `<div class="segment" title="Como tratar os meses sem lançamento"><button class="${semMode === 'proj' ? 'on' : ''}" data-semmode="proj">Projeção</button><button class="${semMode === 'ytd' ? 'on' : ''}" data-semmode="ytd">Até agora</button></div>` : ''}</div>`;
+}
+const scaleBar = s => `<span class="scale ${scoreClass(s)}"><i style="left:${(Math.min(5, Math.max(1, s)) - 1) / 4 * 100}%"></i></span>`;
+
+// ---------- Painel do time ----------
+function renderTeam() {
+  const list = members();
+  if (!list.length) return pageTitle('Painel') + `<section class="panel hero-empty">${icon('users')}<h2>Monte o seu time</h2><p>Adicione os membros, ajuste as metas de cada um e estime o MEREO do mês e do semestre. O cálculo é o mesmo do Rico Pipeline.</p><div class="row wrap center">${button('Adicionar membro', 'add-member', 'plus', 'primary')}${button('Ver com time de exemplo', 'demo', 'arrow')}</div></section>`;
+  const rows = periodResults().sort((a, b) => b.r.score - a.r.score);
+  const sum = C.teamSummary(state, rows.map(x => x.r));
+  const filledTxt = view === 'month' ? `${sum.filled}/${list.length}` : `${rows.reduce((s, x) => s + x.r.filledCount, 0)}/${list.length * 6}`;
+  const strip = `<div class="kpis"><div class="kpi lead ${scoreClass(sum.avg)}"><span class="eyebrow">MEREO médio do time</span><strong>${C.fmtScore(sum.avg)}</strong><small>de 5,00 · ${scoreText(sum.avg).toLowerCase()}</small></div><div class="kpi"><span class="eyebrow">Na meta (≥ 3,00)</span><strong>${sum.above}<em>/${list.length}</em></strong><small>${list.length - sum.above ? (list.length - sum.above) + ' abaixo de 3,00' : 'time inteiro na meta'}</small></div><div class="kpi"><span class="eyebrow">Captação ${view === 'month' ? 'do mês' : semMode === 'proj' ? 'projetada' : 'até agora'}</span><strong>${C.shortMoney(sum.cap)}</strong><small>meta ${C.shortMoney(sum.capGoal)} · ${pctTxt(sum.capGoal ? sum.cap / sum.capGoal * 100 : 0)}</small><span class="progress"><span style="width:${Math.min(100, sum.capGoal ? sum.cap / sum.capGoal * 100 : 0)}%"></span></span></div><div class="kpi"><span class="eyebrow">${view === 'month' ? 'Membros lançados' : 'Meses lançados'}</span><strong>${filledTxt}</strong><small>${view === 'month' ? `${sum.real} realizado${sum.real === 1 ? '' : 's'} · ${sum.filled - sum.real} estimativa${sum.filled - sum.real === 1 ? '' : 's'}` : semMode === 'proj' ? 'vazios projetados pela média' : 'vazios fora da conta'}</small></div></div>`;
+  return pageTitle('Painel', periodBar()) + strip + (view === 'month' ? teamMonth(rows) : teamSemester(rows));
+}
+function teamMonth(rows) {
+  return `<section class="panel ranking"><div class="rank-head"><span>#</span><span>Membro</span><span>MEREO</span>${C.COMPONENTS.map(c => `<span class="hide-sm">${c.short} <small>${c.weight * 100}%</small></span>`).join('')}<span class="hide-xs">Captação × meta</span></div>${rows.map(({ m, r }, i) => {
+    const cap = r.components[0];
+    return `<button class="rank-row" data-member="${m.id}"><span class="pos">${i + 1}</span><span class="who">${avatar(m)}<span><b>${esc(m.name)}</b><small>${statusPill(r.status)}</small></span></span><span class="sc ${scoreClass(r.score)}"><b>${r.filled ? C.fmtScore(r.score) : '—'}</b>${r.filled ? scaleBar(r.score) : ''}</span>${r.components.map(c => `<span class="hide-sm comp ${r.filled ? scoreClass(c.score) : 'none'}" title="${c.name}: ${fmtVal(c, c.value)} de ${fmtVal(c, c.goal)}">${r.filled ? `<b>${c.score.toFixed(1).replace('.', ',')}</b><small>${c.assumed ? 'ref.' : pctTxt(c.pct)}</small>` : '<b>—</b>'}</span>`).join('')}<span class="hide-xs capcol"><small>${C.shortMoney(cap.value)} <em>de ${C.shortMoney(cap.goal)}</em></small><span class="progress"><span style="width:${Math.min(100, cap.pct)}%"></span></span></span></button>`;
+  }).join('')}</section><p class="footnote">Toque em um membro para estimar ou lançar o realizado de ${monthName(month)}. “ref.” = IC/NPS sem lançamento, contando a referência da meta (nota 3), como no Pipeline.</p>`;
+}
+function teamSemester(rows) {
+  const months = C.semesterMonths(sem);
+  return `<section class="panel ranking heat"><div class="heat-head"><span class="hpos">#</span><span>Membro</span>${months.map(m => `<span class="${m === todayMonth ? 'now' : ''}">${monthShort(m)}</span>`).join('')}<span>Semestre</span></div>${rows.map(({ m, r }, i) => `<button class="heat-row" data-member="${m.id}"><span class="pos">${i + 1}</span><span class="who">${avatar(m)}<span><b>${esc(m.name)}</b><small>${r.filledCount}/6 meses · ${r.realCount} realizado${r.realCount === 1 ? '' : 's'}</small></span></span>${r.months.map(x => `<span class="cell ${x.filled ? scoreClass(x.score) : 'none'} ${x.status === 'est' ? 'est' : ''}" title="${monthName(x.month)}">${x.filled ? C.fmtScore(x.score) : semMode === 'proj' && r.filledCount ? '<em>proj.</em>' : '—'}</span>`).join('')}<span class="cell total ${r.filledCount ? scoreClass(r.score) : 'none'}"><b>${r.filledCount ? C.fmtScore(r.score) : '—'}</b></span></button>`).join('')}</section><p class="footnote"><span class="legend"><i class="s-top"></i>≥ 4 excelente <i class="s-ok"></i>3–4 na meta <i class="s-mid"></i>2–3 atenção <i class="s-low"></i>&lt; 2 abaixo · <span class="dash">tracejado</span> = estimativa</span><br>Semestre: captação, cesta e crossell somam os 6 meses contra a soma das metas mensais; IC e NPS usam a média dos meses lançados. ${semMode === 'proj' ? 'Projeção: meses sem lançamento recebem a média dos meses lançados.' : 'Até agora: só os meses lançados, contra as metas desses meses.'}</p>`;
+}
+const statusPill = s => s === 'real' ? '<span class="pill ok">Realizado</span>' : s === 'est' ? '<span class="pill est">Estimativa</span>' : '<span class="pill">Sem lançamento</span>';
+
+// ---------- Membro ----------
+function renderMember() {
+  const m = member(memberId); if (!m || m.removedAt) { screen = 'team'; return renderTeam(); }
+  const list = members(), idx = list.findIndex(x => x.id === m.id);
+  const nav = `<div class="member-nav"><button class="icon-btn" data-action="member-prev" aria-label="Membro anterior" ${list.length < 2 ? 'disabled' : ''}>${icon('back')}</button><span class="small muted">${idx + 1} de ${list.length}</span><button class="icon-btn" data-action="member-next" aria-label="Próximo membro" ${list.length < 2 ? 'disabled' : ''}>${icon('chevron')}</button></div>`;
+  const head = `<div class="member-head"><button class="btn ghost" data-nav="team">${icon('back')}Painel</button><div class="who big">${avatar(m, 'big')}<div><h2>${esc(m.name)}</h2><small>${m.code ? esc(m.code) + ' · ' : ''}${m.role ? esc(m.role) : 'Membro do time'}</small></div></div>${nav}<div class="spacer"></div>${periodBar()}${button('Metas', 'edit-goals', 'edit', '', `data-id="${m.id}"`)}</div>`;
+  return head + (view === 'month' ? memberMonth(m) : memberSemester(m));
+}
+function scorePanel(m) {
+  const r = C.monthResult(state, m, month);
+  return `<div class="score-hero ${scoreClass(r.score)}"><span class="eyebrow">MEREO · ${monthName(month)}</span><strong>${C.fmtScore(r.score)}</strong><span class="muted small">de 5,00 · ${r.filled ? scoreText(r.score) : 'sem lançamento'}</span>${scaleBar(r.score)}<div class="scale-labels"><span>1</span><span>2</span><span>3 · meta</span><span>4</span><span>5</span></div></div><div class="comp-list">${r.components.map(c => compRow(c)).join('')}</div>`;
+}
+const compRow = c => `<div class="comp-row ${scoreClass(c.score)}"><div class="comp-top"><span><b>${c.name}</b> <small>${c.weight * 100}%</small></span><span class="comp-score ${scoreClass(c.score)}">${c.score.toFixed(2).replace('.', ',')}</span></div><div class="comp-val">${fmtVal(c, c.value)} <em>de ${fmtVal(c, c.goal)}</em><span>${c.assumed ? 'referência' : pctTxt(c.pct)}</span></div><span class="progress"><span style="width:${Math.min(100, c.pct / c.curve[4] * 100)}%"></span><i style="left:${100 / c.curve[4] * 100}%"></i></span></div>`;
+
+// Controles deslizantes: tocar, não digitar. O valor pode ser digitado tocando no número.
+function slider({ key, label, value, min, max, step, fmt, presets = [], hint = '', nullable = false, isNull = false, scope = 'entry' }) {
+  const shown = isNull ? value : value;
+  return `<div class="sl ${isNull ? 'is-null' : ''}" data-sl="${key}"><div class="sl-head"><span>${label}</span><button type="button" class="sl-out" data-type="${key}" data-scope="${scope}" title="Digitar valor">${isNull ? 'Referência' : fmt(shown)}</button></div><input type="range" data-${scope}="${key}" min="${min}" max="${max}" step="${step}" value="${shown}" aria-label="${label}">${presets.length || nullable ? `<div class="sl-presets">${nullable ? `<button type="button" class="chip-btn ${isNull ? 'on' : ''}" data-null="${key}" data-scope="${scope}">Referência</button>` : ''}${presets.map(([t, v]) => `<button type="button" class="chip-btn ${!isNull && Math.abs(+v - shown) < step / 2 ? 'on' : ''}" data-preset="${key}" data-scope="${scope}" data-v="${v}">${t}</button>`).join('')}</div>` : ''}${hint ? `<small class="sl-hint" data-hint="${key}">${hint}</small>` : ''}</div>`;
+}
+const FMT = { money: v => C.shortMoney(v), int: v => C.fmtNum(v, 0), pct: v => C.fmtNum(v) + '%', nps: v => C.fmtNum(v) };
+const roundStep = (v, s) => Math.round(v / s) * s;
+function moneyStep(goal) { return goal >= 2e6 ? 25000 : goal >= 5e5 ? 10000 : goal >= 1e5 ? 5000 : 1000; }
+function goalPresets(goal, step) { return [0, 50, 80, 100, 120, 150].map(p => [p === 0 ? 'Zero' : p + '%', roundStep(goal * p / 100, step)]); }
+
+function entryFields(m, e) {
+  const g = C.goalsFor(m, month), v = C.values(e);
+  const capStep = moneyStep(g.cap), cestaStep = moneyStep(g.cesta);
+  const cap = +e.cap || 0;
+  return `<div class="entry-group"><h3>${icon('wallet')}Captação <small>meta ${C.shortMoney(g.cap)}</small></h3>${slider({ key: 'cap', label: 'Captação líquida do mês', value: cap, min: 0, max: Math.max(g.cap * 3, cap), step: capStep, fmt: FMT.money, presets: goalPresets(g.cap, capStep) })}<details class="sub" ${(+e.prev || +e.stvm) ? 'open' : ''}><summary>Previdência e STVM dentro da captação <em>pesam 1,25×</em></summary>${slider({ key: 'prev', label: 'Previdência', value: +e.prev || 0, min: 0, max: Math.max(cap, +e.prev || 0, capStep), step: capStep, fmt: FMT.money, presets: [['Zero', 0], ['25%', roundStep(cap * .25, capStep)], ['50%', roundStep(cap * .5, capStep)]], hint: 'Também entra na cesta de investimento (1,25×).' })}${slider({ key: 'stvm', label: 'STVM', value: +e.stvm || 0, min: 0, max: Math.max(cap, +e.stvm || 0, capStep), step: capStep, fmt: FMT.money, presets: [['Zero', 0], ['25%', roundStep(cap * .25, capStep)]] })}</details><small class="calc" data-calc="cap">Captação MEREO: <b>${C.shortMoney(v.cap)}</b></small></div>
+  <div class="entry-group"><h3>${icon('arrow')}Cesta investimento <small>meta ${C.shortMoney(g.cesta)}</small></h3>${slider({ key: 'aloc', label: 'Alocação do mês', value: +e.aloc || 0, min: 0, max: Math.max(g.cesta * 3, +e.aloc || 0), step: cestaStep, fmt: FMT.money, presets: goalPresets(g.cesta, cestaStep) })}<small class="calc" data-calc="cesta">Cesta MEREO (alocação + previdência 1,25×): <b>${C.shortMoney(v.cesta)}</b></small></div>
+  <div class="entry-group"><h3>${icon('plus')}Crossell <small>meta ${C.fmtNum(g.cross)} pts</small></h3>${slider({ key: 'cards', label: 'Cartões (1 pt cada)', value: +e.cards || 0, min: 0, max: Math.max(Math.ceil(g.cross * 2), +e.cards || 0, 10), step: 1, fmt: FMT.int, presets: [0, 5, 10, 15, 20, 25].map(n => [String(n), n]) })}${slider({ key: 'seg', label: 'Seguros (1 pt a cada R$ 1 mil)', value: +e.seg || 0, min: 0, max: Math.max(30000, +e.seg || 0), step: 500, fmt: FMT.money, presets: [['Zero', 0], ['R$ 2 mil', 2000], ['R$ 5 mil', 5000], ['R$ 10 mil', 10000]] })}${slider({ key: 'con', label: 'Consórcio (1 pt a cada R$ 10 mil)', value: +e.con || 0, min: 0, max: Math.max(300000, +e.con || 0), step: 5000, fmt: FMT.money, presets: [['Zero', 0], ['R$ 50 mil', 50000], ['R$ 100 mil', 100000], ['R$ 200 mil', 200000]] })}<small class="calc" data-calc="cross">Pontos de crossell: <b>${C.fmtNum(v.cross)} pts</b></small></div>
+  <div class="entry-group two"><div><h3>${icon('target')}Índice comercial <small>meta ${C.fmtNum(g.ic)}%</small></h3>${slider({ key: 'ic', label: 'IC do mês', value: e.ic ?? g.ic, isNull: e.ic == null, nullable: true, min: 0, max: 120, step: .5, fmt: FMT.pct, presets: [[C.fmtNum(g.ic * .9) + '%', roundStep(g.ic * .9, .5)], [C.fmtNum(g.ic) + '%', g.ic], [C.fmtNum(g.ic * 1.1) + '%', roundStep(g.ic * 1.1, .5)]] })}</div><div><h3>${icon('users')}NPS <small>meta ${C.fmtNum(g.nps)}</small></h3>${slider({ key: 'nps', label: 'NPS do mês', value: e.nps ?? g.nps, isNull: e.nps == null, nullable: true, min: -100, max: 100, step: .5, fmt: FMT.nps, presets: [['30', 30], [C.fmtNum(g.nps), g.nps], ['60', 60], ['80', 80]] })}</div></div>`;
+}
+function memberMonth(m) {
+  const key = entryKey(m.id, month), raw = state.entries[key], e = raw && !raw.cleared ? raw : {};
+  const filled = C.hasData(raw), status = filled ? (raw.status || 'est') : 'est';
+  return `<div class="member-grid"><section class="panel score-panel" id="scorePanel">${scorePanel(m)}</section><section class="panel entry-panel"><div class="entry-head"><div><span class="eyebrow">${filled ? 'Lançamento de ' : 'Estimar '}${monthName(month)}</span><div class="segment status-seg"><button class="${status === 'est' ? 'on' : ''}" data-status="est">Estimativa</button><button class="${status === 'real' ? 'on' : ''}" data-status="real">Realizado</button></div></div><div class="row wrap">${button('Copiar mês anterior', 'copy-prev', 'copy', 'sm')}${button('Repetir até ' + monthShort(C.semesterMonths(C.semesterOf(month))[5]), 'repeat-sem', 'repeat', 'sm')}${filled ? button('Limpar', 'clear-month', 'trash', 'sm danger') : ''}</div></div><div class="entry-body">${entryFields(m, e)}</div></section></div>`;
+}
+function memberSemester(m) {
+  const r = C.semesterResult(state, m, sem, semMode);
+  const bars = r.months.map(x => { const h = x.filled ? (x.score - 1) / 4 * 100 : 0; return `<button class="bar ${x.filled ? scoreClass(x.score) : 'none'} ${x.status === 'est' ? 'est' : ''}" data-open-month="${x.month}" title="Abrir ${monthName(x.month)}"><span class="bar-val">${x.filled ? C.fmtScore(x.score) : '—'}</span><span class="bar-track"><span style="height:${Math.max(3, h)}%"></span></span><span class="bar-lbl">${monthShort(x.month)}</span><small>${x.status === 'real' ? 'real' : x.status === 'est' ? 'estim.' : 'vazio'}</small></button>`; }).join('');
+  const goalRows = r.months.map(x => `<tr class="${x.filled ? '' : 'dim'}"><td>${monthName(x.month, { month: 'long' })}</td><td>${x.filled ? C.shortMoney(C.values(x.entry).cap) : '—'} <em>/ ${C.shortMoney(x.goals.cap)}</em></td><td class="hide-xs">${x.filled ? C.shortMoney(C.values(x.entry).cesta) : '—'} <em>/ ${C.shortMoney(x.goals.cesta)}</em></td><td class="hide-xs">${x.filled ? C.fmtNum(C.values(x.entry).cross) : '—'} <em>/ ${C.fmtNum(x.goals.cross)}</em></td><td><span class="sc-chip ${x.filled ? scoreClass(x.score) : 'none'}">${x.filled ? C.fmtScore(x.score) : '—'}</span></td></tr>`).join('');
+  const capC = r.components[0], gap = Math.max(0, capC.goal - capC.value);
+  return `<div class="member-grid"><section class="panel score-panel"><div class="score-hero ${scoreClass(r.score)}"><span class="eyebrow">MEREO · ${semLabel(sem)} · ${semMode === 'proj' ? 'projeção' : 'até agora'}</span><strong>${r.filledCount ? C.fmtScore(r.score) : '—'}</strong><span class="muted small">de 5,00 · ${r.filledCount}/6 meses lançados</span>${scaleBar(r.score)}<div class="scale-labels"><span>1</span><span>2</span><span>3 · meta</span><span>4</span><span>5</span></div></div><div class="comp-list">${r.components.map(compRow).join('')}</div>${semMode === 'proj' || r.filledCount === 6 ? `<p class="gap">${gap > 0 ? `Faltam <b>${C.shortMoney(gap)}</b> de captação para fechar a meta do semestre (${C.shortMoney(capC.goal)}).` : `Captação do semestre ${semMode === 'proj' ? 'projetada ' : ''}acima da meta.`}</p>` : ''}</section><section class="panel sem-panel"><div class="entry-head"><span class="eyebrow">Mês a mês · linha tracejada = nota 3 (meta)</span>${button('Metas do semestre', 'edit-sem-goals', 'calendar', 'sm')}</div><div class="bars">${bars}</div><table class="sem-table"><thead><tr><th>Mês</th><th>Captação / meta</th><th class="hide-xs">Cesta / meta</th><th class="hide-xs">Crossell / meta</th><th>MEREO</th></tr></thead><tbody>${goalRows}</tbody><tfoot><tr><td>Semestre</td><td>${C.shortMoney(r.totals.cap)} <em>/ ${C.shortMoney(r.goals.cap)}</em></td><td class="hide-xs">${C.shortMoney(r.totals.cesta)} <em>/ ${C.shortMoney(r.goals.cesta)}</em></td><td class="hide-xs">${C.fmtNum(r.totals.cross)} <em>/ ${C.fmtNum(r.goals.cross)}</em></td><td><span class="sc-chip ${r.filledCount ? scoreClass(r.score) : 'none'}">${r.filledCount ? C.fmtScore(r.score) : '—'}</span></td></tr></tfoot></table></section></div>`;
+}
+
+// ---------- Equipe ----------
+function renderManage() {
+  const list = members(), removed = Object.values(state.members).filter(m => m.removedAt).sort((a, b) => b.removedAt - a.removedAt);
+  const goalsTxt = m => { const g = { ...C.DEFAULT_GOALS, ...(m.goals || {}) }; return `Capt. ${C.shortMoney(g.cap)} · Cesta ${C.shortMoney(g.cesta)} · Cross ${C.fmtNum(g.cross)} pts · IC ${C.fmtNum(g.ic)}% · NPS ${C.fmtNum(g.nps)}`; };
+  return pageTitle('Equipe', `${list.length > 1 ? button('Metas para todos', 'goals-all', 'users') : ''}${button('Adicionar membro', 'add-member', 'plus', 'primary')}`) + (list.length ? `<section class="panel member-list">${list.map(m => `<div class="member-row"><button class="who" data-member="${m.id}">${avatar(m)}<span><b>${esc(m.name)}</b><small>${m.code ? esc(m.code) + ' · ' : ''}${goalsTxt(m)}</small></span></button><div class="row">${button('Metas', 'edit-goals', 'edit', 'sm', `data-id="${m.id}"`)}<button class="icon-btn danger" data-action="remove-member" data-id="${m.id}" aria-label="Remover ${esc(m.name)}" title="Remover do time">${icon('trash')}</button></div></div>`).join('')}</section>` : `<section class="panel hero-empty">${icon('users')}<h2>Nenhum membro ainda</h2><p>Comece adicionando quem faz parte do time. As metas padrão vêm do Pipeline e podem ser ajustadas por pessoa.</p>${button('Adicionar membro', 'add-member', 'plus', 'primary')}</section>`) + (removed.length ? `<details class="panel removed"><summary>Removidos do time (${removed.length})</summary>${removed.map(m => `<div class="member-row">${`<span class="who">${avatar(m)}<span><b>${esc(m.name)}</b><small>Removido em ${new Date(m.removedAt).toLocaleDateString('pt-BR')} · lançamentos preservados</small></span></span>`}${button('Restaurar', 'restore-member', 'undo', 'sm', `data-id="${m.id}"`)}</div>`).join('')}</details>` : '');
+}
+
+// ---------- Minha base ----------
+function renderSettings() {
+  const rules = C.COMPONENTS.map(c => `<tr><td>${c.name}</td><td>${c.weight * 100}%</td><td>${c.curve.map(p => p + '%').join(' · ')}</td></tr>`).join('');
+  return pageTitle('Minha base') + `<div class="settings-grid"><section class="panel panel-pad"><div class="row">${icon('users')}<h3>Time</h3></div><p>Nome do time e do líder, exibidos no menu.</p><div class="fields one"><label class="field">Nome do time<input id="teamName" value="${esc(state.settings.team || '')}" placeholder="Ex.: Time Bauru"></label><label class="field">Líder<input id="leaderName" value="${esc(state.settings.leader || '')}" placeholder="Seu nome"></label></div>${button('Salvar', 'save-team', 'check')}</section>
+  <section class="panel panel-pad"><div class="row">${icon('cloud')}<h3>Sincronizar entre aparelhos</h3></div>${cloud ? `<p>Conectado. Use a mesma chave no iPad e no notebook para ver o mesmo time.</p><p><span class="sync ${syncStatus}" data-sync><i class="dot"></i>${statusLabel()}</span></p><div class="row wrap">${button('Ver chave', 'show-key', 'key')}${button('Sincronizar agora', 'sync-now', 'cloud')}${button('Desconectar', 'disconnect', 'exit', 'danger')}</div>` : `<p>Hoje tudo fica salvo neste aparelho. Crie uma chave para ter a mesma base em outro aparelho — os dados vão criptografados para a nuvem do Pipeline.</p><div class="row wrap">${button('Criar chave', 'create-key', 'plus', 'primary')}</div><form id="keyForm" class="key-form"><label class="field">Já tenho uma chave<input name="key" type="password" autocomplete="off" placeholder="MEREO-…" spellcheck="false" autocapitalize="off"></label><button class="btn" type="submit">${icon('key')}Conectar</button></form>`}</section>
+  <section class="panel panel-pad"><div class="row">${icon('download')}<h3>Cópia de segurança</h3></div><p>Exporte a base completa (membros, metas e lançamentos) ou importe um arquivo exportado. A importação mescla sem apagar.</p><div class="row wrap">${button('Exportar', 'export', 'download')}${button('Importar arquivo', 'import', 'upload')}</div><input id="importFile" type="file" accept="application/json,.json" hidden></section>
+  <section class="panel panel-pad"><div class="row">${icon('palette')}<h3>Aparência</h3></div><p>Mesma lava lamp do Pipeline e do Hub.</p><div class="theme-grid">${THEMES.map(([id, name, desc, [bg, a, b, c]]) => `<button type="button" class="theme-card ${theme === id ? 'on' : ''}" data-theme-pick="${id}"><span class="theme-swatch" style="background:${bg}"><i style="background:${a};left:-10%;top:-30%"></i><i style="background:${b};right:-15%;top:10%"></i><i style="background:${c};left:30%;bottom:-70%"></i></span><b>${name}</b><small>${desc}</small></button>`).join('')}</div></section>
+  <section class="panel panel-pad wide"><div class="row">${icon('info')}<h3>Como o MEREO é calculado</h3></div><p>Mesmas regras do Rico Pipeline. Cada indicador vira uma nota de 1 a 5 pela curva de atingimento (o 3º ponto é 100% da meta = nota 3; linear entre os pontos). A nota final é a média ponderada.</p><table class="rules"><thead><tr><th>Indicador</th><th>Peso</th><th>Curva (notas 1 → 5)</th></tr></thead><tbody>${rules}</tbody></table><ul class="rule-notes"><li>Previdência e STVM dentro da captação pesam <b>1,25×</b>; a previdência ponderada também soma na cesta.</li><li>Cesta de investimento = alocação + previdência ponderada. Meta padrão R$ 2,2 mi.</li><li>Crossell: cartão = 1 ponto · consórcio = 1 ponto a cada R$ 10 mil · seguro = 1 ponto a cada R$ 1 mil. Meta padrão 25 pts.</li><li>Índice comercial (83%) e NPS (41,3) sem lançamento contam como referência — nota 3.</li><li>Semestre: fluxos somam os 6 meses contra a soma das metas mensais; IC e NPS pela média dos meses lançados.</li></ul></section></div>`;
+}
+
+// ---------- Diálogos ----------
+function showModal(title, body, onSubmit, submitLabel = 'Salvar', { wide = false, onOpen } = {}) {
+  dialog.className = wide ? 'wide' : '';
+  dialog.innerHTML = `<form method="dialog" id="modalForm"><div class="dialog-head"><h2>${title}</h2><button type="button" class="icon-btn" data-close aria-label="Fechar">${icon('close')}</button></div><div class="dialog-body">${body}<div class="form-error" role="alert"></div></div><div class="dialog-foot"><button type="button" class="btn" data-close>Cancelar</button><button type="submit" class="btn primary">${submitLabel}</button></div></form>`;
+  const form = $('#modalForm');
+  form.onsubmit = async e => { e.preventDefault(); try { const r = await onSubmit(new FormData(form), form); if (r !== false) dialog.close(); } catch (err) { form.querySelector('.form-error').textContent = err.message; } };
+  dialog.querySelectorAll('[data-close]').forEach(b => b.onclick = () => dialog.close());
+  dialog.showModal(); onOpen?.(form);
+}
+function goalSliders(g, prefix = '') {
+  const cs = moneyStep(g.cap), ces = moneyStep(g.cesta);
+  return `${slider({ key: prefix + 'cap', label: 'Captação mensal', value: g.cap, min: 0, max: Math.max(5e6, g.cap), step: 50000, fmt: FMT.money, presets: [['500 mil', 5e5], ['800 mil', 8e5], ['1 mi', 1e6], ['1,5 mi', 1.5e6], ['2 mi', 2e6]], scope: 'goal' })}${slider({ key: prefix + 'cesta', label: 'Cesta investimento mensal', value: g.cesta, min: 0, max: Math.max(1e7, g.cesta), step: 100000, fmt: FMT.money, presets: [['1,5 mi', 1.5e6], ['2,2 mi', 2.2e6], ['3 mi', 3e6], ['4 mi', 4e6]], scope: 'goal' })}${slider({ key: prefix + 'cross', label: 'Crossell mensal (pontos)', value: g.cross, min: 0, max: Math.max(80, g.cross), step: 1, fmt: v => C.fmtNum(v) + ' pts', presets: [['15', 15], ['20', 20], ['25', 25], ['30', 30]], scope: 'goal' })}${slider({ key: prefix + 'ic', label: 'Índice comercial', value: g.ic, min: 50, max: 100, step: .5, fmt: FMT.pct, presets: [['80%', 80], ['83%', 83], ['85%', 85], ['90%', 90]], scope: 'goal' })}${slider({ key: prefix + 'nps', label: 'NPS', value: g.nps, min: 0, max: 100, step: .1, fmt: FMT.nps, presets: [['35', 35], ['41,3', 41.3], ['50', 50], ['60', 60]], scope: 'goal' })}`;
+}
+const readGoals = form => Object.fromEntries(['cap', 'cesta', 'cross', 'ic', 'nps'].map(k => [k, +form.querySelector(`[data-goal="${k}"]`).value]));
+function addMember() {
+  const g = teamDefaults();
+  showModal('Adicionar membro', `<div class="fields"><label class="field full">Nome<input name="name" required autocomplete="off" placeholder="Nome do assessor"></label><label class="field">Código A <small>opcional</small><input name="code" autocomplete="off" placeholder="A12345" autocapitalize="characters"></label><div class="field"><span>Função</span><div class="chips-radio chips">${['Assessor', 'Especialista', 'Trainee'].map((r, i) => `<label class="chip-check"><input type="radio" name="role" value="${r}" ${i === 0 ? 'checked' : ''}><span>${r}</span></label>`).join('')}</div></div></div><div class="goal-box"><span class="eyebrow">Metas mensais</span>${goalSliders(g)}</div>`, (f, form) => {
+    const name = String(f.get('name') || '').trim(); if (!name) throw Error('Informe o nome.');
+    const id = uid(), goals = readGoals(form);
+    commit(s => { s.members[id] = { id, name, code: String(f.get('code') || '').trim().toUpperCase(), role: f.get('role') || 'Assessor', goals, createdAt: now(), order: now(), updatedAt: now() }; });
+    notify(`${name} entrou no time.`);
+  }, 'Adicionar', { onOpen: f => setTimeout(() => f.querySelector('[name=name]').focus(), 50) });
+}
+function editGoals(id) {
+  const m = member(id); if (!m) return;
+  const g = { ...C.DEFAULT_GOALS, ...(m.goals || {}) };
+  showModal('Metas · ' + esc(m.name), `<div class="fields"><label class="field">Nome<input name="name" value="${esc(m.name)}" required autocomplete="off"></label><label class="field">Código A<input name="code" value="${esc(m.code || '')}" autocomplete="off" autocapitalize="characters"></label></div><div class="goal-box"><span class="eyebrow">Metas mensais padrão</span>${goalSliders(g)}<small class="muted">Para variar a meta mês a mês no semestre, use “Metas do semestre” na visão semestral do membro.</small></div>`, (f, form) => {
+    const name = String(f.get('name') || '').trim(); if (!name) throw Error('Informe o nome.');
+    commit(s => { s.members[id] = { ...s.members[id], name, code: String(f.get('code') || '').trim().toUpperCase(), goals: readGoals(form), updatedAt: now() }; });
+    notify('Metas atualizadas.');
+  });
+}
+function goalsAll() {
+  const g = teamDefaults();
+  showModal('Metas para todo o time', `<p class="muted small" style="margin-bottom:14px">Aplica as mesmas metas mensais padrão a todos os ${members().length} membros e aos próximos que entrarem. Ajustes mês a mês do semestre continuam valendo.</p>${goalSliders(g)}`, (f, form) => {
+    const goals = readGoals(form);
+    commit(s => { s.settings = { ...s.settings, defaultGoals: goals, updatedAt: now() }; for (const m of members()) s.members[m.id] = { ...s.members[m.id], goals, updatedAt: now() }; });
+    notify('Metas aplicadas ao time.');
+  }, 'Aplicar a todos');
+}
+function editSemGoals(id) {
+  const m = member(id); if (!m) return;
+  const months = C.semesterMonths(sem), base = { ...C.DEFAULT_GOALS, ...(m.goals || {}) };
+  const metas = [['cap', 'Captação', 50000, FMT.money], ['cesta', 'Cesta', 100000, FMT.money], ['cross', 'Crossell', 1, v => C.fmtNum(v) + ' pts']];
+  const block = ([k, label, step, fmt]) => {
+    const vals = months.map(mo => C.goalsFor(m, mo)[k]), total = vals.reduce((a, b) => a + b, 0), max = Math.max(base[k] * 3, ...vals);
+    return `<fieldset class="semgoal" data-metric="${k}" ${k !== 'cap' ? 'hidden' : ''}><div class="sl total"><div class="sl-head"><span>${label} · total do semestre</span><b data-total="${k}">${fmt(total)}</b></div><input type="range" data-semtotal="${k}" min="0" max="${max * 6}" step="${step * 6}" value="${total}" aria-label="Total do semestre"><small class="sl-hint">Arraste o total para distribuir igualmente pelos 6 meses, ou ajuste mês a mês.</small></div><div class="month-sliders">${months.map((mo, i) => `<div class="sl mini"><div class="sl-head"><span>${monthName(mo, { month: 'long' })}</span><b data-mout="${k}-${i}">${fmt(vals[i])}</b></div><input type="range" data-semmonth="${k}" data-i="${i}" min="0" max="${max}" step="${step}" value="${vals[i]}" aria-label="${label} ${monthName(mo)}"></div>`).join('')}</div></fieldset>`;
+  };
+  showModal(`Metas do ${semLabel(sem)} · ${esc(m.name)}`, `<div class="chip-group" style="margin-bottom:16px"><div class="chips">${metas.map(([k, l], i) => `<button type="button" class="chip ${i === 0 ? 'on' : ''}" data-semtab="${k}">${l}</button>`).join('')}</div></div>${metas.map(block).join('')}<p class="small muted" style="margin-top:14px">Padrão mensal: ${C.shortMoney(base.cap)} captação · ${C.shortMoney(base.cesta)} cesta · ${C.fmtNum(base.cross)} pts. Meses iguais ao padrão não ficam marcados como ajuste.</p>`, (f, form) => {
+    const mg = { ...(m.monthGoals || {}) };
+    months.forEach((mo, i) => {
+      const o = { ...(mg[mo] || {}) };
+      for (const [k] of metas) { const v = +form.querySelector(`[data-semmonth="${k}"][data-i="${i}"]`).value; if (Math.abs(v - base[k]) < 1e-9) delete o[k]; else o[k] = v; }
+      if (Object.keys(o).length) mg[mo] = o; else delete mg[mo];
+    });
+    commit(s => { s.members[id] = { ...s.members[id], monthGoals: mg, updatedAt: now() }; });
+    notify('Metas do semestre salvas.');
+  }, 'Salvar metas', {
+    wide: true, onOpen: form => {
+      const fmts = Object.fromEntries(metas.map(([k, , , f]) => [k, f]));
+      form.addEventListener('click', e => { const t = e.target.closest('[data-semtab]'); if (!t) return; form.querySelectorAll('[data-semtab]').forEach(b => b.classList.toggle('on', b === t)); form.querySelectorAll('.semgoal').forEach(fs => fs.hidden = fs.dataset.metric !== t.dataset.semtab); });
+      form.addEventListener('input', e => {
+        const t = e.target;
+        if (t.dataset.semtotal) { const k = t.dataset.semtotal, step = metas.find(x => x[0] === k)[2], each = roundStep(+t.value / 6, step); form.querySelectorAll(`[data-semmonth="${k}"]`).forEach(s => { s.value = each; form.querySelector(`[data-mout="${k}-${s.dataset.i}"]`).textContent = fmts[k](+s.value); }); form.querySelector(`[data-total="${k}"]`).textContent = fmts[k](+t.value); }
+        if (t.dataset.semmonth) { const k = t.dataset.semmonth; form.querySelector(`[data-mout="${k}-${t.dataset.i}"]`).textContent = fmts[k](+t.value); const tot = [...form.querySelectorAll(`[data-semmonth="${k}"]`)].reduce((s, x) => s + +x.value, 0); form.querySelector(`[data-total="${k}"]`).textContent = fmts[k](tot); form.querySelector(`[data-semtotal="${k}"]`).value = tot; }
+      });
+    }
+  });
+}
+function removeMember(id) {
+  const m = member(id); if (!m) return;
+  commit(s => { s.members[id] = { ...s.members[id], removedAt: now(), updatedAt: now() }; });
+  if (memberId === id) { screen = screen === 'member' ? 'team' : screen; render(); }
+  notify(`${m.name} saiu do time.`, () => commit(s => { s.members[id] = { ...s.members[id], removedAt: null, updatedAt: now() }; }));
+}
+function showKey() {
+  if (!cloud) return;
+  showModal('Sua chave de sincronização', `<p class="small muted" style="margin-bottom:14px">Cole esta chave em “Já tenho uma chave” no outro aparelho. Quem tiver a chave vê e edita a base — guarde em local seguro.</p><div class="key">${esc(cloud.access)}</div>`, async () => { try { await navigator.clipboard.writeText(cloud.access); notify('Chave copiada.'); } catch { notify('Selecione a chave e copie manualmente.'); return false; } }, 'Copiar chave');
+}
+
+// ---------- Lançamento ao vivo ----------
+function currentEntry() { const k = entryKey(memberId, month), e = state.entries[k]; return e && !e.cleared ? e : null; }
+function setEntry(patch) {
+  const k = entryKey(memberId, month), cur = currentEntry() || { status: 'est' };
+  state.entries[k] = { ...cur, ...patch, updatedAt: now() };
+}
+function liveRefresh() {
+  const m = member(memberId), e = currentEntry() || {}, v = C.values(e);
+  $('#scorePanel').innerHTML = scorePanel(m);
+  const calc = { cap: `Captação MEREO: <b>${C.shortMoney(v.cap)}</b>`, cesta: `Cesta MEREO (alocação + previdência 1,25×): <b>${C.shortMoney(v.cesta)}</b>`, cross: `Pontos de crossell: <b>${C.fmtNum(v.cross)} pts</b>` };
+  for (const [k, h] of Object.entries(calc)) { const el = $(`[data-calc="${k}"]`); if (el) el.innerHTML = h; }
+  const cap = +e.cap || 0;
+  for (const k of ['prev', 'stvm']) { const s = $(`[data-entry="${k}"]`); if (s) s.max = Math.max(cap, +s.value, +s.step); }
+}
+const sliderFmt = key => ({ cap: FMT.money, prev: FMT.money, stvm: FMT.money, aloc: FMT.money, seg: FMT.money, con: FMT.money, cards: FMT.int, ic: FMT.pct, nps: FMT.nps })[key];
+function onEntrySlide(input) {
+  const k = input.dataset.entry, val = +input.value;
+  setEntry({ [k]: val });
+  const box = input.closest('.sl'); box.classList.remove('is-null');
+  box.querySelector('.sl-out').textContent = sliderFmt(k)(val);
+  box.querySelectorAll('[data-preset]').forEach(b => b.classList.toggle('on', Math.abs(+b.dataset.v - val) < +input.step / 2));
+  box.querySelector('[data-null]')?.classList.remove('on');
+  liveRefresh();
+}
+function typeValue(btn) {
+  const key = btn.dataset.type, scope = btn.dataset.scope, range = btn.closest('.sl').querySelector('input[type=range]');
+  const inp = document.createElement('input'); inp.type = 'number'; inp.inputMode = 'decimal'; inp.step = 'any'; inp.value = range.value; inp.className = 'sl-type';
+  btn.replaceWith(inp); inp.focus(); inp.select();
+  const done = () => {
+    const v = parseFloat(String(inp.value).replace(',', '.'));
+    const out = document.createElement('button'); out.type = 'button'; out.className = 'sl-out'; out.dataset.type = key; out.dataset.scope = scope;
+    inp.replaceWith(out);
+    if (isFinite(v)) {
+      if (v > +range.max) range.max = v; if (v < +range.min) range.min = v;
+      range.step = 'any'; range.value = v;
+      if (scope === 'entry') { setEntry({ [key]: v }); persist(); render(); return; }
+      range.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    out.textContent = (scope === 'entry' ? sliderFmt(key) : goalFmt(key))(+range.value);
+  };
+  inp.addEventListener('blur', done, { once: true });
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); inp.blur(); } });
+}
+const goalFmt = k => ({ cap: FMT.money, cesta: FMT.money, cross: v => C.fmtNum(v) + ' pts', ic: FMT.pct, nps: FMT.nps })[k] || FMT.nps;
+
+// ---------- Exemplo ----------
+function demoState() {
+  const s = C.emptyState(); s.settings = { team: 'Time Exemplo', leader: 'Líder Exemplo', updatedAt: 1 };
+  const names = [['Ana Ribeiro', 1.15], ['Bruno Tavares', .95], ['Carla Mendes', 1.3], ['Diego Souza', .7], ['Elisa Prado', 1.05], ['Felipe Nogueira', .55]];
+  const sm = C.semesterMonths(C.semesterOf(todayMonth)), cur = sm.indexOf(todayMonth);
+  names.forEach(([name, f], i) => {
+    const id = 'demo-' + i; s.members[id] = { id, name, code: 'A' + (70310 + i * 137), role: 'Assessor', goals: { ...C.DEFAULT_GOALS }, createdAt: i, order: i, updatedAt: 1 };
+    sm.forEach((mo, j) => {
+      if (j > Math.max(cur, 0) + 1) return;
+      const w = f * (0.8 + ((i * 7 + j * 3) % 5) / 10);
+      s.entries[C.monthKey(id, mo)] = { cap: Math.round(800000 * w / 10000) * 10000, prev: j % 2 ? 100000 : 0, stvm: 0, aloc: Math.round(2200000 * (w * .9 + .1) / 25000) * 25000, cards: Math.round(12 * w), seg: Math.round(4000 * w / 500) * 500, con: j % 3 === 0 ? 100000 : 0, ic: Math.round(83 * (0.95 + w / 20) * 2) / 2, nps: Math.round(41.3 * (0.8 + w / 4)), status: j < cur ? 'real' : 'est', updatedAt: 1 };
+    });
+  });
+  return s;
+}
+
+// ---------- Eventos ----------
+const actions = {
+  'toggle-sidebar': () => { sidebarCollapsed = !sidebarCollapsed; store.set(LS.sidebar, sidebarCollapsed ? 'collapsed' : 'open'); render(); },
+  'cycle-theme': () => { const i = THEMES.findIndex(t => t[0] === theme); applyTheme(THEMES[(i + 1) % THEMES.length][0]); notify('Tema ' + THEMES.find(t => t[0] === theme)[1] + '.'); if (screen === 'settings') render(); },
+  'period-prev': () => { if (view === 'month') month = shiftMonth(month, -1); else sem = C.shiftSemester(sem, -1); render(); },
+  'period-next': () => { if (view === 'month') month = shiftMonth(month, 1); else sem = C.shiftSemester(sem, 1); render(); },
+  'add-member': addMember, 'goals-all': goalsAll,
+  'edit-goals': b => editGoals(b.dataset.id), 'remove-member': b => removeMember(b.dataset.id),
+  'restore-member': b => { commit(s => { s.members[b.dataset.id] = { ...s.members[b.dataset.id], removedAt: null, updatedAt: now() }; }); notify('Membro restaurado.'); },
+  'edit-sem-goals': () => editSemGoals(memberId),
+  'member-prev': () => stepMember(-1), 'member-next': () => stepMember(1),
+  'copy-prev': () => {
+    const prev = state.entries[entryKey(memberId, shiftMonth(month, -1))];
+    if (!C.hasData(prev)) { notify('O mês anterior não tem lançamento.'); return; }
+    const before = state.entries[entryKey(memberId, month)];
+    const { updatedAt, status, ...vals } = prev;
+    commit(s => { s.entries[entryKey(memberId, month)] = { ...vals, status: 'est', updatedAt: now() }; });
+    notify('Estimativa copiada de ' + monthName(shiftMonth(month, -1), { month: 'long' }) + '.', () => commit(s => { s.entries[entryKey(memberId, month)] = before ? { ...before, updatedAt: now() } : { cleared: true, updatedAt: now() }; }));
+  },
+  'repeat-sem': () => {
+    const cur = currentEntry(); if (!C.hasData(cur)) { notify('Estime este mês primeiro.'); return; }
+    const months = C.semesterMonths(C.semesterOf(month)).filter(mo => mo > month);
+    if (!months.length) { notify('Este já é o último mês do semestre.'); return; }
+    const targets = months.filter(mo => !C.hasData(state.entries[entryKey(memberId, mo)]) || (state.entries[entryKey(memberId, mo)].status || 'est') === 'est');
+    const backup = Object.fromEntries(targets.map(mo => [mo, state.entries[entryKey(memberId, mo)]]));
+    const { updatedAt, status, ...vals } = cur;
+    commit(s => { for (const mo of targets) s.entries[entryKey(memberId, mo)] = { ...vals, status: 'est', updatedAt: now() }; });
+    notify(`Estimativa repetida em ${targets.length} ${targets.length === 1 ? 'mês' : 'meses'} (realizados preservados).`, () => commit(s => { for (const mo of targets) s.entries[entryKey(memberId, mo)] = backup[mo] ? { ...backup[mo], updatedAt: now() } : { cleared: true, updatedAt: now() }; }));
+  },
+  'clear-month': () => {
+    const before = currentEntry();
+    commit(s => { s.entries[entryKey(memberId, month)] = { cleared: true, updatedAt: now() }; });
+    notify('Lançamento de ' + monthName(month, { month: 'long' }) + ' limpo.', () => commit(s => { s.entries[entryKey(memberId, month)] = { ...before, updatedAt: now() }; }));
+  },
+  'demo': () => { demoBackup = state; state = demoState(); demo = true; screen = 'team'; render(); },
+  'exit-demo': () => { state = demoBackup || C.emptyState(); demo = false; demoBackup = null; screen = 'team'; render(); },
+  'save-team': () => { const team = $('#teamName').value.trim() || 'Meu time', leader = $('#leaderName').value.trim(); commit(s => { s.settings = { ...s.settings, team, leader, updatedAt: now() }; }); notify('Time atualizado.'); },
+  'create-key': async b => { if (demo) { notify('Saia do exemplo para criar sua chave.'); return; } b.disabled = true; try { await connectCloud(genKey(), true); render(); if (syncStatus === 'synced') showKey(); } catch (e) { cloud = null; store.del(LS.key); notify(e.message); render(); } },
+  'show-key': showKey, 'sync-now': () => sync({ quiet: false }).then(() => syncStatus === 'synced' && notify('Base sincronizada.')),
+  'disconnect': () => { store.del(LS.key); cloud = null; setStatus('local'); render(); notify('Desconectado. Os dados continuam neste aparelho.'); },
+  'export': () => { const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `mereo-time-${new Date().toISOString().slice(0, 10)}.json`; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); },
+  'import': () => $('#importFile').click()
+};
+function shiftMonth(m, d) { const dt = new Date(+m.slice(0, 4), +m.slice(5, 7) - 1 + d, 1); return `${dt.getFullYear()}-${pad(dt.getMonth() + 1)}`; }
+function stepMember(d) { const list = members(), i = list.findIndex(x => x.id === memberId); if (list.length < 2) return; memberId = list[(i + d + list.length) % list.length].id; render(); }
+function openMember(id) { memberId = id; screen = 'member'; render(); }
+
+document.addEventListener('click', e => {
+  const t = e.target;
+  if (dialog.open && dialog.contains(t)) {
+    const p = t.closest('[data-preset]'); if (p) { const r = p.closest('.sl').querySelector('input[type=range]'); if (+p.dataset.v > +r.max) r.max = p.dataset.v; r.value = p.dataset.v; r.dispatchEvent(new Event('input', { bubbles: true })); }
+    const o = t.closest('.sl-out'); if (o) typeValue(o);
+    return;
+  }
+  const nav = t.closest('[data-nav]'); if (nav) { screen = nav.dataset.nav; render(); return; }
+  const mem = t.closest('[data-member]'); if (mem) { openMember(mem.dataset.member); return; }
+  const vw = t.closest('[data-view]'); if (vw) { view = vw.dataset.view; if (view === 'semester') sem = C.semesterOf(month); else if (!C.semesterMonths(sem).includes(month)) month = C.semesterMonths(sem).includes(todayMonth) ? todayMonth : C.semesterMonths(sem)[0]; render(); return; }
+  const sm = t.closest('[data-semmode]'); if (sm) { semMode = sm.dataset.semmode; render(); return; }
+  const om = t.closest('[data-open-month]'); if (om) { month = om.dataset.openMonth; view = 'month'; render(); return; }
+  const st = t.closest('[data-status]'); if (st) { setEntry({ status: st.dataset.status }); persist(); render(); return; }
+  const th = t.closest('[data-theme-pick]'); if (th) { applyTheme(th.dataset.themePick); render(); return; }
+  const pr = t.closest('[data-preset]'); if (pr && pr.dataset.scope === 'entry') { setEntry({ [pr.dataset.preset]: +pr.dataset.v }); persist(); render(); return; }
+  const nl = t.closest('[data-null]'); if (nl && nl.dataset.scope === 'entry') { setEntry({ [nl.dataset.null]: null }); persist(); render(); return; }
+  const out = t.closest('.sl-out'); if (out) { typeValue(out); return; }
+  const a = t.closest('[data-action]'); if (a && actions[a.dataset.action]) { actions[a.dataset.action](a); }
+});
+document.addEventListener('input', e => {
+  const t = e.target;
+  if (t.dataset.entry) { isSliding = true; onEntrySlide(t); return; }
+  if (dialog.open && t.dataset.goal) { const box = t.closest('.sl'); box.querySelector('.sl-out').textContent = goalFmt(t.dataset.goal)(+t.value); box.querySelectorAll('[data-preset]').forEach(b => b.classList.toggle('on', Math.abs(+b.dataset.v - +t.value) < (+t.step || 1e-6) / 2)); }
+});
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.dataset.entry) { isSliding = false; persist(); return; }
+  if (t.id === 'importFile' && t.files[0]) {
+    t.files[0].text().then(txt => { const inc = C.validate(JSON.parse(txt)); commit(s => { const m = C.merge(s, inc); Object.assign(s, m); }); notify(`Importado: ${Object.keys(inc.members).length} membros, ${Object.keys(inc.entries).length} lançamentos.`); }).catch(err => notify('Não foi possível importar: ' + err.message));
+    t.value = '';
+  }
+});
+document.addEventListener('submit', async e => {
+  if (e.target.id !== 'keyForm') return; e.preventDefault();
+  if (demo) { notify('Saia do exemplo para conectar.'); return; }
+  const k = new FormData(e.target).get('key'); const btn = e.target.querySelector('button'); btn.disabled = true;
+  try { await connectCloud(k, false); render(); notify('Conectado. Base sincronizada.'); } catch (err) { cloud = null; store.del(LS.key); btn.disabled = false; notify(err.message); }
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && dialog.open) dialog.close(); });
+
+render();
+})();
+
+</script></body></html>
