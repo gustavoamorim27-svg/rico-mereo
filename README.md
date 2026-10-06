@@ -23,9 +23,9 @@ Painel do líder para acompanhar o MEREO de cada membro do time — visão **men
 
 - 100% da meta = nota 3; linear entre os pontos; nota final = média ponderada (máx. 5,00).
 - Previdência e STVM dentro da captação pesam 1,25×; a previdência ponderada também soma na cesta (cesta = alocação + previdência 1,25×).
-- Crossell: cartão = 1 ponto; consórcio = 1 ponto/R$ 10 mil; seguro = 1 ponto/R$ 1 mil.
+- Crossell: cartão = 1 ponto; consórcio = 1 ponto/R$ 10 mil; seguro = 1 ponto/R$ 1 mil. Meta 25 pts com mínimo de 10 pts em seguros (card 2S2026): sem o mínimo, os demais produtos contam até 15 pts.
 - IC e NPS sem lançamento usam a referência da meta (nota 3), como no Pipeline.
-- Metas padrão: captação R$ 800 mil/mês, cesta R$ 2,2 mi, crossell 25 pts, IC 83%, NPS 41,3.
+- Metas padrão: captação R$ 800 mil/mês, cesta R$ 2,2 mi, crossell 25 pts, IC 83%. NPS segue o card 2S2026 mês a mês (jul 35 · ago 37,5 · set 40 · out 42,5 · nov 45 · dez 47,5); fora dele, 41,3.
 - Semestre: captação, cesta e crossell somam os 6 meses contra a soma das metas mensais; IC e NPS pela média dos meses lançados.
 
 `core.test.mjs` compara as notas com valores gerados pelo `monthData()` do Pipeline para os mesmos lançamentos.

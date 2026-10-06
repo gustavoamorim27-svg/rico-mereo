@@ -2221,6 +2221,15 @@ const MereoCore = (() => {
   ];
   // Metas padrão do pipeline: captação R$ 800 mil/mês, cesta R$ 2,2 mi, crossell 25 pts, IC 83%, NPS 41,3.
   const DEFAULT_GOALS = { cap: 800000, cesta: 2200000, cross: 25, ic: 83, nps: 41.3 };
+  // Card de metas 2S2026 (Assessor · Exclusive Advisory DF II): NPS com meta mensal crescente e
+  // crossell de 25 pts com mínimo de 10 pts em seguros (cartão sem mínimo).
+  const NPS_META = { '2026-07': 35, '2026-08': 37.5, '2026-09': 40, '2026-10': 42.5, '2026-11': 45, '2026-12': 47.5 };
+  const CROSS_MIN_SEG = 10;
+  // sem o mínimo de seguros, os demais produtos contam no máximo (meta − mínimo) pontos
+  function crossPoints(e, goal) {
+    const seg = num(e.seg) / 1000, outros = num(e.cards) + num(e.con) / 10000;
+    return seg >= CROSS_MIN_SEG ? seg + outros : seg + Math.min(outros, Math.max(0, (goal ?? DEFAULT_GOALS.cross) - CROSS_MIN_SEG));
+  }
   const FLOW = ['cap', 'cesta', 'cross'];
   const INPUTS = ['cap', 'prev', 'stvm', 'aloc', 'cards', 'seg', 'con', 'ic', 'nps'];
 
@@ -2238,14 +2247,14 @@ const MereoCore = (() => {
   // Valores MEREO de um lançamento mensal.
   // Previdência/STVM dentro da captação pesam 1,25× (igual ao pipeline). A cesta soma alocação + previdência ponderada.
   // Crossell: cartão = 1 ponto, consórcio = 1 ponto a cada R$ 10 mil, seguro = 1 ponto a cada R$ 1 mil.
-  function values(e) {
+  function values(e, crossGoal) {
     e = e || {};
     const cap = num(e.cap), boosted = Math.min(num(e.prev) + num(e.stvm), cap);
     const prevW = Math.min(num(e.prev), cap) * 1.25;
     return {
       cap: cap + boosted * .25,
       cesta: num(e.aloc) + prevW,
-      cross: num(e.cards) + num(e.con) / 10000 + num(e.seg) / 1000,
+      cross: crossPoints(e, crossGoal),
       ic: e.ic == null || e.ic === '' ? null : +e.ic,
       nps: e.nps == null || e.nps === '' ? null : +e.nps
     };
@@ -2266,13 +2275,15 @@ const MereoCore = (() => {
     const base = { ...DEFAULT_GOALS, ...(member?.goals || {}) };
     const o = member?.monthGoals?.[month] || {};
     for (const k of FLOW) if (o[k] != null && o[k] !== '') base[k] = +o[k];
+    if (o.nps != null && o.nps !== '') base.nps = +o.nps;
+    else if (NPS_META[month] != null) base.nps = NPS_META[month];
     return base;
   }
   function monthResult(state, member, month) {
     const entry = state.entries?.[monthKey(member.id, month)];
     const filled = hasData(entry);
     const goals = goalsFor(member, month);
-    const r = build(values(filled ? entry : {}), goals);
+    const r = build(values(filled ? entry : {}, goals.cross), goals);
     return { ...r, month, goals, entry: filled ? entry : null, filled, status: filled ? (entry.status || 'est') : 'none' };
   }
 
@@ -2288,7 +2299,7 @@ const MereoCore = (() => {
   function semesterResult(state, member, sem, mode = 'proj') {
     const months = semesterMonths(sem).map(m => monthResult(state, member, m));
     const filled = months.filter(m => m.filled);
-    const vals = months.map(m => m.filled ? values(m.entry) : null);
+    const vals = months.map(m => m.filled ? values(m.entry, m.goals.cross) : null);
     const filledVals = vals.filter(Boolean);
     const avg = k => filledVals.length ? filledVals.reduce((s, v) => s + v[k], 0) / filledVals.length : 0;
     const totals = {}, goals = {};
@@ -2348,7 +2359,7 @@ const MereoCore = (() => {
   const fmtScore = s => s.toFixed(2).replace('.', ',');
   const fmtNum = (n, d = 1) => (+n || 0).toLocaleString('pt-BR', { maximumFractionDigits: d });
 
-  return { COMPONENTS, DEFAULT_GOALS, FLOW, INPUTS, score, values, build, monthKey, goalsFor, monthResult, semesterOf, semesterMonths, shiftSemester, semesterResult, emptyState, merge, validate, activeMembers, teamSummary, hasData, shortMoney, fmtScore, fmtNum };
+  return { COMPONENTS, DEFAULT_GOALS, NPS_META, CROSS_MIN_SEG, FLOW, INPUTS, score, values, build, monthKey, goalsFor, monthResult, semesterOf, semesterMonths, shiftSemester, semesterResult, emptyState, merge, validate, activeMembers, teamSummary, hasData, shortMoney, fmtScore, fmtNum };
 })();
 if (typeof module !== 'undefined') module.exports = MereoCore;
 
@@ -2586,12 +2597,12 @@ function moneyStep(goal) { return goal >= 2e6 ? 25000 : goal >= 5e5 ? 10000 : go
 function goalPresets(goal, step) { return [0, 50, 80, 100, 120, 150].map(p => [p === 0 ? 'Zero' : p + '%', roundStep(goal * p / 100, step)]); }
 
 function entryFields(m, e) {
-  const g = C.goalsFor(m, month), v = C.values(e);
+  const g = C.goalsFor(m, month), v = C.values(e, g.cross);
   const capStep = moneyStep(g.cap), cestaStep = moneyStep(g.cesta);
   const cap = +e.cap || 0;
   return `<div class="entry-group"><h3>${icon('wallet')}Captação <small>meta ${C.shortMoney(g.cap)}</small></h3>${slider({ key: 'cap', label: 'Captação líquida do mês', value: cap, min: 0, max: Math.max(g.cap * 3, cap), step: capStep, fmt: FMT.money, presets: goalPresets(g.cap, capStep) })}<details class="sub" ${(+e.prev || +e.stvm) ? 'open' : ''}><summary>Previdência e STVM dentro da captação <em>pesam 1,25×</em></summary>${slider({ key: 'prev', label: 'Previdência', value: +e.prev || 0, min: 0, max: Math.max(cap, +e.prev || 0, capStep), step: capStep, fmt: FMT.money, presets: [['Zero', 0], ['25%', roundStep(cap * .25, capStep)], ['50%', roundStep(cap * .5, capStep)]], hint: 'Também entra na cesta de investimento (1,25×).' })}${slider({ key: 'stvm', label: 'STVM', value: +e.stvm || 0, min: 0, max: Math.max(cap, +e.stvm || 0, capStep), step: capStep, fmt: FMT.money, presets: [['Zero', 0], ['25%', roundStep(cap * .25, capStep)]] })}</details><small class="calc" data-calc="cap">Captação MEREO: <b>${C.shortMoney(v.cap)}</b></small></div>
   <div class="entry-group"><h3>${icon('arrow')}Cesta investimento <small>meta ${C.shortMoney(g.cesta)}</small></h3>${slider({ key: 'aloc', label: 'Alocação do mês', value: +e.aloc || 0, min: 0, max: Math.max(g.cesta * 3, +e.aloc || 0), step: cestaStep, fmt: FMT.money, presets: goalPresets(g.cesta, cestaStep) })}<small class="calc" data-calc="cesta">Cesta MEREO (alocação + previdência 1,25×): <b>${C.shortMoney(v.cesta)}</b></small></div>
-  <div class="entry-group"><h3>${icon('plus')}Crossell <small>meta ${C.fmtNum(g.cross)} pts</small></h3>${slider({ key: 'cards', label: 'Cartões (1 pt cada)', value: +e.cards || 0, min: 0, max: Math.max(Math.ceil(g.cross * 2), +e.cards || 0, 10), step: 1, fmt: FMT.int, presets: [0, 5, 10, 15, 20, 25].map(n => [String(n), n]) })}${slider({ key: 'seg', label: 'Seguros (1 pt a cada R$ 1 mil)', value: +e.seg || 0, min: 0, max: Math.max(30000, +e.seg || 0), step: 500, fmt: FMT.money, presets: [['Zero', 0], ['R$ 2 mil', 2000], ['R$ 5 mil', 5000], ['R$ 10 mil', 10000]] })}${slider({ key: 'con', label: 'Consórcio (1 pt a cada R$ 10 mil)', value: +e.con || 0, min: 0, max: Math.max(300000, +e.con || 0), step: 5000, fmt: FMT.money, presets: [['Zero', 0], ['R$ 50 mil', 50000], ['R$ 100 mil', 100000], ['R$ 200 mil', 200000]] })}<small class="calc" data-calc="cross">Pontos de crossell: <b>${C.fmtNum(v.cross)} pts</b></small></div>
+  <div class="entry-group"><h3>${icon('plus')}Crossell <small>meta ${C.fmtNum(g.cross)} pts</small></h3>${slider({ key: 'cards', label: 'Cartões (1 pt cada)', value: +e.cards || 0, min: 0, max: Math.max(Math.ceil(g.cross * 2), +e.cards || 0, 10), step: 1, fmt: FMT.int, presets: [0, 5, 10, 15, 20, 25].map(n => [String(n), n]) })}${slider({ key: 'seg', label: 'Seguros (1 pt a cada R$ 1 mil)', value: +e.seg || 0, min: 0, max: Math.max(30000, +e.seg || 0), step: 500, fmt: FMT.money, presets: [['Zero', 0], ['R$ 2 mil', 2000], ['R$ 5 mil', 5000], ['R$ 10 mil', 10000]] })}${slider({ key: 'con', label: 'Consórcio (1 pt a cada R$ 10 mil)', value: +e.con || 0, min: 0, max: Math.max(300000, +e.con || 0), step: 5000, fmt: FMT.money, presets: [['Zero', 0], ['R$ 50 mil', 50000], ['R$ 100 mil', 100000], ['R$ 200 mil', 200000]] })}<small class="calc" data-calc="cross">Pontos de crossell: <b>${C.fmtNum(v.cross)} pts</b>${(+e.seg || 0) / 1000 < C.CROSS_MIN_SEG ? ' · faltam ' + C.fmtNum(C.CROSS_MIN_SEG - (+e.seg || 0) / 1000) + ' pts de seguros para o mínimo' : ''}</small></div>
   <div class="entry-group two"><div><h3>${icon('target')}Índice comercial <small>meta ${C.fmtNum(g.ic)}%</small></h3>${slider({ key: 'ic', label: 'IC do mês', value: e.ic ?? g.ic, isNull: e.ic == null, nullable: true, min: 0, max: 120, step: .5, fmt: FMT.pct, presets: [[C.fmtNum(g.ic * .9) + '%', roundStep(g.ic * .9, .5)], [C.fmtNum(g.ic) + '%', g.ic], [C.fmtNum(g.ic * 1.1) + '%', roundStep(g.ic * 1.1, .5)]] })}</div><div><h3>${icon('users')}NPS <small>meta ${C.fmtNum(g.nps)}</small></h3>${slider({ key: 'nps', label: 'NPS do mês', value: e.nps ?? g.nps, isNull: e.nps == null, nullable: true, min: -100, max: 100, step: .5, fmt: FMT.nps, presets: [['30', 30], [C.fmtNum(g.nps), g.nps], ['60', 60], ['80', 80]] })}</div></div>`;
 }
 function memberMonth(m) {
@@ -2602,7 +2613,7 @@ function memberMonth(m) {
 function memberSemester(m) {
   const r = C.semesterResult(state, m, sem, semMode);
   const bars = r.months.map(x => { const h = x.filled ? (x.score - 1) / 4 * 100 : 0; return `<button class="bar ${x.filled ? scoreClass(x.score) : 'none'} ${x.status === 'est' ? 'est' : ''}" data-open-month="${x.month}" title="Abrir ${monthName(x.month)}"><span class="bar-val">${x.filled ? C.fmtScore(x.score) : '—'}</span><span class="bar-track"><span style="height:${Math.max(3, h)}%"></span></span><span class="bar-lbl">${monthShort(x.month)}</span><small>${x.status === 'real' ? 'real' : x.status === 'est' ? 'estim.' : 'vazio'}</small></button>`; }).join('');
-  const goalRows = r.months.map(x => `<tr class="${x.filled ? '' : 'dim'}"><td>${monthName(x.month, { month: 'long' })}</td><td>${x.filled ? C.shortMoney(C.values(x.entry).cap) : '—'} <em>/ ${C.shortMoney(x.goals.cap)}</em></td><td class="hide-xs">${x.filled ? C.shortMoney(C.values(x.entry).cesta) : '—'} <em>/ ${C.shortMoney(x.goals.cesta)}</em></td><td class="hide-xs">${x.filled ? C.fmtNum(C.values(x.entry).cross) : '—'} <em>/ ${C.fmtNum(x.goals.cross)}</em></td><td><span class="sc-chip ${x.filled ? scoreClass(x.score) : 'none'}">${x.filled ? C.fmtScore(x.score) : '—'}</span></td></tr>`).join('');
+  const goalRows = r.months.map(x => `<tr class="${x.filled ? '' : 'dim'}"><td>${monthName(x.month, { month: 'long' })}</td><td>${x.filled ? C.shortMoney(C.values(x.entry).cap) : '—'} <em>/ ${C.shortMoney(x.goals.cap)}</em></td><td class="hide-xs">${x.filled ? C.shortMoney(C.values(x.entry).cesta) : '—'} <em>/ ${C.shortMoney(x.goals.cesta)}</em></td><td class="hide-xs">${x.filled ? C.fmtNum(C.values(x.entry, x.goals.cross).cross) : '—'} <em>/ ${C.fmtNum(x.goals.cross)}</em></td><td><span class="sc-chip ${x.filled ? scoreClass(x.score) : 'none'}">${x.filled ? C.fmtScore(x.score) : '—'}</span></td></tr>`).join('');
   const capC = r.components[0], gap = Math.max(0, capC.goal - capC.value);
   return `<div class="member-grid"><section class="panel score-panel"><div class="score-hero ${scoreClass(r.score)}"><span class="eyebrow">MEREO · ${semLabel(sem)} · ${semMode === 'proj' ? 'projeção' : 'até agora'}</span><strong>${r.filledCount ? C.fmtScore(r.score) : '—'}</strong><span class="muted small">de 5,00 · ${r.filledCount}/6 meses lançados</span>${scaleBar(r.score)}<div class="scale-labels"><span>1</span><span>2</span><span>3 · meta</span><span>4</span><span>5</span></div></div><div class="comp-list">${r.components.map(compRow).join('')}</div>${semMode === 'proj' || r.filledCount === 6 ? `<p class="gap">${gap > 0 ? `Faltam <b>${C.shortMoney(gap)}</b> de captação para fechar a meta do semestre (${C.shortMoney(capC.goal)}).` : `Captação do semestre ${semMode === 'proj' ? 'projetada ' : ''}acima da meta.`}</p>` : ''}</section><section class="panel sem-panel"><div class="entry-head"><span class="eyebrow">Mês a mês · linha tracejada = nota 3 (meta)</span>${button('Metas do semestre', 'edit-sem-goals', 'calendar', 'sm')}</div><div class="bars">${bars}</div><table class="sem-table"><thead><tr><th>Mês</th><th>Captação / meta</th><th class="hide-xs">Cesta / meta</th><th class="hide-xs">Crossell / meta</th><th>MEREO</th></tr></thead><tbody>${goalRows}</tbody><tfoot><tr><td>Semestre</td><td>${C.shortMoney(r.totals.cap)} <em>/ ${C.shortMoney(r.goals.cap)}</em></td><td class="hide-xs">${C.shortMoney(r.totals.cesta)} <em>/ ${C.shortMoney(r.goals.cesta)}</em></td><td class="hide-xs">${C.fmtNum(r.totals.cross)} <em>/ ${C.fmtNum(r.goals.cross)}</em></td><td><span class="sc-chip ${r.filledCount ? scoreClass(r.score) : 'none'}">${r.filledCount ? C.fmtScore(r.score) : '—'}</span></td></tr></tfoot></table></section></div>`;
 }
@@ -2621,7 +2632,7 @@ function renderSettings() {
   <section class="panel panel-pad"><div class="row">${icon('cloud')}<h3>Sincronizar entre aparelhos</h3></div>${cloud ? `<p>Conectado. Use a mesma chave no iPad e no notebook para ver o mesmo time.</p><p><span class="sync ${syncStatus}" data-sync><i class="dot"></i>${statusLabel()}</span></p><div class="row wrap">${button('Ver chave', 'show-key', 'key')}${button('Sincronizar agora', 'sync-now', 'cloud')}${button('Desconectar', 'disconnect', 'exit', 'danger')}</div>` : `<p>Hoje tudo fica salvo neste aparelho. Crie uma chave para ter a mesma base em outro aparelho — os dados vão criptografados para a nuvem do Pipeline.</p><div class="row wrap">${button('Criar chave', 'create-key', 'plus', 'primary')}</div><form id="keyForm" class="key-form"><label class="field">Já tenho uma chave<input name="key" type="password" autocomplete="off" placeholder="MEREO-…" spellcheck="false" autocapitalize="off"></label><button class="btn" type="submit">${icon('key')}Conectar</button></form>`}</section>
   <section class="panel panel-pad"><div class="row">${icon('download')}<h3>Cópia de segurança</h3></div><p>Exporte a base completa (membros, metas e lançamentos) ou importe um arquivo exportado. A importação mescla sem apagar.</p><div class="row wrap">${button('Exportar', 'export', 'download')}${button('Importar arquivo', 'import', 'upload')}</div><input id="importFile" type="file" accept="application/json,.json" hidden></section>
   <section class="panel panel-pad"><div class="row">${icon('palette')}<h3>Aparência</h3></div><p>Mesma lava lamp do Pipeline e do Hub.</p><div class="theme-grid">${THEMES.map(([id, name, desc, [bg, a, b, c]]) => `<button type="button" class="theme-card ${theme === id ? 'on' : ''}" data-theme-pick="${id}"><span class="theme-swatch" style="background:${bg}"><i style="background:${a};left:-10%;top:-30%"></i><i style="background:${b};right:-15%;top:10%"></i><i style="background:${c};left:30%;bottom:-70%"></i></span><b>${name}</b><small>${desc}</small></button>`).join('')}</div></section>
-  <section class="panel panel-pad wide"><div class="row">${icon('info')}<h3>Como o MEREO é calculado</h3></div><p>Mesmas regras do Rico Pipeline. Cada indicador vira uma nota de 1 a 5 pela curva de atingimento (o 3º ponto é 100% da meta = nota 3; linear entre os pontos). A nota final é a média ponderada.</p><table class="rules"><thead><tr><th>Indicador</th><th>Peso</th><th>Curva (notas 1 → 5)</th></tr></thead><tbody>${rules}</tbody></table><ul class="rule-notes"><li>Previdência e STVM dentro da captação pesam <b>1,25×</b>; a previdência ponderada também soma na cesta.</li><li>Cesta de investimento = alocação + previdência ponderada. Meta padrão R$ 2,2 mi.</li><li>Crossell: cartão = 1 ponto · consórcio = 1 ponto a cada R$ 10 mil · seguro = 1 ponto a cada R$ 1 mil. Meta padrão 25 pts.</li><li>Índice comercial (83%) e NPS (41,3) sem lançamento contam como referência — nota 3.</li><li>Semestre: fluxos somam os 6 meses contra a soma das metas mensais; IC e NPS pela média dos meses lançados.</li></ul></section></div>`;
+  <section class="panel panel-pad wide"><div class="row">${icon('info')}<h3>Como o MEREO é calculado</h3></div><p>Mesmas regras do Rico Pipeline. Cada indicador vira uma nota de 1 a 5 pela curva de atingimento (o 3º ponto é 100% da meta = nota 3; linear entre os pontos). A nota final é a média ponderada.</p><table class="rules"><thead><tr><th>Indicador</th><th>Peso</th><th>Curva (notas 1 → 5)</th></tr></thead><tbody>${rules}</tbody></table><ul class="rule-notes"><li>Previdência e STVM dentro da captação pesam <b>1,25×</b>; a previdência ponderada também soma na cesta.</li><li>Cesta de investimento = alocação + previdência ponderada. Meta padrão R$ 2,2 mi.</li><li>Crossell: cartão = 1 ponto · consórcio = 1 ponto a cada R$ 10 mil · seguro = 1 ponto a cada R$ 1 mil. Meta 25 pts com <b>mínimo de 10 pts em seguros</b> (sem ele, os demais produtos contam até 15).</li><li>NPS com meta mensal do card 2S2026: jul 35 · ago 37,5 · set 40 · out 42,5 · nov 45 · dez 47,5.</li><li>Índice comercial (83%) e NPS sem lançamento contam como referência — nota 3.</li><li>Semestre: fluxos somam os 6 meses contra a soma das metas mensais; IC e NPS pela média dos meses lançados.</li></ul></section></div>`;
 }
 
 // ---------- Diálogos ----------
@@ -2711,9 +2722,9 @@ function setEntry(patch) {
   state.entries[k] = { ...cur, ...patch, updatedAt: now() };
 }
 function liveRefresh() {
-  const m = member(memberId), e = currentEntry() || {}, v = C.values(e);
+  const m = member(memberId), e = currentEntry() || {}, v = C.values(e, C.goalsFor(m, month).cross);
   $('#scorePanel').innerHTML = scorePanel(m);
-  const calc = { cap: `Captação MEREO: <b>${C.shortMoney(v.cap)}</b>`, cesta: `Cesta MEREO (alocação + previdência 1,25×): <b>${C.shortMoney(v.cesta)}</b>`, cross: `Pontos de crossell: <b>${C.fmtNum(v.cross)} pts</b>` };
+  const calc = { cap: `Captação MEREO: <b>${C.shortMoney(v.cap)}</b>`, cesta: `Cesta MEREO (alocação + previdência 1,25×): <b>${C.shortMoney(v.cesta)}</b>`, cross: `Pontos de crossell: <b>${C.fmtNum(v.cross)} pts</b>${(+e.seg || 0) / 1000 < C.CROSS_MIN_SEG ? ' · faltam ' + C.fmtNum(C.CROSS_MIN_SEG - (+e.seg || 0) / 1000) + ' pts de seguros para o mínimo' : ''}` };
   for (const [k, h] of Object.entries(calc)) { const el = $(`[data-calc="${k}"]`); if (el) el.innerHTML = h; }
   const cap = +e.cap || 0;
   for (const k of ['prev', 'stvm']) { const s = $(`[data-entry="${k}"]`); if (s) s.max = Math.max(cap, +s.value, +s.step); }
