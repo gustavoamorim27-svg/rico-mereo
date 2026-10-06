@@ -34,7 +34,8 @@ Painel do líder para acompanhar o MEREO de cada membro do time — visão **men
 
 - Tudo fica salvo no aparelho (localStorage) e funciona offline.
 - **Sincronizar entre aparelhos (opcional):** em *Minha base → Criar chave*. A base vai criptografada (AES-GCM, chave derivada por HKDF) para a coleção `ricoPipeline` do projeto Firebase `rico-hub`, em documentos `mereo-v1-*`, separados dos documentos do Pipeline. No outro aparelho, *Já tenho uma chave*. Quem tem a chave vê e edita a base.
-- Sincroniza a cada 20 s, ao voltar para a aba e logo após cada alteração; conflitos são mesclados por registro (membro/mês), usando a precondição `updateTime` do Firestore.
+- **Compartilhar time:** em *Equipe* ou *Minha base*, gera um link (`…/rico-mereo/#time=MEREO-…`). Quem abre entra direto na base do time — sem colar chave — e vê os mesmos membros, metas e lançamentos. Quem tem o link também edita.
+- Sincroniza a cada 5 s com a tela em uso (20 s se ficar parada), ao voltar para a aba e logo após cada alteração; conflitos são mesclados por registro (membro/mês), usando a precondição `updateTime` do Firestore.
 - *Exportar / Importar* gera e mescla um JSON completo.
 
 ## Publicação

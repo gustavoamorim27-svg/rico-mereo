@@ -2523,9 +2523,41 @@ async function connectCloud(access, create) {
   cloud = c; store.set(LS.key, c.access); store.set(LS.state, JSON.stringify(state)); dirty = true;
   await sync({ quiet: false });
 }
-(async () => { const k = store.get(LS.key); if (k) { try { cloud = await credentials(k); sync(); } catch { cloud = null; } } })();
-setInterval(() => { if (cloud && !document.hidden) sync(); }, 20000);
-document.addEventListener('visibilitychange', () => { if (!document.hidden && cloud) sync(); });
+// Link do time: #time=MEREO-… abre direto a base compartilhada (a chave sai da barra de endereço em seguida).
+function linkKey() {
+  const m = /[#&]time=(MEREO-[A-Za-z0-9_-]{43})/.exec(location.hash || '');
+  if (m) try { history.replaceState(null, '', location.pathname + location.search); } catch {}
+  return m ? m[1] : null;
+}
+const shareLink = () => cloud ? location.origin + location.pathname + '#time=' + cloud.access : '';
+async function joinShared(k) {
+  const local = members().length, mine = store.get(LS.key);
+  if (mine === k) { try { cloud = await credentials(k); await sync(); } catch {} return; }
+  const entra = async replace => {
+    try {
+      if (replace) { store.set('ricoMereo.stateAntes', JSON.stringify(state)); state = C.emptyState(); }
+      await connectCloud(k, false); screen = 'team'; render(); notify('Você entrou no time compartilhado. As mudanças aparecem aqui em segundos.');
+    } catch (e) { cloud = null; store.del(LS.key); notify(e.message); render(); }
+  };
+  if (!local && !mine) return entra(false);
+  showModal('Abrir o time compartilhado', `<p>Este link abre o time compartilhado pelo líder. Neste aparelho já existe ${local ? `uma base com ${local} membro${local === 1 ? '' : 's'}` : 'outra base sincronizada'}.</p><p class="small muted" style="margin-top:10px">Ao abrir, este aparelho passa a mostrar o time compartilhado. A base atual fica guardada como cópia neste aparelho.</p>`, async () => { await entra(true); }, 'Abrir o time compartilhado');
+}
+// Sincronização quase em tempo real: a cada 5 s enquanto a tela está aberta e em uso; 20 s se ficar parada.
+let lastActive = Date.now(), lastPoll = 0;
+['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(ev => document.addEventListener(ev, () => { lastActive = Date.now(); }, { passive: true, capture: true }));
+setInterval(() => {
+  if (!cloud || document.hidden || demo) return;
+  const every = Date.now() - lastActive < 180000 ? 5000 : 20000;
+  if (Date.now() - lastPoll >= every) { lastPoll = Date.now(); sync(); }
+}, 1000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden && cloud) { lastActive = Date.now(); sync(); } });
+window.addEventListener('focus', () => { if (cloud) { lastActive = Date.now(); sync(); } });
+setTimeout(async () => {
+  const lk = linkKey();
+  if (lk) { await joinShared(lk); return; }
+  const k = store.get(LS.key); if (k) { try { cloud = await credentials(k); sync(); } catch { cloud = null; } }
+}, 0);
+window.addEventListener('hashchange', () => { const lk = linkKey(); if (lk) joinShared(lk); });
 
 // ---------- Dados ----------
 const members = () => C.activeMembers(state);
@@ -2626,7 +2658,7 @@ function memberSemester(m) {
 function renderManage() {
   const list = members(), removed = Object.values(state.members).filter(m => m.removedAt).sort((a, b) => b.removedAt - a.removedAt);
   const goalsTxt = m => { const g = C.goalsFor(m, todayMonth); return `Capt. ${C.shortMoney(g.cap)} · Cesta ${C.shortMoney(g.cesta)} · Cross ${C.fmtNum(g.cross)} pts · NPS ${C.fmtNum(g.nps)}${C.NPS_META[todayMonth] != null ? ' (card, ' + monthShort(todayMonth) + ')' : ''} · IC ${C.fmtNum(g.ic)}%`; };
-  return pageTitle('Equipe', `${list.length > 1 ? button('Metas para todos', 'goals-all', 'users') : ''}${button('Adicionar membro', 'add-member', 'plus', 'primary')}`) + (list.length ? `<section class="panel member-list">${list.map(m => `<div class="member-row"><button class="who" data-member="${m.id}">${avatar(m)}<span><b>${esc(m.name)}</b><small>${m.code ? esc(m.code) + ' · ' : ''}${goalsTxt(m)}</small></span></button><div class="row">${button('Metas', 'edit-goals', 'edit', 'sm', `data-id="${m.id}"`)}<button class="icon-btn danger" data-action="remove-member" data-id="${m.id}" aria-label="Remover ${esc(m.name)}" title="Remover do time">${icon('trash')}</button></div></div>`).join('')}</section>` : `<section class="panel hero-empty">${icon('users')}<h2>Nenhum membro ainda</h2><p>Comece adicionando quem faz parte do time. As metas padrão vêm do Pipeline e podem ser ajustadas por pessoa.</p>${button('Adicionar membro', 'add-member', 'plus', 'primary')}</section>`) + (removed.length ? `<details class="panel removed"><summary>Removidos do time (${removed.length})</summary>${removed.map(m => `<div class="member-row">${`<span class="who">${avatar(m)}<span><b>${esc(m.name)}</b><small>Removido em ${new Date(m.removedAt).toLocaleDateString('pt-BR')} · lançamentos preservados</small></span></span>`}${button('Restaurar', 'restore-member', 'undo', 'sm', `data-id="${m.id}"`)}</div>`).join('')}</details>` : '');
+  return pageTitle('Equipe', `${list.length ? button('Compartilhar time', 'share-team', 'copy') : ''}${list.length > 1 ? button('Metas para todos', 'goals-all', 'users') : ''}${button('Adicionar membro', 'add-member', 'plus', 'primary')}`) + (list.length ? `<section class="panel member-list">${list.map(m => `<div class="member-row"><button class="who" data-member="${m.id}">${avatar(m)}<span><b>${esc(m.name)}</b><small>${m.code ? esc(m.code) + ' · ' : ''}${goalsTxt(m)}</small></span></button><div class="row">${button('Metas', 'edit-goals', 'edit', 'sm', `data-id="${m.id}"`)}<button class="icon-btn danger" data-action="remove-member" data-id="${m.id}" aria-label="Remover ${esc(m.name)}" title="Remover do time">${icon('trash')}</button></div></div>`).join('')}</section>` : `<section class="panel hero-empty">${icon('users')}<h2>Nenhum membro ainda</h2><p>Comece adicionando quem faz parte do time. As metas padrão vêm do Pipeline e podem ser ajustadas por pessoa.</p>${button('Adicionar membro', 'add-member', 'plus', 'primary')}</section>`) + (removed.length ? `<details class="panel removed"><summary>Removidos do time (${removed.length})</summary>${removed.map(m => `<div class="member-row">${`<span class="who">${avatar(m)}<span><b>${esc(m.name)}</b><small>Removido em ${new Date(m.removedAt).toLocaleDateString('pt-BR')} · lançamentos preservados</small></span></span>`}${button('Restaurar', 'restore-member', 'undo', 'sm', `data-id="${m.id}"`)}</div>`).join('')}</details>` : '');
 }
 
 // ---------- Minha base ----------
@@ -2636,7 +2668,7 @@ function renderSettings() {
   const cardLinha = (nome, f) => `<tr><td>${nome}</td>${cardMeses.map(mo => `<td>${f(mo)}</td>`).join('')}</tr>`;
   const cardMetas = `<table class="rules card-metas"><thead><tr><th>Metas mensais</th>${cardMeses.map(mo => `<th>${monthShort(mo)}</th>`).join('')}</tr></thead><tbody>${cardLinha('Captação Líquida, R$M', () => '0,80')}${cardLinha('Cesta Investimentos, %', () => '100%')}${cardLinha('Cesta Cross Sell, pts', () => '25,0')}${cardLinha('NPS Assessoria, pts', mo => C.NPS_META[mo].toFixed(1).replace('.', ','))}${cardLinha('Índice Comercial, %', () => '83%')}</tbody></table>`;
   return pageTitle('Minha base') + `<div class="settings-grid"><section class="panel panel-pad"><div class="row">${icon('users')}<h3>Time</h3></div><p>Nome do time e do líder, exibidos no menu.</p><div class="fields one"><label class="field">Nome do time<input id="teamName" value="${esc(state.settings.team || '')}" placeholder="Ex.: Time Bauru"></label><label class="field">Líder<input id="leaderName" value="${esc(state.settings.leader || '')}" placeholder="Seu nome"></label></div>${button('Salvar', 'save-team', 'check')}</section>
-  <section class="panel panel-pad"><div class="row">${icon('cloud')}<h3>Sincronizar entre aparelhos</h3></div>${cloud ? `<p>Conectado. Use a mesma chave no iPad e no notebook para ver o mesmo time.</p><p><span class="sync ${syncStatus}" data-sync><i class="dot"></i>${statusLabel()}</span></p><div class="row wrap">${button('Ver chave', 'show-key', 'key')}${button('Sincronizar agora', 'sync-now', 'cloud')}${button('Desconectar', 'disconnect', 'exit', 'danger')}</div>` : `<p>Hoje tudo fica salvo neste aparelho. Crie uma chave para ter a mesma base em outro aparelho — os dados vão criptografados para a nuvem do Pipeline.</p><div class="row wrap">${button('Criar chave', 'create-key', 'plus', 'primary')}</div><form id="keyForm" class="key-form"><label class="field">Já tenho uma chave<input name="key" type="password" autocomplete="off" placeholder="MEREO-…" spellcheck="false" autocapitalize="off"></label><button class="btn" type="submit">${icon('key')}Conectar</button></form>`}</section>
+  <section class="panel panel-pad"><div class="row">${icon('cloud')}<h3>Sincronizar entre aparelhos</h3></div>${cloud ? `<p>Conectado. Quem abrir o link do time (ou usar a mesma chave) vê os mesmos dados, atualizados a cada poucos segundos.</p><p><span class="sync ${syncStatus}" data-sync><i class="dot"></i>${statusLabel()}</span></p><div class="row wrap">${button('Compartilhar time', 'share-team', 'copy', 'primary')}${button('Ver chave', 'show-key', 'key')}${button('Sincronizar agora', 'sync-now', 'cloud')}${button('Desconectar', 'disconnect', 'exit', 'danger')}</div>` : `<p>Hoje tudo fica salvo neste aparelho. Crie uma chave para ter a mesma base em outro aparelho — os dados vão criptografados para a nuvem do Pipeline.</p><div class="row wrap">${button('Compartilhar time', 'share-team', 'copy', 'primary')}${button('Criar chave', 'create-key', 'plus')}</div><form id="keyForm" class="key-form"><label class="field">Já tenho uma chave<input name="key" type="password" autocomplete="off" placeholder="MEREO-…" spellcheck="false" autocapitalize="off"></label><button class="btn" type="submit">${icon('key')}Conectar</button></form>`}</section>
   <section class="panel panel-pad"><div class="row">${icon('download')}<h3>Cópia de segurança</h3></div><p>Exporte a base completa (membros, metas e lançamentos) ou importe um arquivo exportado. A importação mescla sem apagar.</p><div class="row wrap">${button('Exportar', 'export', 'download')}${button('Importar arquivo', 'import', 'upload')}</div><input id="importFile" type="file" accept="application/json,.json" hidden></section>
   <section class="panel panel-pad"><div class="row">${icon('palette')}<h3>Aparência</h3></div><p>Mesma lava lamp do Pipeline e do Hub.</p><div class="theme-grid">${THEMES.map(([id, name, desc, [bg, a, b, c]]) => `<button type="button" class="theme-card ${theme === id ? 'on' : ''}" data-theme-pick="${id}"><span class="theme-swatch" style="background:${bg}"><i style="background:${a};left:-10%;top:-30%"></i><i style="background:${b};right:-15%;top:10%"></i><i style="background:${c};left:30%;bottom:-70%"></i></span><b>${name}</b><small>${desc}</small></button>`).join('')}</div></section>
   <section class="panel panel-pad wide"><div class="row">${icon('info')}<h3>Como o MEREO é calculado</h3></div><p><b>Card de metas 2S2026 · Assessor | Exclusive Advisory (DF II) – Acc Load 500.</b> Mesmas regras do Rico Pipeline. Cada linha de meta vira uma nota de 1 a 5 pela curva de atingimento (o 3º ponto é 100% da meta = nota 3; linear entre os pontos). A nota final é a média ponderada pelos pesos.</p><table class="rules"><thead><tr><th>Linha de meta</th><th>Peso</th><th>Curva</th><th>Racional</th></tr></thead><tbody>${rules}</tbody></table>${cardMetas}<ul class="rule-notes"><li>Previdência e STVM dentro da captação pesam <b>1,25×</b>; a previdência ponderada também soma na cesta.</li><li>Cesta Investimentos (alocação nos ativos definidos no PC) = alocação + previdência ponderada, medida contra a meta de R$ 2,2 mi (100% da meta = nota 3).</li><li>Cesta Cross Sell: cartão = 1 ponto · consórcio = 1 ponto a cada R$ 10 mil · seguro = 1 ponto a cada R$ 1 mil. Meta 25 pts com <b>mínimo de 10 pts em seguros</b> (sem ele, os demais produtos contam até 15).</li><li>NPS com meta mensal do card 2S2026: jul 35 · ago 37,5 · set 40 · out 42,5 · nov 45 · dez 47,5.</li><li>Índice comercial (83%) e NPS sem lançamento contam como referência — nota 3.</li><li>Semestre: fluxos somam os 6 meses contra a soma das metas mensais; IC e NPS pela média dos meses lançados.</li></ul></section></div>`;
@@ -2716,6 +2748,16 @@ function removeMember(id) {
   commit(s => { s.members[id] = { ...s.members[id], removedAt: now(), updatedAt: now() }; });
   if (memberId === id) { screen = screen === 'member' ? 'team' : screen; render(); }
   notify(`${m.name} saiu do time.`, () => commit(s => { s.members[id] = { ...s.members[id], removedAt: null, updatedAt: now() }; }));
+}
+async function shareTeam(btn) {
+  if (demo) { notify('Saia do exemplo para compartilhar o seu time.'); return; }
+  if (!cloud) {
+    if (btn) btn.disabled = true;
+    try { await connectCloud(genKey(), true); } catch (e) { cloud = null; store.del(LS.key); notify(e.message); if (btn) btn.disabled = false; return; }
+    render();
+  }
+  const link = shareLink();
+  showModal('Compartilhar o time', `<p class="small muted" style="margin-bottom:14px">Mande este link para quem deve acompanhar o time. Quem abrir vê os mesmos membros, metas e lançamentos, e as mudanças aparecem para todos em poucos segundos. Quem tem o link também pode editar, então envie só para o time.</p><div class="key">${esc(link)}</div>`, async () => { try { await navigator.clipboard.writeText(link); notify('Link copiado. É só colar no Teams.'); } catch { notify('Selecione o link e copie.'); return false; } }, 'Copiar link');
 }
 function showKey() {
   if (!cloud) return;
@@ -2821,6 +2863,7 @@ const actions = {
   'exit-demo': () => { state = demoBackup || C.emptyState(); demo = false; demoBackup = null; screen = 'team'; render(); },
   'save-team': () => { const team = $('#teamName').value.trim() || 'Meu time', leader = $('#leaderName').value.trim(); commit(s => { s.settings = { ...s.settings, team, leader, updatedAt: now() }; }); notify('Time atualizado.'); },
   'create-key': async b => { if (demo) { notify('Saia do exemplo para criar sua chave.'); return; } b.disabled = true; try { await connectCloud(genKey(), true); render(); if (syncStatus === 'synced') showKey(); } catch (e) { cloud = null; store.del(LS.key); notify(e.message); render(); } },
+  'share-team': b => shareTeam(b),
   'show-key': showKey, 'sync-now': () => sync({ quiet: false }).then(() => syncStatus === 'synced' && notify('Base sincronizada.')),
   'disconnect': () => { store.del(LS.key); cloud = null; setStatus('local'); render(); notify('Desconectado. Os dados continuam neste aparelho.'); },
   'export': () => { const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `mereo-time-${new Date().toISOString().slice(0, 10)}.json`; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); },
