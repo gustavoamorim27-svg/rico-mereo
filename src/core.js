@@ -1,12 +1,13 @@
 // Motor MEREO — mesmas regras do Rico Pipeline (core.mjs → monthData), agora por membro do time.
-// Pesos, curvas e referências idênticos: Captação 40% · Cesta 20% · Crossell 10% · Índice comercial 10% · NPS 20%.
+// Card 2S2026: Captação Líquida 40% · Cesta Investimentos 20% · Cesta Cross Sell 10% · NPS Assessoria 20% · Índice Comercial 10%.
 const MereoCore = (() => {
+  // Ordem, nomes, pesos, curvas e racional do card de metas 2S2026 (Assessor | Exclusive Advisory DF II – Acc Load 500).
   const COMPONENTS = [
-    { id: 'cap', name: 'Captação', short: 'Capt.', weight: .4, curve: [20, 60, 100, 140, 180], unit: 'R$' },
-    { id: 'cesta', name: 'Cesta investimento', short: 'Cesta', weight: .2, curve: [60, 80, 100, 120, 140], unit: 'R$' },
-    { id: 'cross', name: 'Crossell', short: 'Cross', weight: .1, curve: [60, 80, 100, 120, 140], unit: 'pts' },
-    { id: 'ic', name: 'Índice comercial', short: 'IC', weight: .1, curve: [80, 90, 100, 110, 120], unit: '%' },
-    { id: 'nps', name: 'NPS', short: 'NPS', weight: .2, curve: [60, 80, 100, 120, 140], unit: '' }
+    { id: 'cap', name: 'Captação Líquida', short: 'Capt.', weight: .4, curve: [20, 60, 100, 140, 180], unit: 'R$', racional: 'Captação Líquida Total' },
+    { id: 'cesta', name: 'Cesta Investimentos', short: 'Cesta', weight: .2, curve: [60, 80, 100, 120, 140], unit: 'R$', racional: 'Alocação nos ativos definidos no PC' },
+    { id: 'cross', name: 'Cesta Cross Sell', short: 'Cross', weight: .1, curve: [60, 80, 100, 120, 140], unit: 'pts', racional: 'Meta 25 pts · mínimo seguros 10 · mínimo cartão N/A' },
+    { id: 'nps', name: 'NPS Assessoria', short: 'NPS', weight: .2, curve: [60, 80, 100, 120, 140], unit: '', racional: 'NPS Assessoria Rico' },
+    { id: 'ic', name: 'Índice Comercial', short: 'IC', weight: .1, curve: [80, 90, 100, 110, 120], unit: '%', racional: 'Aderência ao Índice Comercial Assessor' }
   ];
   // Metas padrão do pipeline: captação R$ 800 mil/mês, cesta R$ 2,2 mi, crossell 25 pts, IC 83%, NPS 41,3.
   const DEFAULT_GOALS = { cap: 800000, cesta: 2200000, cross: 25, ic: 83, nps: 41.3 };
