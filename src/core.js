@@ -10,6 +10,15 @@ const MereoCore = (() => {
   ];
   // Metas padrão do pipeline: captação R$ 800 mil/mês, cesta R$ 2,2 mi, crossell 25 pts, IC 83%, NPS 41,3.
   const DEFAULT_GOALS = { cap: 800000, cesta: 2200000, cross: 25, ic: 83, nps: 41.3 };
+  // Card de metas 2S2026 (Assessor · Exclusive Advisory DF II): NPS com meta mensal crescente e
+  // crossell de 25 pts com mínimo de 10 pts em seguros (cartão sem mínimo).
+  const NPS_META = { '2026-07': 35, '2026-08': 37.5, '2026-09': 40, '2026-10': 42.5, '2026-11': 45, '2026-12': 47.5 };
+  const CROSS_MIN_SEG = 10;
+  // sem o mínimo de seguros, os demais produtos contam no máximo (meta − mínimo) pontos
+  function crossPoints(e, goal) {
+    const seg = num(e.seg) / 1000, outros = num(e.cards) + num(e.con) / 10000;
+    return seg >= CROSS_MIN_SEG ? seg + outros : seg + Math.min(outros, Math.max(0, (goal ?? DEFAULT_GOALS.cross) - CROSS_MIN_SEG));
+  }
   const FLOW = ['cap', 'cesta', 'cross'];
   const INPUTS = ['cap', 'prev', 'stvm', 'aloc', 'cards', 'seg', 'con', 'ic', 'nps'];
 
@@ -27,14 +36,14 @@ const MereoCore = (() => {
   // Valores MEREO de um lançamento mensal.
   // Previdência/STVM dentro da captação pesam 1,25× (igual ao pipeline). A cesta soma alocação + previdência ponderada.
   // Crossell: cartão = 1 ponto, consórcio = 1 ponto a cada R$ 10 mil, seguro = 1 ponto a cada R$ 1 mil.
-  function values(e) {
+  function values(e, crossGoal) {
     e = e || {};
     const cap = num(e.cap), boosted = Math.min(num(e.prev) + num(e.stvm), cap);
     const prevW = Math.min(num(e.prev), cap) * 1.25;
     return {
       cap: cap + boosted * .25,
       cesta: num(e.aloc) + prevW,
-      cross: num(e.cards) + num(e.con) / 10000 + num(e.seg) / 1000,
+      cross: crossPoints(e, crossGoal),
       ic: e.ic == null || e.ic === '' ? null : +e.ic,
       nps: e.nps == null || e.nps === '' ? null : +e.nps
     };
@@ -55,13 +64,15 @@ const MereoCore = (() => {
     const base = { ...DEFAULT_GOALS, ...(member?.goals || {}) };
     const o = member?.monthGoals?.[month] || {};
     for (const k of FLOW) if (o[k] != null && o[k] !== '') base[k] = +o[k];
+    if (o.nps != null && o.nps !== '') base.nps = +o.nps;
+    else if (NPS_META[month] != null) base.nps = NPS_META[month];
     return base;
   }
   function monthResult(state, member, month) {
     const entry = state.entries?.[monthKey(member.id, month)];
     const filled = hasData(entry);
     const goals = goalsFor(member, month);
-    const r = build(values(filled ? entry : {}), goals);
+    const r = build(values(filled ? entry : {}, goals.cross), goals);
     return { ...r, month, goals, entry: filled ? entry : null, filled, status: filled ? (entry.status || 'est') : 'none' };
   }
 
@@ -77,7 +88,7 @@ const MereoCore = (() => {
   function semesterResult(state, member, sem, mode = 'proj') {
     const months = semesterMonths(sem).map(m => monthResult(state, member, m));
     const filled = months.filter(m => m.filled);
-    const vals = months.map(m => m.filled ? values(m.entry) : null);
+    const vals = months.map(m => m.filled ? values(m.entry, m.goals.cross) : null);
     const filledVals = vals.filter(Boolean);
     const avg = k => filledVals.length ? filledVals.reduce((s, v) => s + v[k], 0) / filledVals.length : 0;
     const totals = {}, goals = {};
@@ -137,6 +148,6 @@ const MereoCore = (() => {
   const fmtScore = s => s.toFixed(2).replace('.', ',');
   const fmtNum = (n, d = 1) => (+n || 0).toLocaleString('pt-BR', { maximumFractionDigits: d });
 
-  return { COMPONENTS, DEFAULT_GOALS, FLOW, INPUTS, score, values, build, monthKey, goalsFor, monthResult, semesterOf, semesterMonths, shiftSemester, semesterResult, emptyState, merge, validate, activeMembers, teamSummary, hasData, shortMoney, fmtScore, fmtNum };
+  return { COMPONENTS, DEFAULT_GOALS, NPS_META, CROSS_MIN_SEG, FLOW, INPUTS, score, values, build, monthKey, goalsFor, monthResult, semesterOf, semesterMonths, shiftSemester, semesterResult, emptyState, merge, validate, activeMembers, teamSummary, hasData, shortMoney, fmtScore, fmtNum };
 })();
 if (typeof module !== 'undefined') module.exports = MereoCore;
